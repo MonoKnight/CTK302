@@ -5,7 +5,7 @@ var gif_loadImg, gif_createImg;
 function setup() {
   createCanvas(400, 400);
 
-  // code for initializing mic in.
+  // code for initializing mic in
   mic = new p5.AudioIn(); // what does "new" mean?
   mic.start();
   //gif_createImg = createImg("assets/DancingSkeleton.gif");
@@ -15,7 +15,7 @@ function draw() {
   background("cyan");
 
   // get the sound input
-  vol = mic.getLevel(); // returned level is between 0 and 1
+  vol = mic.getLevel(); // returned level is between 0 and 1.
 
   // text on the screen for debugging
   fill("white");
