@@ -53,10 +53,3 @@ function draw() {
       break;
   }
 }
-
-function mouseReleased() {
-  state++;
-  if (state > 2) {
-    state = 0;
-  }
-}
