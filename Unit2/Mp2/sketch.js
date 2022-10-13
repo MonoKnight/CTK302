@@ -275,7 +275,7 @@ function draw() {
       });
       //banner at top
       booksetting();
-      text("But most often, people join because they have lost everything. When no one else will, the crew will accept them. It doesn't matter who you are or what you've done, everyone is welcome abord the New World Pirates.", 40, 50, width-60, 200);
+      text("But most often, people join because they have lost everything. When no one else will, the crew will accept them. It doesn't matter who you are or what you've done, everyone is welcome aboard the New World Pirates.", 40, 50, width-60, 200);
       break;
     case 6://end of picture book
       textAlign(CENTER);
