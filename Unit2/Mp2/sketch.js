@@ -43,7 +43,7 @@ function setup() {
   s[1] = loadSound("assets/Thunder1.mp3");
   s[2] = loadSound("assets/Thunder1.mp3");
   imageMode(CENTER);
-  mic = new p5.AudioIn(); // what does "new" mean?
+  mic = new p5.AudioIn();
   mic.start();
 }
 
@@ -57,7 +57,19 @@ function draw() {
       fill("white");
       textFont(f1, 100);
       text("The Legend of the\nNew World Pirates", width/2, 200);
-      image(i1, width/2, 650, 600, 600); 
+      image(i1, width/2, 650, 1000, 600); 
+      push();
+      fill("#00C6F7");
+      noStroke();
+      beginShape();
+      vertex(0, height);
+      for(var x = 0; x < width; x++){
+        var y = map(sin(x * 0.02), -strum, strum, 800, 850);
+        vertex(x, y);
+      }
+      vertex(width, height);
+      endShape();
+      pop();
       break;
     case 1://calm ocean
       background("#B2FFFE");
@@ -80,9 +92,9 @@ function draw() {
       pop();
       //boat settings
       push();
-      translate(width / 2, 700);
+      translate(width / 2, 725);
       translate(p5.Vector.fromAngle(millis() / 750, 40));
-      image(i1, 0, 0, 400, 400); 
+      image(i1, 0, 0, 600, 400); 
       pop();
       //foreground waves
       fill("#02b4e0");
@@ -112,9 +124,9 @@ function draw() {
       wave(0, 600, 700, 0.16);
       //boat settings 
       push();
-      translate(width / 2, 600);
+      translate(width / 2, 650);
       translate(p5.Vector.fromAngle(millis() / 300, 60));
-      image(i1, 0, 0, 400, 400); 
+      image(i1, 0, 0, 600, 400); 
       pop();
       //middle wave settings
       fill("#070E2C");
@@ -168,9 +180,9 @@ function draw() {
       pop();
       //island settings
       fill("#FFE29C");
-      image(i2, 800, 600, 400, 400); 
+      image(i2, 800, 600, 500, 400); 
       ellipse(width, height, 1300, 600);
-      image(i3, 700, 750, 150, 150); 
+      image(i3, 700, 750, 200, 150); 
       //foreground waves
       fill("#02b4e0");
       wave(7, 800, 850, 0.016);
@@ -204,9 +216,9 @@ function draw() {
       pop();
       //island settings
       fill("#FFE29C");
-      image(i2, 800, 600, 400, 400); 
+      image(i2, 800, 600, 500, 400); 
       ellipse(width, height, 1300, 600);
-      image(i3, 700, 750, 150, 150); 
+      image(i3, 700, 750, 200, 150); 
       //boat settings
       boatx += 2;
       let angle = boatx * 0.025;
@@ -276,7 +288,7 @@ function draw() {
       push();
       translate(width/2, 700);
       rotate(0.25);
-      image(i4, 0, 0, 800, 400); 
+      image(i4, 0, 0, 800, 600); 
       pop();
       break;
   }
