@@ -193,7 +193,7 @@ function draw() {
       text("But why risk it all? For some, it was a desire to explore the world. For others, it was the riches and treasures they found. It was sometimes even so simple as the joy of yelling \"LAND HO!\"", 40, 50, width-60, 200);
       fill("red");
       text("Yell Now!", 700, 150);
-      if(vol > 0.1) state++;
+      if(vol > 0.15) state++;
       break;
     case 4://island 2
       background("#B2FFFE");
@@ -223,8 +223,8 @@ function draw() {
       boatx += 2;
       let angle = boatx * 0.025;
       let ymovement = map(sin(angle), -1, 1, 650, 700);
-      if(boatx <= width/2 - 150)image(i1, boatx, ymovement, 400, 400); 
-      else if(boatx >= width/2 - 150)image(i1, width/2 - 150, ymovement, 400, 400); 
+      if(boatx <= width/2 - 150)image(i1, boatx, ymovement, 600, 400); 
+      else if(boatx >= width/2 - 150)image(i1, width/2 - 150, ymovement, 600, 400); 
       //foreground waves
       fill("#02b4e0");
       wave(7, 800, 850, 0.016);
