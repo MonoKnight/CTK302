@@ -35,7 +35,7 @@ function preload(){
   s[2] = loadSound("assets/music/Medium.mp3");
   s[3] = loadSound("assets/music/Hard.mp3");
   s[4] = loadSound("assets/music/NightofNights.mp3");
-  f[0] = loadFont("assets/fonts/TFont2.ttf");
+  f[0] = loadFont("assets/fonts/Tfont2.ttf");
 }
 
 function setup() {
