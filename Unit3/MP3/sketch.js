@@ -122,7 +122,7 @@ function startGame(){
   textSize(100);
   text("Shitty Game Demo", width/2, height/2 - 300);
   textSize(50);
-  text("CONTROLS:\nMovement: Arrow Keys\nShoot: Shift", width/2, 400)
+  text("CONTROLS:\nMovement: Arrow Keys / WASD\nShoot: Shift", width/2, 400)
   buttonCreate(0, "Easy", 200, 800, 350, 150, "#69fffc", "#54c7c5");
   buttonCreate(1, "Medium", 600, 800, 350, 150, "#f7ec4d", "#b3aa36");
   buttonCreate(2, "Hard", 1000, 800, 350, 150, "#db0000", "#910101");
