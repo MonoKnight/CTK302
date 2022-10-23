@@ -3,19 +3,20 @@ let [pHealth, pMax, pRatio, pHColor, eHealth, eMax, eRatio, eHColor] = [5, 5, 1,
 //player variables
 let [pSize, playerPos, pSpeed, pTimer, pCooldown, isAlive] = [30, 0, 7.5, 0, false, true];
 //player bullet variables
-let [pBTimer, pBWidth, pBHeight, pBMultiplier, pBCooldown, pbullets] = [0, 20, 40, 2, 0.25, []];
+let [pBTimer, pBWidth, pBHeight, pBMultiplier, pBCooldown, pPT, pbullets, pSpawn] = [0, 20, 40, 2, 60, 0, [], []];
 //enemy variables 
 let [eSize, enemyPos, eSpeed, eAMultiplier, enemyDirection, eIsAlive] = [100, 0, 5, 1, true, true];
 //enemy bullet variables
 let [bTimer, bSize, bCooldown, bulletCount, bullets, velX, velY] = [0, 30, 1, 0, [], [], []];
 //state variables
-let [pState, gameState, eBState, eAnger, inStartAnim] = [1, 0, 0, false, true];
+let [pUState, lCState, pState, gameState, eBState, eAnger, inStartAnim] = [0, 0, 1, 0, 0, false, true];
 //difficulty variables
 let [dV, bState] = [0, [false]];
 //start animation variables
 let [sAY, sATimer] = [-400, 0];
 //assets
-let [iV, i, pI, bI, s, f] = [0, [], [], [], [], []];
+let [iV, i, pI, bI, s, f, pUI] = [0, [], [], [], [], [], []];
+//game continuity variables
 
 
 function preload(){
@@ -31,6 +32,9 @@ function preload(){
   bI[1] = loadImage("assets/images/BulletBlue.png");
   bI[2] = loadImage("assets/images/BulletYellow.png");
   bI[3] = loadImage("assets/images/BulletBlack.png");
+  pUI[0] = loadImage("assets/images/HP.png");
+  pUI[1] = loadImage("assets/images/Special.png");
+  //pUI[2] = loadImage("assets/images/BulletBlack.png");
   s[1] = loadSound("assets/music/Easy.mp3");
   s[2] = loadSound("assets/music/Medium.mp3");
   s[3] = loadSound("assets/music/Hard.mp3");
@@ -56,6 +60,7 @@ function setup() {
 function draw() {
   background(220);
   fill(255);
+  print(pBCooldown);
 
   switch(gameState){
     case 0: //start screen
@@ -70,6 +75,7 @@ function draw() {
         player();
         enemy();
         shootBullet();
+        powerUpSpawn();
         health();
       }
       break;
@@ -91,14 +97,16 @@ function mouseReleased(){
     case 0:
       break;
     case 1:
-      gameState = 3;
+      gameState = 2;
       break;
     case 2:
       gameReset();
+      lCState++;
       gameState = 1;
       break;
     case 3:
       gameReset();
+      lCState = 0;
       gameState = 1;
       break;
   }
@@ -139,13 +147,47 @@ function startAnim(){
   if(sAY >= 0) {
     sAY = 0;
     textSize(30)
-    text("So you want to challenge me?\nAlright, I'm always down for a fight!", width/2, 400);
+    startText();
     sATimer++
     if(sATimer > 5 * 60) inStartAnim = false;
   }
   if(keyIsDown(ENTER)) inStartAnim = false;
 }
 
+//function to determine the starting text
+function startText(){
+  textSize(30);
+  if(lCState > 3) lCState = 3;
+  switch(lCState){
+    case 0:
+      switch(dV){
+        case 1:
+          text("So you want to spar?\nWell I'm always down for a challenge!", width/2, 400);
+          break;
+        case 2:
+          text("So you want to fight?\nAlright, but I wont go easy on you!", width/2, 400);
+          break;
+        case 3:
+          text("A battle? You look tough, I better get serious!", width/2, 400);
+          break;
+        case 4:
+          text("You seem serious, I guess I better give it my all.", width/2, 400);
+          break;
+      }
+      break;
+    case 1:
+      text("Back again? Well I'll keep going as long as you do!", width/2, 400);
+      break;
+    case 2:
+      text("Your resilience is admireable, but that doesn't mean ill give up!", width/2, 400);
+      break;
+    case 3:
+      text("I can go easier on you if you want, just say the word and I will!", width/2, 400);
+      break;
+  }
+}
+
+//function for when the bossfight starts
 function bossFight(){
   image(i[3], width/2, height/2, width, height + 300);
   if(!s[dV].isPlaying()) s[dV].play();
@@ -159,6 +201,7 @@ function gameOver(){
   //clears all bullets
   bullets.length = 0;
   pbullets.length = 0;
+  pSpawn.length = 0;
   //summons enemy in the center
   fill("orange");
   rect(width/2, 200, eSize, eSize);
@@ -171,9 +214,11 @@ function gameOver(){
   if(keyIsDown(ESCAPE)) {
     gameState = 0;
     gameReset();
+    lCState = 0;
   }
 }
 
+//function for when you win the game
 function youWin(){
   background(130, 130, 130);
   //clears all bullets
@@ -192,6 +237,7 @@ function youWin(){
   //return to main menu
   if(keyIsDown(ESCAPE)) {
     gameState = 0;
+    lCState = 0;
     gameReset();
   }
 }
@@ -211,8 +257,36 @@ function gameReset(){
   eAMultiplier = 1;
   sAY = -300;
   eRatio = 1;
+  pBCooldown = 60;
 }
 
+//function to spawn powerups
+function powerUpSpawn(){
+  pPT++ 
+  if(pPT > 15 * 60){
+    pUState = int(random(0,2));
+    pSpawn.push(new Powerup());
+    pPT = 0;
+  }
+
+  for(let i = 0; i < pSpawn.length; i++){
+    pSpawn[i].display();
+    pSpawn[i].update();
+
+    if(pSpawn[i].pos.dist(playerPos) < (bSize / 2) + (pSize / 2)) {
+      switch(pSpawn[i].image) {
+        case 0:
+          if(pHealth < pMax) pHealth ++;
+          pSpawn.splice(i, 1);
+          break;
+        case 1:
+          if(pBCooldown > 10) pBCooldown += -10;
+          pSpawn.splice(i, 1);
+          break;
+      }
+    }
+  }
+}
 
 //Healthbar Height = TopY + (Distance Between Top and Bottom Y * (1 - Current Health - Max Health))
 function health(){
@@ -307,7 +381,7 @@ function player(){
 
   //Player Bullets
   pBTimer++;
-  if(keyIsDown(SHIFT) && pBTimer > pBCooldown * 60) {
+  if(keyIsDown(SHIFT) && pBTimer > pBCooldown * 0.25) {
     for(let i = 0; i < 1; i++){
       pbullets.push(new PBullet());
     }
@@ -356,25 +430,25 @@ function shootBullet(){
     bulletCalc();
     for(let i = 0; i < bulletCount; i++){
       switch(eBState){
-        case 0:
+        case 0://normal bullet
           bulletAngle(90, 90, 20);
           bullets.push(new Bullet(velX[i], velY[i], 0.05, 0, 0));
           break;
-        case 1:
+        case 1://right bullet
           bulletAngle(90, 90, 10);
           bullets.push(new Bullet(velX[i], velY[i], 0.03, 1, 0));
           break;
-        case 2:
+        case 2://left bullet
           bulletAngle(-90, 90, 10);
           bullets.push(new Bullet(velX[i], velY[i], 0.03, 1, 0));
           break;
-        case 3:
+        case 3://fast bullet
           bulletAngle(33, 33, 10);
           bullets.push(new Bullet(velX[i], velY[i], 0.1, 2, 0));
           break;
-        case 4:
+        case 4://slow bullet
           bulletAngle(27, 27, 5);
-          bullets.push(new Bullet(velX[i], velY[i], 0.03, 3, 0.09));
+          bullets.push(new Bullet(velX[i], velY[i], 0.03, 3, 0.075));
           break;
       }
     }
@@ -427,7 +501,7 @@ function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
     fill(bC2);
     bState[bSV] = true;
   }
-  rect(bX, bY, bW, bH);
+  rect(bX, bY, bW, bH, 20);
   fill(255);
   textSize(40);
   text(bT, bX, bY + 10);
@@ -452,7 +526,6 @@ class Bullet{
   }
 }
 
-
 //creates player bullets
 class PBullet{
   constructor(){
@@ -462,6 +535,20 @@ class PBullet{
   display(){
     fill("white");
     ellipse(this.pos.x, this.pos.y, pBWidth, pBHeight);
+  }
+  update(){
+    this.pos.add(this.velocity);
+  }
+}
+
+class Powerup{
+  constructor(){
+    this.pos = createVector(random(200, 1000), -100);
+    this.velocity = createVector(0, 5);
+    this.image = pUState;
+  }
+  display(){
+    image(pUI[this.image], this.pos.x, this.pos.y, 50, 50); 
   }
   update(){
     this.pos.add(this.velocity);
