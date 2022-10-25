@@ -464,9 +464,9 @@ function shootBullet(){
         bullets.splice(i, 1);
       }
     }
-    //if(bullets[i].pos.y > height + 200 || bullets[i].pos.x > width + 200 || bullets[i].pos.x < -200){
-    //  bullets.splice(i, 1);
-    //}
+    else if(bullets[i].pos.y > height + 200 || bullets[i].pos.x > width + 200 || bullets[i].pos.x < -200){
+      bullets.splice(i, 1);
+    }
   }
 }
 
