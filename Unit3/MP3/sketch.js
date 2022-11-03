@@ -1,11 +1,11 @@
 //health variables
 let [pHealth, pMax, pRatio, pHColor, eHealth, eMax, eRatio, eHColor] = [5, 5, 1, 0, 50, 50, 1, 0];
 //player variables
-let [pSize, playerPos, pSpeed, pTimer, pCooldown, isAlive] = [30, 0, 7.5, 0, false, true];
+let [pSize, playerPos, pSpeed, pTimer, pCooldown, isAlive] = [90, 0, 7.5, 0, false, true];
 //player bullet variables
 let [pBTimer, pBWidth, pBHeight, pBMultiplier, pBCooldown, pPT, pbullets, pSpawn] = [0, 20, 40, 2, 60, 0, [], []];
 //enemy variables 
-let [eSize, enemyPos, eSpeed, eAMultiplier, enemyDirection, eIsAlive] = [100, 0, 5, 1, true, true];
+let [eF, eIT, eSize, enemyPos, eSpeed, eAMultiplier, enemyDirection, eIsAlive] = [0, 0, 200, 0, 5, 1, true, true];
 //enemy bullet variables
 let [bTimer, bSize, bCooldown, bulletCount, bullets, velX, velY] = [0, 30, 1, 0, [], [], []];
 //state variables
@@ -15,31 +15,39 @@ let [dV, bState] = [0, [false]];
 //start animation variables
 let [sAY, sATimer] = [-400, 0];
 //assets
-let [iV, i, pI, bI, s, f, pUI] = [0, [], [], [], [], [], []];
+let [iV, dET, dEV, i, pI, bI, eI, dEI, s, f, pUI] = [0, 0, 0, [], [], [], [], [], [], [], []];
 //game continuity variables
 
 
 function preload(){
-  i[0] = loadImage("assets/images/GlassLight.png");
-  i[1] = loadImage("assets/images/GlassMedium.png");
-  i[2] = loadImage("assets/images/GlassHeavy.png");
-  i[3] = loadImage("assets/images/GameBackground.jpg");
-  i[4] = loadImage("assets/images/Shield.png");
-  pI[0] = loadImage("assets/images/PCLeanLeft.png");
-  pI[1] = loadImage("assets/images/PCNeutral.png");
-  pI[2] = loadImage("assets/images/PCLeanRight.png");
-  bI[0] = loadImage("assets/images/BulletRed.png");
-  bI[1] = loadImage("assets/images/BulletBlue.png");
-  bI[2] = loadImage("assets/images/BulletYellow.png");
-  bI[3] = loadImage("assets/images/BulletBlack.png");
-  pUI[0] = loadImage("assets/images/HP.png");
-  pUI[1] = loadImage("assets/images/Special.png");
+  i[0] = loadImage("assets/images/Glass/GlassLight.png");
+  i[1] = loadImage("assets/images/Glass/GlassMedium.png");
+  i[2] = loadImage("assets/images/Glass/GlassHeavy.png");
+  i[3] = loadImage("assets/images/Background/IGBackground.png");
+  i[4] = loadImage("assets/images/Powerups/Shield.png");
+  i[5] = loadImage("assets/images/Background/MMBackground.png");
+  pI[0] = loadImage("assets/images/PC/PCLeanLeft.png");
+  pI[1] = loadImage("assets/images/PC/PCNeutral.png");
+  pI[2] = loadImage("assets/images/PC/PCLeanRight.png");
+  bI[0] = loadImage("assets/images/Bullets/RedCircle.png");
+  bI[1] = loadImage("assets/images/Bullets/BlueArrow2.png");
+  bI[2] = loadImage("assets/images/Bullets/YellowKnife.png");
+  bI[3] = loadImage("assets/images/Bullets/BlackStar.png");
+  bI[4] = loadImage("assets/images/Bullets/BlueArrow.png");
+  pUI[0] = loadImage("assets/images/Powerups/Heart.png");
+  pUI[1] = loadImage("assets/images/Powerups/Star.png");
+  eI[0] = loadImage("assets/images/Enemy/GoombudLeft.png");
+  eI[1] = loadImage("assets/images/Enemy/GoombudRight.png");
+  eI[2] = loadImage("assets/images/Enemy/AGLeft.png");
+  eI[3] = loadImage("assets/images/Enemy/AGRight.png");
   //pUI[2] = loadImage("assets/images/BulletBlack.png");
   s[1] = loadSound("assets/music/Easy.mp3");
   s[2] = loadSound("assets/music/Medium.mp3");
   s[3] = loadSound("assets/music/Hard.mp3");
   s[4] = loadSound("assets/music/NightofNights.mp3");
+  s[5] = loadSound("assets/music/dENoise.mp3");
   f[0] = loadFont("assets/fonts/Tfont2.ttf");
+  for(let i = 0; i < 17; i++) dEI[i] = loadImage("assets/images/Explosion/DExplosion (" + (i+1) +").gif");
 }
 
 function setup() {
@@ -60,7 +68,8 @@ function setup() {
 function draw() {
   background(220);
   fill(255);
-  print(pBCooldown);
+  noStroke();
+  print(gameState);
 
   switch(gameState){
     case 0: //start screen
@@ -82,12 +91,31 @@ function draw() {
     case 2: //game over
       if (s[dV].isPlaying()) s[dV].stop();
       gameOver();
+      noStroke();
       health();
       break;
     case 3: //win
       if (s[dV].isPlaying()) s[dV].stop();
       youWin();
+      noStroke();
       health(); 
+      break;
+    case 4: //you explode
+      if (s[dV].isPlaying()) s[dV].stop();
+      image(i[3], width/2, height/2, width, height);
+      health();
+      enemyimage(enemyPos.x, enemyPos.y, 0);
+      image(pI[1], playerPos.x, playerPos.y, pSize - 30, pSize);
+      youExplode(playerPos.x, playerPos.y);
+      break;
+    case 5: //enemy explodes
+      if (s[dV].isPlaying()) s[dV].stop();
+      image(i[3], width/2, height/2, width, height);
+      health();
+      enemyimage(enemyPos.x, enemyPos.y, 0);
+      image(pI[1], playerPos.x, playerPos.y, pSize - 30, pSize);
+      enemyExplode(enemyPos.x, enemyPos.y);
+      break;
   }
 }
 
@@ -97,7 +125,7 @@ function mouseReleased(){
     case 0:
       break;
     case 1:
-      gameState = 2;
+      gameState = 5;
       break;
     case 2:
       gameReset();
@@ -125,24 +153,28 @@ function difficulty(){
 }
 
 function startGame(){
-  background(0);
+  image(i[5], width/2, height/2, width, height);
   fill(255);
+  strokeWeight(5);
+  stroke("black");
   textSize(100);
-  text("Shitty Game Demo", width/2, height/2 - 300);
+  text("Bullet Hell Demo", width/2, height/2 - 300);
   textSize(50);
   text("CONTROLS:\nMovement: Arrow Keys / WASD\nShoot: Shift", width/2, 400)
+  noStroke();
   buttonCreate(0, "Easy", 200, 800, 350, 150, "#69fffc", "#54c7c5");
   buttonCreate(1, "Medium", 600, 800, 350, 150, "#f7ec4d", "#b3aa36");
   buttonCreate(2, "Hard", 1000, 800, 350, 150, "#db0000", "#910101");
   buttonCreate(3, "EXTREME", 600, 1000, 350, 150, "#7419a8", "#4e1270");
 }
 function startAnim(){
-  image(i[3], width/2, height/2, width, height + 300);
-  fill("orange");
-  rect(enemyPos.x, enemyPos.y + sAY, eSize, eSize);
-  image(pI[1], playerPos.x, playerPos.y, 66, 96);
+  image(i[3], width/2, height/2, width, height);
+  enemyimage(enemyPos.x, enemyPos.y, sAY);
+  image(pI[1], playerPos.x, playerPos.y, pSize - 30, pSize);
   sAY += 4;
   textSize(30)
+  strokeWeight(2);
+  stroke("black");
   text("Press Enter to skip.", width/2, 1000);
   if(sAY >= 0) {
     sAY = 0;
@@ -189,25 +221,26 @@ function startText(){
 
 //function for when the bossfight starts
 function bossFight(){
-  image(i[3], width/2, height/2, width, height + 300);
+  image(i[3], width/2, height/2, width, height);
   if(!s[dV].isPlaying()) s[dV].play();
-  if(isAlive == false) gameState = 2;
-  if(eIsAlive == false) gameState = 3;
+  if(isAlive == false) gameState = 4;
+  if(eIsAlive == false) gameState = 5;
 }
 
 //function for when you game over
 function gameOver(){
-  background(130, 130, 130);
+  image(i[3], width/2, height/2, width, height);
   //clears all bullets
   bullets.length = 0;
   pbullets.length = 0;
   pSpawn.length = 0;
   //summons enemy in the center
-  fill("orange");
-  rect(width/2, 200, eSize, eSize);
+  enemyimage(width/2, height/2 - 300, 0);
   //text
+  strokeWeight(3);
+  stroke("black");
   textSize(50);
-  text("Wow you suck lmao", width/2, height/2);
+  text("Why don't you come back when\nyou're a bit stronger?", width/2, height/2 - 100);
   textSize(30);
   text("Click to restart, hit escape to go back to the main menu", width/2, height/2 + 100);
   //return to main menu
@@ -220,16 +253,17 @@ function gameOver(){
 
 //function for when you win the game
 function youWin(){
-  background(130, 130, 130);
+  image(i[3], width/2, height/2, width, height);
   //clears all bullets
   bullets.length = 0;
   pbullets.length = 0;
   //summons enemy in the center
-  fill("orange");
-  rect(width/2, 200, eSize, eSize);
+  enemyimage(width/2, height/2 - 300, 0);
   //summons player in the center
-  image(pI[1], width/2, 1000, 66, 96);
+  image(pI[1], width/2, 1000, pSize - 30, pSize);
   //text
+  strokeWeight(2);
+  stroke("black");
   textSize(50);
   text("Ow okay you win ):", width/2, height/2);
   textSize(30);
@@ -258,6 +292,32 @@ function gameReset(){
   sAY = -300;
   eRatio = 1;
   pBCooldown = 60;
+  dET = 0;
+  dEV = 0;
+  eF = 0;
+  pPT = 0;
+}
+
+function youExplode(eX, eY) {
+  if(!s[5].isPlaying()) s[5].play();
+  dET++;
+  if(dET > 0.1 * 60) {
+    dEV++
+    if(dEV >= 15) gameState = 2;
+    dET = 0;
+  }
+  image(dEI[dEV], eX, eY, 150, 150);
+}
+
+function enemyExplode(eX, eY){
+  if(!s[5].isPlaying()) s[5].play();
+  dET++;
+  if(dET > 0.1 * 60) {
+    dEV++
+    if(dEV >= 15) gameState = 3;
+    dET = 0;
+  }
+  image(dEI[dEV], eX, eY, 300, 300);
 }
 
 //function to spawn powerups
@@ -273,7 +333,7 @@ function powerUpSpawn(){
     pSpawn[i].display();
     pSpawn[i].update();
 
-    if(pSpawn[i].pos.dist(playerPos) < (bSize / 2) + (pSize / 2)) {
+    if(pSpawn[i].pos.dist(playerPos) < (50 / 2) + (pSize / 2)) {
       switch(pSpawn[i].image) {
         case 0:
           if(pHealth < pMax) pHealth ++;
@@ -362,20 +422,20 @@ function health(){
 function player(){
   //Player Movement
   if(pHealth == 0) isAlive = false;
-  if(keyIsDown(LEFT_ARROW) || keyIsDown(65) && playerPos.x > 0) playerPos.x -= pSpeed, pState = 0;
-  if(keyIsDown(RIGHT_ARROW) || keyIsDown(68) && playerPos.x < width) playerPos.x += pSpeed, pState = 2;
-  if(keyIsDown(UP_ARROW) || keyIsDown(87) && playerPos.y > 0) playerPos.y -= pSpeed;
-  if(keyIsDown(DOWN_ARROW) || keyIsDown(83) && playerPos.y < height) playerPos.y += pSpeed;
+  if((keyIsDown(LEFT_ARROW) || keyIsDown(65)) && playerPos.x > 0 + (pSize / 2)) playerPos.x -= pSpeed, pState = 0;
+  if((keyIsDown(RIGHT_ARROW) || keyIsDown(68)) && playerPos.x < width - (pSize / 2)) playerPos.x += pSpeed, pState = 2;
+  if((keyIsDown(UP_ARROW) || keyIsDown(87)) && playerPos.y > 0 + (pSize / 2)) playerPos.y -= pSpeed;
+  if((keyIsDown(DOWN_ARROW) || keyIsDown(83)) && playerPos.y < height - (pSize / 2)) playerPos.y += pSpeed;
   if(!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && !keyIsDown(65) && !keyIsDown(68)) pState = 1;
   switch (pState){
     case 0:
-      image(pI[0], playerPos.x, playerPos.y, 66, 96);
+      image(pI[0], playerPos.x, playerPos.y, pSize - 30, pSize);
       break;
     case 1:
-      image(pI[1], playerPos.x, playerPos.y, 66, 96);
+      image(pI[1], playerPos.x, playerPos.y, pSize - 30, pSize);
       break;
     case 2:
-      image(pI[2], playerPos.x, playerPos.y, 66, 96);
+      image(pI[2], playerPos.x, playerPos.y, pSize - 30, pSize);
       break;
   }
 
@@ -409,6 +469,15 @@ function player(){
   cooldown();
 }
 
+//function for shield
+function cooldown(){
+  if(pCooldown == true){
+    image(i[4], playerPos.x, playerPos.y, pSize * 2, pSize * 2);
+    pTimer ++ 
+    if(pTimer > 3*60) pCooldown = false, pTimer = 0;
+  }
+}
+
 //function for enemy movement
 function enemy(){
   if(eRatio <= 0.5) eAnger = true, eAMultiplier = 1.5;
@@ -418,7 +487,23 @@ function enemy(){
   else if(enemyDirection == false)  enemyPos.x += -eSpeed * eAMultiplier * (dV/2);
   if(eAnger == false) fill("orange");
   if(eAnger == true) fill("red");
-  rect(enemyPos.x, enemyPos.y, eSize, eSize);
+  enemyimage(enemyPos.x, enemyPos.y, 0);
+}
+
+function enemyimage(ePX, ePY, aY){
+  print(eF);
+  eIT++
+  if(eIT >= 0.5 * 60){
+    eF++;
+    if(eRatio > 0.5){
+      if(eF == 2) eF = 0;
+    }
+    if(eRatio <= 0.5){
+      if(eF == 4) eF = 2;
+    }
+    eIT = 0;
+  }
+  image(eI[eF], ePX, ePY + aY, eSize, eSize);
 }
 
 //functions to create and shoot bullets
@@ -432,23 +517,23 @@ function shootBullet(){
       switch(eBState){
         case 0://normal bullet
           bulletAngle(90, 90, 20);
-          bullets.push(new Bullet(velX[i], velY[i], 0.05, 0, 0));
+          bullets.push(new Bullet(velX[i], velY[i], 0.05, 0, 0, 2, 180, 0, i, -1));
           break;
-        case 1://right bullet
+        case 1://left bullet
           bulletAngle(90, 90, 10);
-          bullets.push(new Bullet(velX[i], velY[i], 0.03, 1, 0));
+          bullets.push(new Bullet(velX[i], velY[i], 0.03, 4, 0, 1.5, 180, 30, i, -1));
           break;
-        case 2://left bullet
+        case 2://right bullet
           bulletAngle(-90, 90, 10);
-          bullets.push(new Bullet(velX[i], velY[i], 0.03, 1, 0));
+          bullets.push(new Bullet(velX[i], velY[i], 0.03, 1, 0, 1.5, 180, 30, i, 1));
           break;
         case 3://fast bullet
           bulletAngle(33, 33, 10);
-          bullets.push(new Bullet(velX[i], velY[i], 0.1, 2, 0));
+          bullets.push(new Bullet(velX[i], velY[i], 0.1, 2, 0, 1.5, 125, 55, i, -1));
           break;
         case 4://slow bullet
-          bulletAngle(27, 27, 5);
-          bullets.push(new Bullet(velX[i], velY[i], 0.03, 3, 0.075));
+          bulletAngle(45, 45, 10);
+          bullets.push(new Bullet(velX[i], velY[i], 0.03, 3, 0.2, 1, 125, 55, i, -1));
           break;
       }
     }
@@ -458,7 +543,7 @@ function shootBullet(){
   for(let i = 0; i < bullets.length; i++) {
     bullets[i].display();
     bullets[i].update();
-    if(bullets[i].pos.dist(playerPos) < (bSize / 2) + (pSize / 2)) {
+    if(bullets[i].pos.dist(playerPos) < (bSize / 3) + (pSize / 3)) {
       if(isAlive == true) {
         if(pCooldown == false) pHealth += -1, pCooldown = true, background("red");
         bullets.splice(i, 1);
@@ -467,14 +552,6 @@ function shootBullet(){
     else if(bullets[i].pos.y > height + 200 || bullets[i].pos.x > width + 200 || bullets[i].pos.x < -200){
       bullets.splice(i, 1);
     }
-  }
-}
-
-function cooldown(){
-  if(pCooldown == true){
-    image(i[4], playerPos.x, playerPos.y, pSize * 3, pSize * 3);
-    pTimer ++ 
-    if(pTimer > 3*60) pCooldown = false, pTimer = 0;
   }
 }
 
@@ -490,7 +567,7 @@ function bulletCalc(){
   else if(eBState == 1) bulletCount = 15;
   else if(eBState == 2) bulletCount = 15;
   else if(eBState == 3) bulletCount = 7;
-  else if(eBState == 4) bulletCount = 12;
+  else if(eBState == 4) bulletCount = 10;
 }
 
 //creates buttons
@@ -509,15 +586,22 @@ function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
 
 //creates enemy bullets
 class Bullet{
-  constructor(velX, velY, bMultiplier, bV, magnifier){
+  constructor(velX, velY, bMultiplier, bV, magnifier, bSI, bSA, bEA, i, rl){
     this.pos = createVector(enemyPos.x, enemyPos.y);
     this.velocity = createVector(velX * bMultiplier, velY * bMultiplier);
     this.image = bV;
     this.magnifier = magnifier;
-    this.size = bSize;
+    this.size = bSize * bSI;
+    this.bC = bulletCount;
+    this.angle = createVector(bSA, bEA, i);
+    this.rl = rl
   }
   display(){
-    image(bI[this.image], this.pos.x, this.pos.y, this.size, this.size);
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.angle.x + (this.angle.z * ((this.angle.x - this.angle.y) / this.bC)) * this.rl);
+    image(bI[this.image], 0, 0, this.size, this.size);
+    pop()
   }
   update(){
     this.pos.add(this.velocity);
@@ -548,7 +632,7 @@ class Powerup{
     this.image = pUState;
   }
   display(){
-    image(pUI[this.image], this.pos.x, this.pos.y, 50, 50); 
+    image(pUI[this.image], this.pos.x, this.pos.y, 75, 75); 
   }
   update(){
     this.pos.add(this.velocity);
