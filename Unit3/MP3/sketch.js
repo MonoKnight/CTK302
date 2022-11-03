@@ -14,9 +14,10 @@ let [pUState, lCState, pState, gameState, eBState, eAnger, inStartAnim] = [0, 0,
 let [dV, bState] = [0, [false]];
 //start animation variables
 let [sAY, sATimer] = [-400, 0];
+//dev variables
+let [devV, devState, devM, necoMode, necoBoss] = [0, false, 1, false, false];
 //assets
-let [iV, dET, dEV, i, pI, bI, eI, dEI, s, f, pUI] = [0, 0, 0, [], [], [], [], [], [], [], []];
-//game continuity variables
+let [iV, dET, dEV, i, pI, bI, eI, dEI, nI, s, f, pUI] = [0, 0, 0, [], [], [], [], [], [], [], [], []];
 
 
 function preload(){
@@ -46,8 +47,10 @@ function preload(){
   s[3] = loadSound("assets/music/Hard.mp3");
   s[4] = loadSound("assets/music/NightofNights.mp3");
   s[5] = loadSound("assets/music/dENoise.mp3");
+  s[6] = loadSound("assets/music/catvillage.mp3");
   f[0] = loadFont("assets/fonts/Tfont2.ttf");
   for(let i = 0; i < 17; i++) dEI[i] = loadImage("assets/images/Explosion/DExplosion (" + (i+1) +").gif");
+  for(let i = 0; i < 8; i++) nI[i] = loadImage("assets/images/neco/neco (" + (i+1) +").gif");
 }
 
 function setup() {
@@ -123,6 +126,9 @@ function mouseReleased(){
 
   switch(gameState) {
     case 0:
+      devV++;
+      if(devV >= 3) necoMode = true;
+      if(devV >= 5) devState = true, devM = 25;
       break;
     case 1:
       break;
@@ -142,6 +148,7 @@ function mouseReleased(){
   if(bState[1] == true && gameState == 0) gameState++, dV = 2, difficulty();
   if(bState[2] == true && gameState == 0) gameState++, dV = 3, difficulty();
   if(bState[3] == true && gameState == 0) gameState++, dV = 4, difficulty();
+  if(bState[5] == true && gameState == 0) gameState++, dV = 6, difficulty(), necoBoss = true;
 }
 
 function difficulty(){
@@ -149,6 +156,7 @@ function difficulty(){
   else if(dV == 2) eHealth = 100, eMax = 100, pHealth = 5, pMax = 5, bCooldown = 1.25;
   else if(dV == 3) eHealth = 150, eMax = 150, pHealth = 5, pMax = 5, bCooldown = 0.75;
   else if(dV == 4) eHealth = 200, eMax = 200, pHealth = 3, pMax = 3, bCooldown = 0.5;
+  else if(dV == 6) eHealth = 100, eMax = 100, pHealth = 5, pMax = 5, bCooldown = 1.25;
 }
 
 function startGame(){
@@ -165,7 +173,11 @@ function startGame(){
   buttonCreate(1, "Medium", 600, 800, 350, 150, "#f7ec4d", "#b3aa36");
   buttonCreate(2, "Hard", 1000, 800, 350, 150, "#db0000", "#910101");
   buttonCreate(3, "EXTREME", 600, 1000, 350, 150, "#7419a8", "#4e1270");
+  if(devState == true)buttonCreate(4, "Dev Mode On", 200, 100, 350, 150, "#53cf29", "#53cf29");
+  if(necoMode == true)buttonCreate(5, "Neco Mode", width-200, 100, 350, 150, "#ffed66", "#bfb24d");
 }
+
+//function for starting animation
 function startAnim(){
   image(i[3], width/2, height/2, width, height);
   enemyimage(enemyPos.x, enemyPos.y, sAY);
@@ -295,8 +307,13 @@ function gameReset(){
   dEV = 0;
   eF = 0;
   pPT = 0;
+  devV = 0;
+  devState = false;
+  devM = 0;
+  necoMode = false;
 }
 
+//function to play death anim
 function youExplode(eX, eY) {
   if(!s[5].isPlaying()) s[5].play();
   dET++;
@@ -308,6 +325,7 @@ function youExplode(eX, eY) {
   image(dEI[dEV], eX, eY, 150, 150);
 }
 
+//function to play enemy death anim
 function enemyExplode(eX, eY){
   if(!s[5].isPlaying()) s[5].play();
   dET++;
@@ -453,7 +471,7 @@ function player(){
 
     if(pbullets[i].pos.dist(enemyPos) < (pBHeight / 2) + (eSize / 2)) {
       if(eIsAlive == true) {
-        eHealth = eHealth - 1;
+        eHealth = eHealth - 1 * devM;
         pbullets.splice(i, 1);
       }
       if(eHealth == 0) eIsAlive = false;
@@ -489,20 +507,31 @@ function enemy(){
   enemyimage(enemyPos.x, enemyPos.y, 0);
 }
 
+//function for animating the enemy
 function enemyimage(ePX, ePY, aY){
-  print(eF);
-  eIT++
-  if(eIT >= 0.5 * 60){
-    eF++;
-    if(eRatio > 0.5){
-      if(eF == 2) eF = 0;
+  if(necoBoss == false){
+    eIT++;
+    if(eIT >= 0.5 * 60){
+      eF++;
+      if(eRatio > 0.5){
+        if(eF == 2) eF = 0;
+      }
+      if(eRatio <= 0.5){
+        if(eF == 4) eF = 2;
+      }
+      eIT = 0;
     }
-    if(eRatio <= 0.5){
-      if(eF == 4) eF = 2;
-    }
-    eIT = 0;
+    image(eI[eF], ePX, ePY + aY, eSize, eSize);
   }
-  image(eI[eF], ePX, ePY + aY, eSize, eSize);
+  if(necoBoss == true){
+    eIT++;
+    if (eIT >= 0.1 * 60){
+      eF++;
+      if(eF >= nI.length) eF = 0;
+      eIT = 0;
+    }
+    image(nI[eF], ePX, ePY + aY, eSize, eSize);
+  }
 }
 
 //functions to create and shoot bullets
@@ -539,12 +568,13 @@ function shootBullet(){
     bTimer = 0;
   }
   
+  //hit detection/bullet despawn
   for(let i = 0; i < bullets.length; i++) {
     bullets[i].display();
     bullets[i].update();
     if(bullets[i].pos.dist(playerPos) < (bSize / 3) + (pSize / 3)) {
       if(isAlive == true) {
-        if(pCooldown == false) pHealth += -1, pCooldown = true, background("red");
+        if(pCooldown == false && devState == false) pHealth += -1, pCooldown = true, background("red");
         bullets.splice(i, 1);
       }
     }
@@ -554,6 +584,7 @@ function shootBullet(){
   }
 }
 
+//function to determine bullet angle
 function bulletAngle(bSAX, bSAY, bAngle){
   for(let i = 0; i < bulletCount; i += 1){
     velX[i] = 100 * sin(-bSAX + (i * bAngle));
@@ -561,6 +592,7 @@ function bulletAngle(bSAX, bSAY, bAngle){
   }
 }
 
+//function for getting bullet count
 function bulletCalc(){
   if(eBState == 0) bulletCount = 10;
   else if(eBState == 1) bulletCount = 15;
