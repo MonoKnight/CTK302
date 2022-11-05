@@ -259,6 +259,10 @@ function gameOver(){
     gameState = 0;
     gameReset();
     lCState = 0;
+    devV = 0;
+    devState = false;
+    devM = 1;
+    necoMode = false;
   }
 }
 
@@ -284,6 +288,10 @@ function youWin(){
     gameState = 0;
     lCState = 0;
     gameReset();
+    devV = 0;
+    devState = false;
+    devM = 1;
+    necoMode = false;
   }
 }
 
@@ -307,10 +315,6 @@ function gameReset(){
   dEV = 0;
   eF = 0;
   pPT = 0;
-  devV = 0;
-  devState = false;
-  devM = 0;
-  necoMode = false;
 }
 
 //function to play death anim
