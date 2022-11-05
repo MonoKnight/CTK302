@@ -50,7 +50,7 @@ function preload(){
   s[6] = loadSound("assets/music/catvillage.mp3");
   f[0] = loadFont("assets/fonts/Tfont2.ttf");
   for(let i = 0; i < 17; i++) dEI[i] = loadImage("assets/images/Explosion/DExplosion (" + (i+1) +").gif");
-  for(let i = 0; i < 8; i++) nI[i] = loadImage("assets/images/neco/neco (" + (i+1) +").gif");
+  for(let i = 0; i < 10; i++) nI[i] = loadImage("assets/images/neco/neco (" + (i+1) +").gif");
 }
 
 function setup() {
@@ -200,8 +200,9 @@ function startAnim(){
 //function to determine the starting text
 function startText(){
   textSize(30);
-  if(lCState > 3) lCState = 3;
-  switch(lCState){
+  if(necoBoss == false){
+    if(lCState > 3) lCState = 3;
+    switch(lCState){
     case 0:
       switch(dV){
         case 1:
@@ -227,7 +228,9 @@ function startText(){
     case 3:
       text("I can go easier on you if you want, just say the word and I will!", width/2, 400);
       break;
+    }
   }
+  else if(necoBoss == true) text("Buru Nyuu :3", width/2, 400);
 }
 
 //function for when the bossfight starts
@@ -251,7 +254,8 @@ function gameOver(){
   strokeWeight(3);
   stroke("black");
   textSize(50);
-  text("Why don't you come back when\nyou're a bit stronger?", width/2, height/2 - 100);
+  if(necoBoss == false) text("Why don't you come back when\nyou're a bit stronger?", width/2, height/2 - 100);
+  else if(necoBoss == true) text("Buru Nyuu :3", width/2, height/2 - 100);
   textSize(30);
   text("Click to restart, hit escape to go back to the main menu", width/2, height/2 + 100);
   //return to main menu
@@ -263,6 +267,7 @@ function gameOver(){
     devState = false;
     devM = 1;
     necoMode = false;
+    necoBoss = false;
   }
 }
 
@@ -280,7 +285,8 @@ function youWin(){
   strokeWeight(2);
   stroke("black");
   textSize(50);
-  text("Ow okay you win ):", width/2, height/2);
+  if(necoBoss == false)text("Ow okay you win ):", width/2, height/2 - 100);
+  else if(necoBoss == true) text("Buru Nyuu :3", width/2, height/2 - 100);
   textSize(30);
   text("Click to restart, hit escape to go back to the main menu", width/2, height/2 + 100);
   //return to main menu
@@ -292,6 +298,7 @@ function youWin(){
     devState = false;
     devM = 1;
     necoMode = false;
+    necoBoss = false;
   }
 }
 
