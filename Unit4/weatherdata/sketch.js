@@ -14,11 +14,13 @@ let dir = 0;
 let cv = 0;
 let dir2 = 0;
 let i;
+let f;
 
 function preload() {
   for(i = 0; i < 64; i++) clock[i] = loadImage("assets/clock/frame_" + (i + 2) + "_delay-0.05s.png");
   for(i = 1; i < 28; i++) compass[i] = loadImage("assets/compass/compass (" + i + ").png");
   i = loadImage("assets/freeport.webp");
+  f = loadFont("assets/Tfont2.ttf");
 }
 
 function setup() {
@@ -30,6 +32,9 @@ function setup() {
   let myTotalString = myCityString + myIDString;
   
   loadJSON(myTotalString, gotData); // that gotData function happens when JSON comes back.
+
+  textFont(f);
+  textSize(18);
 }
 
 function draw() {
@@ -51,11 +56,11 @@ function draw() {
       stroke("white");
       strokeWeight(5);
       fill("black");
-      text("What is the weather in " + weather.name + "?", 20, 20);
-      text("temperature is " + temp + " degrees fahrenheit", 20, 60);
-      text("humidity is " + humidity + "%", 20, 80);
-      text("windspeed is " + windspeed, 20, 40);
-      text("The wind direction is at " + dir + " degrees", 20, 100);
+      text("What is the weather in " + weather.name + "?", 20, 40);
+      text("temperature is " + temp + " degrees fahrenheit", 20, 80);
+      text("humidity is " + humidity + "%", 20, 120);
+      text("windspeed is " + windspeed, 20, 160);
+      text("The wind direction is at " + dir + " degrees", 20, 200);
       
 
       // cloud
@@ -69,7 +74,7 @@ function draw() {
 
       //images
       //image(clock[test], width/2, height/2 - 75);
-      image(compass[cv], 0, 100);
+      image(compass[cv], 0, 200);
 
       break;
   }
