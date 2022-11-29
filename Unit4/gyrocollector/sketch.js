@@ -65,8 +65,7 @@ function draw() {
     if(fallv > 7) fallv = 0;
     fallt = 0;
   }
-  image(fall[fallv], frogPos.x, frogPos.y, 50, 50);
-  ellipse(0, 0, 80, 80);
+  image(fall[fallv], 0, 0, 50, 50);
   pop();
 
 
