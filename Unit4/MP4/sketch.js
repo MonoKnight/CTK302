@@ -1,12 +1,14 @@
-let floor, c, ball, box, square;
+let floor, lwall, rwall, ceiling, c, ball, box, square, punchhitboxL, punchhitboxR, goombud;
 //neco sprites
 let nHurtBox, physicsball;
-//goombud sprites;
-let goombud;
+//goombud var;
+let [goombuddamage, gCT, gCooldown,] = [0, 0, false];
 //neco neutral/walk/run
 let [nDir, nWTimer, nWV, nWalk, nWalkL, nNTimer, nNV, nNeutralR, nNeutralL, nRT, nRV, nRunR, nRunL, nVar] = [true, 0, 0, [], [], 0, 0, [], [], 0, 0, [], [], 0];
 //neco jump
 let [nIsJumping, nIsGrounded, nDoubleJump, nJTimer, nJV, nJumpR, nJumpL, jTimer] = [false, true, true, 0, 0, [], [], 0];
+//neco crawl
+let [nCT, nCV, nCrawlR, nCrawlL] = [0, 0, [], []];
 //neco attack
 let [isPunching, nPDir, nPV, nPTimer, nPunchL, nPunchR, ePV, ePTimer, explosion] = [false, false, 0, 0, [], [], 0, 0, []];
 
@@ -24,25 +26,34 @@ function preload(){
   for(let i = 0; i < 7; i++) nPunchR[i] = loadImage("Assets/NecoArc/Attacks/Punch/PunchR (" + (i+1) +").gif");
   for(let i = 0; i < 7; i++) nPunchL[i] = loadImage("Assets/NecoArc/Attacks/Punch/NecoPunchLeft (" + (i+1) +").gif");
   for(let i = 0; i < 17; i++) explosion[i] = loadImage("Assets/Explosion/DExplosion (" + (i+1) +").gif");
+  for(let i = 0; i < 5; i++) nCrawlR[i] = loadImage("Assets/NecoArc/Crawl/CrawlR (" + (i+1) +").gif");
+  for(let i = 0; i < 5; i++) nCrawlL[i] = loadImage("Assets/NecoArc/Crawl/CrawlL (" + (i+1) +").gif");
   i = loadImage("Assets/GoombudRight.png");
 }
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(800, 800);
   textAlign(CENTER);
   rectMode(CENTER);
   imageMode(CENTER);
   angleMode(DEGREES);
   world.gravity.y = 30;
-  physicsball = new Sprite(width/2, 30, 80, 'dynamic');
-  nHurtBox = new Sprite(physicsball.x, physicsball.y, 40, 90, 'none');
   goombud = new Sprite(width/2 - 100, 30, 60, 'dynamic');
+  physicsball = new Sprite(width/2, 30, 80, 'dynamic');
+  punchhitboxL = new Sprite(physicsball.x - 60, physicsball.y - 25, 60, 'none');
+  punchhitboxR = new Sprite(physicsball.x + 60, physicsball.y - 25, 60, 'none');
+  nHurtBox = new Sprite(physicsball.x, physicsball.y, 40, 90, 'none');
   c = color(0, 0, 0, 0);
   physicsball.color = c;
   goombud.color = c;
   c = color(255, 0, 0, 100);
   nHurtBox.color = c;
-  physicsball.visible = true;
+  c = color(0, 255, 0, 100);
+  punchhitboxL.color = c;
+  punchhitboxR.color = c;
+  punchhitboxL.visible = false;
+  punchhitboxR.visible = false;
+  physicsball.visible = false;
   floorcreate();
 
   //square = new Sprite(300, 30, 40, 40, 'kinetic');
@@ -51,25 +62,37 @@ function setup() {
 
 function draw() {
   background("white");
+  textSize(20);
+  text("Percentage: " + goombuddamage + "%", 100, 50);
   playermove();
-  push();
-  translate(goombud.x, goombud.y);
-  rotate(goombud.rotation);
-  image(i, 0, 0, 60, 60);
-  pop();
-  if(goombud.x > width + 50) goombud.x = -50;
-  if(goombud.x <  -50) goombud.x = width + 50;
-  if(physicsball.x > width + 50) physicsball.x = -50;
-  if(physicsball.x <  -50) physicsball.x = width + 50;
-  nHurtBox.x = physicsball.x;
-  nHurtBox.y = physicsball.y;
-  //rect(ball.x, ball.y, 50, 50);
+  spritePostion();
+  if(isPunching == true && nPDir == false && nPV > 2) {
+    if(dist(punchhitboxL.x, punchhitboxL.y, goombud.x, goombud.y) < ((goombud.d/2) + (punchhitboxL.d/2)) && gCooldown == false){
+      goombud.vel.x = -6 + (-1 * (goombuddamage * 0.1));
+      goombud.vel.y = -9 + (-1.5 * (goombuddamage * 0.1));
+      goombuddamage += 5;
+      gCooldown = true;
+    }
 
-  if(kb.pressing('f')) goombud.rotation += -1;
-  
-  //if(keyIsDown(RIGHT_ARROW)) floor.rotation += 1;
+  }
+  else if(isPunching == true && nPDir == true && nPV > 2) {
+    if(dist(punchhitboxR.x, punchhitboxR.y, goombud.x, goombud.y) < ((goombud.d/2) + (punchhitboxR.d/2)) && gCooldown == false) {
+      goombud.vel.x = 6 + (1 * (goombuddamage * 0.1))
+      goombud.vel.y = -9 + (-1.5 * (goombuddamage * 0.1));
+      goombuddamage += 5;
+      gCooldown = true;
+    }
+  }
 
-  //floor.rotation += 1;
+  if(gCooldown == true){
+    gCT++
+    if(gCT > 0.5 * 60){
+      gCooldown = false;
+      gCT = 0;
+    }
+  }
+
+
 }
 
 function playermove(){
@@ -92,6 +115,9 @@ function playermove(){
   else if(kb.pressing('right') && nIsJumping == true && !kb.pressing('shift')) nVar = 6;
   else if(kb.pressing('left') && nIsJumping == true && kb.pressing('shift')) nVar = 7;
   else if(kb.pressing('right') && nIsJumping == true && kb.pressing('shift')) nVar = 8;
+  else if(kb.pressing('left') && kb.pressing('down') && nIsGrounded == true) nVar = 10;
+  else if(kb.pressing('right') && kb.pressing('down') && nIsGrounded == true) nVar = 11;
+  else if(kb.pressing('down') && nIsGrounded == true) nVar = 12;
   else if(kb.pressing('left') && !kb.pressing('shift')) nVar = 1;
   else if(kb.pressing('right') && !kb.pressing('shift')) nVar = 2;
   else if(kb.pressing('left') && kb.pressing('shift')) nVar = 3;
@@ -153,6 +179,20 @@ function playermove(){
       physicsball.vel.x = 0;
       if(isPunching == false) playerJump();
       break;
+    case 10://Crawl Left
+      physicsball.vel.x = -2.5;
+      nDir = false;
+      if(isPunching == false) playerCrawl();
+      break;
+    case 11://Crawl Right
+      physicsball.vel.x = 2.5;
+      nDir = true;
+      if(isPunching == false) playerCrawl();
+      break;
+    case 12://Crawl Neutral
+      physicsball.vel.x = 0;
+      if(isPunching == false) playerCrawl();
+      break;
   }
 
 }
@@ -191,7 +231,7 @@ function playerNeutral(){
 }
 
 function playerJump(){
-  nJTimer++ 
+  nJTimer++ ;
   if(nJTimer >= 0.1*60){
     nJV++;
     if(nJV > 7) nJV = 0;
@@ -201,8 +241,19 @@ function playerJump(){
   else if (nDir == true) image(nJumpR[nJV], physicsball.x, physicsball.y - 5, 100, 100);
 }
 
+function playerCrawl(){
+  nCT++;
+  if(nCT > 0.1*60){
+    nCV++;
+    if(nCV > 4) nCV = 0;
+    nCT = 0;
+  }
+  if (nDir == false) image(nCrawlL[nCV], physicsball.x, physicsball.y - 5, 100, 100);
+  else if (nDir == true) image(nCrawlR[nCV], physicsball.x, physicsball.y - 5, 100, 100);
+}
+
 function playerPunch(){
-  nPTimer++ 
+  nPTimer++;
   if(nPTimer >= 0.1*60){
     nPV++;
     nPTimer = 0;
@@ -214,9 +265,9 @@ function playerPunch(){
 }
 
 function punchExplosion(){
-  ePTimer++
+  ePTimer++;
   if(ePTimer > 0.0175*60){
-    ePV++
+    ePV++;
     ePTimer = 0;
   }
   
@@ -225,14 +276,33 @@ function punchExplosion(){
 }
 
 function floorcreate(){
-  floor = new Sprite();
-	floor.collider = 'static';
+  floor = new Sprite(width/2, height - 5, width * 1.5, 10, 'static');
+  //lwall = new Sprite(5, height/2, 10, height * 1.5, 'static');
+  //rwall = new Sprite(width - 5, height/2, 10, height * 1.5, 'static');
+  ceiling = new Sprite(width/2, 5, width * 1.5, 10, 'static');
   c = color(0, 0, 255);
   floor.color = c;
-	floor.y = 390;
-	floor.w = width + 200;
-	floor.h = 5;
-  floor.rotation = 0;
+  //lwall.color = c;
+  //rwall.color = c;
+  ceiling.color = c;
+}
+
+function spritePostion(){
+  push();
+  translate(goombud.x, goombud.y);
+  rotate(goombud.rotation);
+  image(i, 0, 0, 60, 60);
+  pop();
+  if(goombud.x > width + 50) goombud.x = -50;
+  if(goombud.x <  -50) goombud.x = width + 50;
+  if(physicsball.x > width + 50) physicsball.x = -50;
+  if(physicsball.x <  -50) physicsball.x = width + 50;
+  nHurtBox.x = physicsball.x;
+  nHurtBox.y = physicsball.y;
+  punchhitboxL.x = physicsball.x - 60;
+  punchhitboxL.y = physicsball.y - 25;
+  punchhitboxR.x = physicsball.x + 60;
+  punchhitboxR.y = physicsball.y - 25;
 }
 
 

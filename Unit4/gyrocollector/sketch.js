@@ -5,11 +5,16 @@ var y = 0;
 var z = 0;
 var xPosition = 0;
 var yPosition = 0;
-
+var fall = [];
+var fallt = 0;
+var fallv = 0;
 // var bunnyImage;
 var cars = [];
 var frogPos;
 
+function preload(){
+  for(let i = 0; i < 8; i++) fall[i] = loadImage("assets/fall (" + (i+1) +").gif");
+}
 
 function setup() {
 
@@ -54,7 +59,13 @@ function draw() {
 
   // draw the FROG
   // image(bunnyImage, 0, 0, 500, 500);
-  fill('green');
+  fallt++
+  if(fallt > 0.1*60){
+    fallv++;
+    if(fallv > 7) fallv = 0;
+    fallt = 0;
+  }
+  image(fall[fallv], 0, 0, 50, 50);
   ellipse(0, 0, 80, 80);
   pop();
 
