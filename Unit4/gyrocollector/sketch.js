@@ -5,16 +5,12 @@ var y = 0;
 var z = 0;
 var xPosition = 0;
 var yPosition = 0;
-var fall = [];
+let fall = [];
 var fallt = 0;
 var fallv = 0;
 // var bunnyImage;
 var cars = [];
 var frogPos;
-
-function preload(){
-  for(let i = 0; i < 8; i++) fall[i] = loadImage("assets/fall (" + (i+1) +").gif");
-}
 
 function setup() {
 
@@ -25,7 +21,7 @@ function setup() {
   beta = 0;
   gamma = 0;
 
-
+  for(let i = 0; i < 8; i++) fall[i] = loadImage("assets/fall (" + (i+1) +").gif");
   // spawn a bunch of cars
   for (var i = 0; i < 40; i++) {
     cars.push(new Car());
@@ -39,11 +35,13 @@ function setup() {
   imageMode(CENTER);
   rectMode(CENTER);
   noStroke();
+  
 }
 
 function draw() {
 
   background('#c6f5ff'); // light blue
+  image(fall[0], width/2, height/2, 50, 50);
 
   // the map command !!!!
   // takes your variable and maps it from range 1 to range 2
