@@ -8,9 +8,14 @@ var yPosition = 0;
 let fall = [];
 var fallt = 0;
 var fallv = 0;
+let fall1;
 // var bunnyImage;
 var cars = [];
 var frogPos;
+
+function preload(){
+  fall1 = loadImage("assets/maoi.png");
+}
 
 function setup() {
 
@@ -21,7 +26,7 @@ function setup() {
   beta = 0;
   gamma = 0;
 
-  for(let i = 0; i < 8; i++) fall[i] = loadImage("assets/fall (" + (i+1) +").gif");
+
   // spawn a bunch of cars
   for (var i = 0; i < 40; i++) {
     cars.push(new Car());
@@ -41,7 +46,7 @@ function setup() {
 function draw() {
 
   background('#c6f5ff'); // light blue
-  image(fall[0], width/2, height/2, 50, 50);
+
 
   // the map command !!!!
   // takes your variable and maps it from range 1 to range 2
@@ -57,13 +62,9 @@ function draw() {
 
   // draw the FROG
   // image(bunnyImage, 0, 0, 500, 500);
-  fallt++
-  if(fallt > 0.1*60){
-    fallv++;
-    if(fallv > 7) fallv = 0;
-    fallt = 0;
-  }
-  image(fall[fallv], 0, 0, 50, 50);
+
+  image(fall1, 0, 0, 150, 150);
+  
   pop();
 
 
