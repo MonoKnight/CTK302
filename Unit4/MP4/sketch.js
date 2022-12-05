@@ -19,7 +19,7 @@ let [isKicking, nKV, nKT, nKL, nKR, eKV, eKTimer, kExplosion] = [false, 0, 0, []
 //neco intro
 let [nITimer, nIV, nIntro] = [0, 0, []];
 //assets
-let [goombudI, bgImage, bSV, bSV2, bV, fonts, keys, wBV] = [0, [], 0, 960, 1, [], [], 9];
+let [goombudI, bgImage, bSV, bSV2, bV, fonts, keys, wBV, songs, necoNoises, hasPlayed] = [0, [], 0, 960, 1, [], [], 9, [], [], []];
 //gamestate variables
 let [gameState, isLoaded, bState] = [0, false, [false]];
 //effects variables
@@ -56,11 +56,11 @@ function preload(){
   bgImage[2] = loadImage("Assets/Backgrounds/Volcano.png");
   bgImage[3] = loadImage("Assets/Backgrounds/Moon.jpg");
   bgImage[4] = loadImage("Assets/Backgrounds/underwater.jpg");
-  bgImage[5] = loadImage("Assets/Backgrounds/cold.png")
-  bgImage[6] = loadImage("Assets/Backgrounds/hot.png")
-  bgImage[7] = loadImage("Assets/Backgrounds/sunny.png")
-  bgImage[8] = loadImage("Assets/Backgrounds/rain.jpg")
-  bgImage[9] = loadImage("Assets/Backgrounds/Question.jpg")
+  bgImage[5] = loadImage("Assets/Backgrounds/cold.png");
+  bgImage[6] = loadImage("Assets/Backgrounds/hot.png");
+  bgImage[7] = loadImage("Assets/Backgrounds/sunny.png");
+  bgImage[8] = loadImage("Assets/Backgrounds/rain.jpg");
+  bgImage[9] = loadImage("Assets/Backgrounds/Question.jpg");
   fonts[0] = loadFont("Assets/Fonts/NewRodin.otf");
   fonts[1] = loadFont("Assets/Fonts/NewRodinB.otf");
   keys[0] = loadImage("Assets/Keys/computer_key_W_T.png");
@@ -73,6 +73,20 @@ function preload(){
   keys[7] = loadImage("Assets/Keys/computer_key_I_T.png");
   keys[8] = loadImage("Assets/Keys/computer_key_R_T.png");
   keys[9] = loadImage("Assets/Keys/computer_key_Esc_T.png");
+  songs[0] = loadSound("Assets/Music/Mountain.mp3");
+  songs[1] = loadSound("Assets/Music/MainLevel.mp3");
+  songs[2] = loadSound("Assets/Music/Volcano.mp3");
+  songs[3] = loadSound("Assets/Music/Moon.mp3");
+  songs[4] = loadSound("Assets/Music/Water.mp3");
+  songs[5] = loadSound("Assets/Music/Snow.mp3");
+  songs[6] = loadSound("Assets/Music/Sun.mp3");
+  songs[7] = loadSound("Assets/Music/Sun.mp3");
+  songs[8] = loadSound("Assets/Music/Rain.mp3");
+  necoNoises[0] = loadSound("Assets/SoundEffects/dENoise.mp3");
+  necoNoises[1] = loadSound("Assets/SoundEffects/Jump.wav");
+  necoNoises[2] = loadSound("Assets/SoundEffects/Punch.wav");
+  necoNoises[3] = loadSound("Assets/SoundEffects/Swipe.wav");
+  necoNoises[4] = loadSound("Assets/SoundEffects/Kick.wav");
 }
 
 function setup() {
@@ -152,6 +166,7 @@ function draw() {
       damageCalc();
       spriteInvisible();
       spriteVisible();
+      music();
       break;
     case 3://pause screen
       spritePostion();
@@ -161,6 +176,7 @@ function draw() {
       spriteVisible();
       inGameText();
       controlScreen();
+      if (songs[bV].isPlaying()) songs[bV].pause();
       break;
   }
 }
@@ -433,7 +449,7 @@ function gameReset(){
 //function for basic player movement
 function playermove(){
   //check is player is grounded
-  if(physicsball.collides(floor)) nIsGrounded = true, nDoubleJump = true;
+  if(physicsball.collides(floor)) nIsGrounded = true, nDoubleJump = true, hasPlayed[0] = false;
   //is jumping
   if(nIsJumping == true) {
     jTimer++ 
@@ -586,6 +602,7 @@ function playerNeutral(){
 
 //function for player jumping animation
 function playerJump(){
+  if(!necoNoises[1].isPlaying() && hasPlayed[0] == false) necoNoises[1].play(), hasPlayed[0] = true;
   nJTimer++ ;
   if(nJTimer >= 0.1*60){
     nJV++;
@@ -610,6 +627,7 @@ function playerCrawl(){
 
 //function for punch animation
 function playerPunch(){
+  if(!necoNoises[2].isPlaying() && hasPlayed[1] == false) necoNoises[2].play(), hasPlayed[1] = true;
   nPTimer++;
   if(nPTimer >= 0.1*60){
     nPV++;
@@ -618,7 +636,7 @@ function playerPunch(){
   if (nPDir == false) image(nPunchL[nPV], physicsball.x, physicsball.y - 5, 100, 100);
   else if (nPDir == true) image(nPunchR[nPV], physicsball.x, physicsball.y - 5, 100, 100);
   if(nPV > 2) punchExplosion();
-  if(nPV >= 6) isPunching = false, nPV = 0, ePV = 0;
+  if(nPV >= 6) isPunching = false, hasPlayed[1] = false, nPV = 0, ePV = 0;
 }
 
 //function for punch explosion animation
@@ -628,12 +646,13 @@ function punchExplosion(){
     ePV++;
     ePTimer = 0;
   }
-  
+  if(!necoNoises[0].isPlaying()) necoNoises[0].play();
   if (nPDir == false) image(explosion[ePV], physicsball.x -60, physicsball.y - 25, 100, 100);
   else if (nPDir == true) image(explosion[ePV], physicsball.x + 60, physicsball.y - 25, 100, 100);
 }
 
 function swipeAttack(){
+  if(!necoNoises[3].isPlaying() && hasPlayed[1] == false) necoNoises[3].play(), hasPlayed[1] = false;
   nST++;
   if(nST > 0.1 * 60){
     nSV++;
@@ -641,10 +660,11 @@ function swipeAttack(){
   }
   if (nPDir == false) image(nSL[nSV], physicsball.x, physicsball.y - 5, 200, 100);
   else if (nPDir == true) image(nSR[nSV], physicsball.x, physicsball.y - 5, 200, 100);
-  if(nSV >= 5) isSwiping = false, nSV = 0; 
+  if(nSV >= 5) isSwiping = false, hasPlayed[1] = false, nSV = 0; 
 }
 
 function kickAttack(){
+  if(!necoNoises[4].isPlaying() && hasPlayed[1] == false) necoNoises[4].play(), hasPlayed[1] == true;
   nKT++;
   if(nKT > 0.1 * 60){
     nKV++;
@@ -653,7 +673,7 @@ function kickAttack(){
   if (nPDir == false) image(nKL[nKV], physicsball.x, physicsball.y - 5, 100, 100);
   else if (nPDir == true) image(nKR[nKV], physicsball.x, physicsball.y - 5, 100, 100);
   if(nKV > 2) kickExplosion();
-  if(nKV >= 5) isKicking = false, nKV = 0, eKV = 0; 
+  if(nKV >= 5) isKicking = false, nKV = 0, eKV = 0, hasPlayed[1] = false; 
 }
 
 function kickExplosion(){
@@ -662,7 +682,7 @@ function kickExplosion(){
     eKV++;
     eKTimer = 0;
   }
-  
+  if(!necoNoises[0].isPlaying()) necoNoises[0].play();
   if (nPDir == false) image(kExplosion[eKV], physicsball.x -70, physicsball.y + 15, 200, 200);
   else if (nPDir == true) image(kExplosion[eKV], physicsball.x + 70, physicsball.y + 15, 200, 200);
 }
@@ -850,6 +870,11 @@ function buttonCreate(bSV, bT, bTS, bTY, bX, bY, bW, bH, bC, bC2) {
   text(bT, bX, bY + bTY);
 }
 
+function music(){
+  if(!songs[bV].isPlaying()) songs[bV].play();
+}
+
+
 //class for creating snow
 class SnowFunction{
   constructor(){
@@ -954,4 +979,6 @@ function cloud(cloudX, cloudY, cloudMultiplier){
   ellipse(cloudX-(70  * cloudMultiplier) , cloudY+(70 * cloudMultiplier), cloudsize[1] * cloudMultiplier, cloudsize[4] * cloudMultiplier);
   ellipse(cloudX+(70 * cloudMultiplier), cloudY+(50 * cloudMultiplier), cloudsize[2] * cloudMultiplier, cloudsize[5] * cloudMultiplier);
 }
+
+
 
