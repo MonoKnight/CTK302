@@ -1,6 +1,5 @@
 //sprites
-let floor, lwall, rwall, ceiling, c, ball, box, square, punchhitboxL, punchhitboxR, goombud, sHBL, sHBR;
-let [goombuds, number] = [[], 0];
+let floor, lwall, rwall, ceiling, c, ball, box, square, punchhitboxL, punchhitboxR, goombud, sHBL, sHBR, kHBL, kHBR;
 //neco sprites
 let nHurtBox, physicsball;
 //goombud var;
@@ -15,6 +14,8 @@ let [nCT, nCV, nCrawlR, nCrawlL] = [0, 0, [], []];
 let [isPunching, nPDir, nPV, nPTimer, nPunchL, nPunchR, ePV, ePTimer, explosion] = [false, false, 0, 0, [], [], 0, 0, []];
 //neco swipe attack
 let [isSwiping, nSV, nST, nSL, nSR] = [false, 0, 0, [], []];
+//neco kick attack
+let [isKicking, nKV, nKT, nKL, nKR, eKV, eKTimer, kExplosion] = [false, 0, 0, [], [], 0, 0, []];
 //neco intro
 let [nITimer, nIV, nIntro] = [0, 0, []];
 //assets
@@ -23,6 +24,10 @@ let [goombudI, bgImage, bSV, bSV2, bV, fonts, keys, wBV] = [0, [], 0, 960, 1, []
 let [gameState, isLoaded, bState] = [0, false, [false]];
 //effects variables
 let [snow, flames, fT, waterSpeed, bubbles, raindrop] = [[], [], 0, 0, [], []];
+//cloud variables
+let [cloudX, cloudY, cloudMultiplier, cloudsize, cloudtranslate] = [0, 0, 1, [], []];
+//weather variables
+let weather, state = 0, coldImg, hotImg, deafaultImg, wV = 0;
 
 
 function preload(){
@@ -42,6 +47,9 @@ function preload(){
   for(let i = 0; i < 9; i++) nIntro[i] = loadImage("Assets/NecoArc/Intro/Intro (" + (i+1) +").gif");
   for(let i = 0; i < 6; i++) nSR[i] = loadImage("Assets/NecoArc/Attacks/Swipe/NecoSwipeR (" + (i+1) +").gif");
   for(let i = 0; i < 6; i++) nSL[i] = loadImage("Assets/NecoArc/Attacks/Swipe/NecoSwipeL (" + (i+1) +").gif");
+  for(let i = 0; i < 7; i++) nKR[i] = loadImage("Assets/NecoArc/Attacks/Kick/NecoKickR (" + (i+1) +").gif");
+  for(let i = 0; i < 7; i++) nKL[i] = loadImage("Assets/NecoArc/Attacks/Kick/NecoKickL (" + (i+1) +").gif");
+  for(let i = 0; i < 9; i++) kExplosion[i] = loadImage("Assets/Explosion/MExplosion (" + (i+1) +").gif");
   goombudI = loadImage("Assets/GoombudRight.png");
   bgImage[0] = loadImage("Assets/Backgrounds/SMW.png");
   bgImage[1] = loadImage("Assets/Backgrounds/smwforest.png");
@@ -78,9 +86,52 @@ function setup() {
   world.gravity.y = 30;
   //square = new Sprite(300, 30, 40, 40, 'kinetic');
   for(let i = 0; i < 40; i++) bubbles.push(new Bubble());
+  for (let i = 0; i < 6; i++) {
+    cloudtranslate[i] = random(-400, 1100);
+  }
+  for (let i = 0; i < 3; i++ ) {
+    cloudsize[i + 3] = random(100, 150);
+    cloudsize[i] = random(200, 250);
+  }
+  let myTotalString = "https://api.openweathermap.org/data/2.5/weather?lat=40.514&lon=-88.991&appid=23855a3dd622ce6eb6c2222ffd51c832&units=imperial";
+  loadJSON(myTotalString, gotData); 
+}
+
+function gotData(data) {
+  weather = data;
 }
 
 function draw() {
+  switch (state) {
+      
+    case 0:
+      if (weather) {
+        state = 1;
+      }
+      break;
+
+    case 1:
+      if (weather.weather[0].id >= 200 &&  weather.weather[0].id < 600) {
+        wV = 8;
+        // set to Thunderstorm effect
+      }
+
+      if (weather.weather[0].id >= 600 &&  weather.weather[0].id < 700) {
+        // set to Snow effect
+        wV = 5;
+      }
+
+      if (weather.weather[0].id >= 700 &&  weather.weather[0].id < 900) {
+        if (weather.weather[0].id == 800) {
+          // set to clear effect
+          wV = 6;
+        }else {
+          // set to Cloudy effect  
+          wV = 7;
+        }
+      }
+      break;
+  }
   switch(gameState){
     case 0://Start screen
       if(isLoaded == true) spritePostion(), spriteInvisible();
@@ -97,6 +148,7 @@ function draw() {
       playermove();
       spritePostion();
       levelModifiers();
+      inGameText();
       damageCalc();
       spriteInvisible();
       spriteVisible();
@@ -179,7 +231,7 @@ function inGame(){
   inGameBackground();
   inGameText();
   if(kb.presses("Q")) gameState = 3;
-  if(kb.presses("Escape")) gameState = 0;
+  if(kb.presses("Escape")) gameState = 0, gameReset();
   if(kb.presses("r")){
     goombuddamage = 0;
     spriteMove();
@@ -196,10 +248,11 @@ function inGameText(){
   push();
   textAlign(LEFT);
   strokeWeight(2);
-  fill("white");
+  fill(255, 255 - 2 * goombuddamage, 255 - 2 * goombuddamage);
   stroke("black");
   textSize(20);
   text("Goombud Damage: " + goombuddamage + "%", 15, 40);
+  fill("white");
   textAlign(RIGHT);
   text("Press Q to Pause", width - 15, 40); 
   pop();
@@ -211,7 +264,7 @@ function levelModifiers(){
   switch(bV){
     case 0:
       break;
-    case 2:
+    case 2://volcano
       fT++;
       if(fT > 0.05 * 60){
         for(let i = 0; i < 1; i ++) {
@@ -226,10 +279,10 @@ function levelModifiers(){
       }
 
       break;
-    case 3:
+    case 3://moon
       world.gravity.y = 5;
       break;
-    case 4:
+    case 4://underwater
       world.gravity.y = 5;
       waterSpeed = 0.5;
       physicsball.vel.x = physicsball.vel.x * 0.5;
@@ -243,17 +296,48 @@ function levelModifiers(){
       rect(width/2, height/2, width, height);
       pop();
       break;
-    case 5:
+    case 5: //snow
       snow.forEach(function (SnowFunction){
         SnowFunction.display();
         SnowFunction.move();
       });
       break;
-    case 8:
+    case 7://cloudy
+      push();
+      for (let i = 0; i < 6; i++) {
+        cloudtranslate[i] += -1.5;
+        if (cloudtranslate[i] < -800) cloudtranslate[i] = 700;
+      }
+      fill("white");
+      cloud(cloudX + 50 + cloudtranslate[0], cloudY + 50, cloudMultiplier * 1.25);
+      cloud(cloudX + 200 + cloudtranslate[1], cloudY + 50, cloudMultiplier * 0.75);
+      cloud(cloudX + 350 + cloudtranslate[2], cloudY + 50, cloudMultiplier);
+      cloud(cloudX + 500 + cloudtranslate[3], cloudY + 50, cloudMultiplier * 1.25);
+      cloud(cloudX + 650 + cloudtranslate[4], cloudY + 50, cloudMultiplier * 0.75);
+      cloud(cloudX + 800 + cloudtranslate[5], cloudY + 50, cloudMultiplier);
+      pop();
+      break;
+    case 8: //storm
       raindrop.forEach(function (rainDropfunction){
         rainDropfunction.display();
         rainDropfunction.move();
       });
+      push();
+      for (let i = 0; i < 6; i++) {
+        cloudtranslate[i] += -4;
+        if (cloudtranslate[i] < -1000) cloudtranslate[i] = 1000;
+      }
+      fill("#494e57");
+      cloud(cloudX + 50 + cloudtranslate[0], cloudY + 0, cloudMultiplier * 1.75);
+      cloud(cloudX + 200 + cloudtranslate[1], cloudY + 0, cloudMultiplier * 1.5);
+      cloud(cloudX + 350 + cloudtranslate[2], cloudY + 0, cloudMultiplier * 1.75);
+      cloud(cloudX + 500 + cloudtranslate[3], cloudY + 0, cloudMultiplier * 1.5);
+      cloud(cloudX + 650 + cloudtranslate[4], cloudY + 0, cloudMultiplier * 1.75);
+      cloud(cloudX + 800 + cloudtranslate[5], cloudY + 0, cloudMultiplier * 1.5);
+      pop();
+      break;
+    case 9:
+      bV = wV;
       break;
   }
 }
@@ -290,7 +374,7 @@ function controlScreen(){
   image(keys[5], width/2 + 100, 145, 40, 40);
   text("Swipe", width/2 + 300, 200);
   image(keys[6], width/2 + 100, 195, 40, 40);
-  text("Long Punch", width/2 + 300, 250);
+  text("Kick", width/2 + 300, 250);
   image(keys[7], width/2 + 100, 245, 40, 40);
   text("Reset", width/2 + 300, 300);
   image(keys[8], width/2 + 100, 295, 40, 40);
@@ -343,6 +427,7 @@ function gameReset(){
   for(let i = 0; i < bState.length; i++) bState[i] = false;
   bV = 1;
   goombuddamage = 0;
+  floorColorChange("green");
 }
 
 //function for basic player movement
@@ -376,75 +461,77 @@ function playermove(){
   else if(nIsJumping == true) nVar = 9;
   else nVar = 0;
 
-  if(isSwiping == false && isPunching == false && kb.pressing('left')) nPDir = false; 
-  else if(isSwiping == false && isPunching == false && kb.pressing('right')) nPDir = true; 
+  if(isSwiping == false && isPunching == false && isKicking == false && kb.pressing('left')) nPDir = false; 
+  else if(isSwiping == false && isPunching == false && isKicking == false && kb.pressing('right')) nPDir = true; 
   if(kb.pressing('p')) isPunching = true;
   else if(kb.pressing('o')) isSwiping = true;
+  else if(kb.pressing('i')) isKicking = true;
   if(isPunching == true) playerPunch();
   else if(isSwiping == true) swipeAttack();
+  else if(isKicking == true) kickAttack();
 
   switch(nVar){
     case 0://Neutral
       physicsball.vel.x = 0;
-      if(nIsJumping == false && isPunching == false && isSwiping == false) playerNeutral();
+      if(nIsJumping == false && isPunching == false && isSwiping == false && isKicking == false) playerNeutral();
       break;
     case 1://Walk Left
       physicsball.vel.x = -5;
       nDir = false;
-      if(nIsJumping == false && isPunching == false && isSwiping == false) playerWalk();
+      if(nIsJumping == false && isPunching == false && isSwiping == false && isKicking == false) playerWalk();
       break;
     case 2://Walk Right
       physicsball.vel.x = 5;
       nDir = true;
-      if(nIsJumping == false && isPunching == false && isSwiping == false) playerWalk();
+      if(nIsJumping == false && isPunching == false && isSwiping == false && isKicking == false) playerWalk();
       break;
     case 3://Run Left
       physicsball.vel.x = -10;
       nDir = false;
-      if(nIsJumping == false && isPunching == false && isSwiping == false) playerRun();
+      if(nIsJumping == false && isPunching == false && isSwiping == false && isKicking == false) playerRun();
       break;
     case 4://Run Right
       physicsball.vel.x = 10;
       nDir = true;
-      if(nIsJumping == false && isPunching == false && isSwiping == false) playerRun();
+      if(nIsJumping == false && isPunching == false && isSwiping == false && isKicking == false) playerRun();
       break;
     case 5://Jump Left
       physicsball.vel.x = -5;
       nDir = false;
-      if(isPunching == false && isSwiping == false) playerJump();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerJump();
       break;
     case 6://Jump Right
       physicsball.vel.x = 5;
       nDir = true;
-      if(isPunching == false && isSwiping == false) playerJump();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerJump();
       break;
     case 7://Run Jump Left
       physicsball.vel.x = -10;
       nDir = false;
-      if(isPunching == false && isSwiping == false) playerJump();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerJump();
       break;
     case 8://Run Jump Right
       physicsball.vel.x = 10;
       nDir = true;
-      if(isPunching == false && isSwiping == false) playerJump();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerJump();
       break;
     case 9://Jump Neutral
       physicsball.vel.x = 0;
-      if(isPunching == false && isSwiping == false) playerJump();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerJump();
       break;
     case 10://Crawl Left
       physicsball.vel.x = -2.5;
       nDir = false;
-      if(isPunching == false && isSwiping == false) playerCrawl();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerCrawl();
       break;
     case 11://Crawl Right
       physicsball.vel.x = 2.5;
       nDir = true;
-      if(isPunching == false && isSwiping == false) playerCrawl();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerCrawl();
       break;
     case 12://Crawl Neutral
       physicsball.vel.x = 0;
-      if(isPunching == false && isSwiping == false) playerCrawl();
+      if(isPunching == false && isSwiping == false && isKicking == false) playerCrawl();
       break;
   }
 
@@ -557,13 +644,36 @@ function swipeAttack(){
   if(nSV >= 5) isSwiping = false, nSV = 0; 
 }
 
+function kickAttack(){
+  nKT++;
+  if(nKT > 0.1 * 60){
+    nKV++;
+    nKT = 0;
+  }
+  if (nPDir == false) image(nKL[nKV], physicsball.x, physicsball.y - 5, 100, 100);
+  else if (nPDir == true) image(nKR[nKV], physicsball.x, physicsball.y - 5, 100, 100);
+  if(nKV > 2) kickExplosion();
+  if(nKV >= 5) isKicking = false, nKV = 0, eKV = 0; 
+}
+
+function kickExplosion(){
+  eKTimer++;
+  if(eKTimer > 0.035*60){
+    eKV++;
+    eKTimer = 0;
+  }
+  
+  if (nPDir == false) image(kExplosion[eKV], physicsball.x -70, physicsball.y + 15, 200, 200);
+  else if (nPDir == true) image(kExplosion[eKV], physicsball.x + 70, physicsball.y + 15, 200, 200);
+}
+
 //function to create walls
 function floorcreate(){
   floor = new Sprite(width/2, height - 5, width * 1.5, 10, 'static');
   //lwall = new Sprite(5, height/2, 10, height * 1.5, 'static');
   //rwall = new Sprite(width - 5, height/2, 10, height * 1.5, 'static');
   ceiling = new Sprite(width/2, 5, width * 1.5, 10, 'static');
-  c = color(0, 255, 0);
+  c = color("green");
   floor.color = c;
   //lwall.color = c;
   //rwall.color = c;
@@ -590,10 +700,14 @@ function spriteCreate(){
   punchhitboxL.color = c;
   punchhitboxR = new Sprite(physicsball.x + 60, physicsball.y - 25, 60, 'none');
   punchhitboxR.color = c;
-  nSwipeL = new Sprite(physicsball.x - 50, physicsball.y - 10, 75, 'none')
+  nSwipeL = new Sprite(physicsball.x - 50, physicsball.y - 10, 75, 'none');
   nSwipeL.color = c;
-  nSwipeR = new Sprite(physicsball.x + 50, physicsball.y - 10, 75, 'none')
+  nSwipeR = new Sprite(physicsball.x + 50, physicsball.y - 10, 75, 'none');
   nSwipeR.color = c;
+  nKickL = new Sprite(physicsball.x - 70, physicsball.y + 45, 75, 'none');
+  nKickL.color = c;
+  nKickR = new Sprite(physicsball.x + 70, physicsball.y + 45, 75, 'none');
+  nKickR.color = c;
   nHurtBox = new Sprite(physicsball.x, physicsball.y, 40, 90, 'none');
   c = color(255, 0, 0, 100);
   nHurtBox.color = c;
@@ -608,6 +722,8 @@ function spriteInvisible(){
   punchhitboxR.visible = false;
   nSwipeL.visible = false;
   nSwipeR.visible = false;
+  nKickL.visible = false;
+  nKickR.visible = false;
   floor.visible = false;
   ceiling.visible = false;
 }
@@ -639,6 +755,10 @@ function spritePostion(){
   nSwipeL.y = physicsball.y - 10;
   nSwipeR.x = physicsball.x + 50;
   nSwipeR.y = physicsball.y - 10;
+  nKickL.x = physicsball.x - 70;
+  nKickL.y = physicsball.y + 45;
+  nKickR.x = physicsball.x + 70;
+  nKickR.y = physicsball.y + 45;
 }
 
 //function that moves the sprites back to default position
@@ -659,7 +779,7 @@ function damageCalc(){
     if(dist(punchhitboxL.x, punchhitboxL.y, goombud.x, goombud.y) < ((goombud.d/2) + (punchhitboxL.d/2)) && gCooldown == false){
       goombud.vel.x = (-6 + (-1 * (goombuddamage * 0.1))) * waterSpeed;
       goombud.vel.y = (-9 + (-1.5 * (goombuddamage * 0.1))) * waterSpeed;
-      goombuddamage += 5;
+      goombuddamage += 7.5;
       gCooldown = true;
     }
 
@@ -668,14 +788,14 @@ function damageCalc(){
     if(dist(punchhitboxR.x, punchhitboxR.y, goombud.x, goombud.y) < ((goombud.d/2) + (punchhitboxR.d/2)) && gCooldown == false) {
       goombud.vel.x = (6 + (1 * (goombuddamage * 0.1))) * waterSpeed;
       goombud.vel.y = (-9 + (-1.5 * (goombuddamage * 0.1))) * waterSpeed;
-      goombuddamage += 5;
+      goombuddamage += 7.5;
       gCooldown = true;
     }
   }
   if(isSwiping == true && nPDir == false && nSV > 1) {
     if(dist(nSwipeL.x, nSwipeL.y, goombud.x, goombud.y) < ((goombud.d/2) + (nSwipeL.d/2)) && gCooldown == false){
-      goombud.vel.x = (-10 + (-1 * (goombuddamage * 0.1))) * waterSpeed;
-      goombud.vel.y = (-3 + (-1.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombud.vel.x = (-10 + (-1.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombud.vel.y = (-3 + (-0.5 * (goombuddamage * 0.1))) * waterSpeed;
       goombuddamage += 10;
       gCooldown = true;
     }
@@ -683,9 +803,26 @@ function damageCalc(){
   }
   else if(isSwiping == true && nPDir == true && nSV > 1) {
     if(dist(nSwipeR.x, nSwipeR.y, goombud.x, goombud.y) < ((goombud.d/2) + (nSwipeR.d/2)) && gCooldown == false) {
-      goombud.vel.x = (10 + (-1 * (goombuddamage * 0.1))) * waterSpeed;
-      goombud.vel.y = (-3 + (-1.5 * (goombuddamage * 0.1))) * waterSpeed;
-      goombuddamage += 5;
+      goombud.vel.x = (10 + (1.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombud.vel.y = (-3 + (-0.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombuddamage += 10;
+      gCooldown = true;
+    }
+  }
+  if(isKicking == true && nPDir == false && nKV > 2) {
+    if(dist(nKickL.x, nKickL.y, goombud.x, goombud.y) < ((goombud.d/2) + (nKickL.d/2)) && gCooldown == false){
+      goombud.vel.x = (-7.5 + (-1.25 * (goombuddamage * 0.1))) * waterSpeed;
+      goombud.vel.y = (2.5 + (-0.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombuddamage += 15;
+      gCooldown = true;
+    }
+
+  }
+  else if(isKicking == true && nPDir == true && nKV > 2) {
+    if(dist(nKickR.x, nKickR.y, goombud.x, goombud.y) < ((goombud.d/2) + (nKickR.d/2)) && gCooldown == false) {
+      goombud.vel.x = (7.5 + (1.25 * (goombuddamage * 0.1))) * waterSpeed;
+      goombud.vel.y = (-2.5 + (-0.5 * (goombuddamage * 0.1))) * waterSpeed;
+      goombuddamage += 15;
       gCooldown = true;
     }
   }
@@ -809,5 +946,12 @@ class rainDropfunction{
       this.gravity = 0;
     }
   }
+}
+
+function cloud(cloudX, cloudY, cloudMultiplier){
+  noStroke();
+  ellipse(cloudX, cloudY, cloudsize[0] * cloudMultiplier, cloudsize[3] * cloudMultiplier);
+  ellipse(cloudX-(70  * cloudMultiplier) , cloudY+(70 * cloudMultiplier), cloudsize[1] * cloudMultiplier, cloudsize[4] * cloudMultiplier);
+  ellipse(cloudX+(70 * cloudMultiplier), cloudY+(50 * cloudMultiplier), cloudsize[2] * cloudMultiplier, cloudsize[5] * cloudMultiplier);
 }
 
