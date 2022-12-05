@@ -19,7 +19,7 @@ let [isKicking, nKV, nKT, nKL, nKR, eKV, eKTimer, kExplosion] = [false, 0, 0, []
 //neco intro
 let [nITimer, nIV, nIntro] = [0, 0, []];
 //assets
-let [goombudI, bgImage, bSV, bSV2, bV, fonts, keys, wBV, songs, necoNoises, hasPlayed] = [0, [], 0, 960, 1, [], [], 9, [], [], []];
+let [goombudI, bgImage, bSV, bSV2, bV, fonts, keys, wBV, songs, necoNoises, hasPlayed, x] = [0, [], 0, 960, 1, [], [], 9, [], [], [], 0];
 //gamestate variables
 let [gameState, isLoaded, bState] = [0, false, [false]];
 //effects variables
@@ -238,7 +238,13 @@ function mainMenu(){
   pop();
   textFont(fonts[0]);
   buttonCreate(0, "Start Game", 40, 10, width/2, height/2 - 100, 300, 100, "#7f11ed", "#550b9e");
-  buttonCreate(1, "Credits", 40, 10, width/2, height/2 + 50, 300, 100, "#7f11ed", "#550b9e");
+  //buttonCreate(1, "Credits", 40, 10, width/2, height/2 + 50, 300, 100, "#7f11ed", "#550b9e");
+  push();
+  translate(width/2, 550);
+  rotate(x);
+  image(goombudI, 0, 0, 200, 200);
+  x++;
+  pop();
 }
 
 //function for in game
