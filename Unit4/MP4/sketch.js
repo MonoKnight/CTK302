@@ -82,6 +82,7 @@ function preload(){
   songs[6] = loadSound("Assets/Music/Sun.mp3");
   songs[7] = loadSound("Assets/Music/Sun.mp3");
   songs[8] = loadSound("Assets/Music/Rain.mp3");
+  songs[9] = loadSound("Assets/Music/Sun.mp3");
   necoNoises[0] = loadSound("Assets/SoundEffects/dENoise.mp3");
   necoNoises[1] = loadSound("Assets/SoundEffects/Jump.wav");
   necoNoises[2] = loadSound("Assets/SoundEffects/Punch.wav");
@@ -194,8 +195,8 @@ function mouseReleased(){
     case 1://start anim
       break;
     case 2://in game
-      gameReset();
-      gameState = 0;
+      //gameReset();
+      //gameState = 0;
       break;
     case 3://pause screen
       break;
@@ -877,6 +878,8 @@ function buttonCreate(bSV, bT, bTS, bTY, bX, bY, bW, bH, bC, bC2) {
 }
 
 function music(){
+  //if(!songs[bV].isPlaying() && bV == 9) songs[wBV].play();
+  //print(bV);
   if(!songs[bV].isPlaying()) songs[bV].play();
 }
 
