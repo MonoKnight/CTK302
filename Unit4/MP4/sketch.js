@@ -59,7 +59,7 @@ function preload(){
   bgImage[5] = loadImage("Assets/Backgrounds/cold.png");
   bgImage[6] = loadImage("Assets/Backgrounds/hot.png");
   bgImage[7] = loadImage("Assets/Backgrounds/sunny.png");
-  bgImage[8] = loadImage("Assets/Backgrounds/rain.jpg");
+  bgImage[8] = loadImage("Assets/Backgrounds/rain.png");
   bgImage[9] = loadImage("Assets/Backgrounds/Question.jpg");
   fonts[0] = loadFont("Assets/Fonts/NewRodin.otf");
   fonts[1] = loadFont("Assets/Fonts/NewRodinB.otf");
