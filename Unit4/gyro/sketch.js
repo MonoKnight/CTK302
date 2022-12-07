@@ -28,9 +28,9 @@ function draw() {
   fill('white');
   textFont(fonts);
   noStroke();
-  textSize(100);
+  textSize(50);
   textAlign(CENTER);
-  text("Maoi Simulator", width / 2, 200);
+  text("Maoi\nSimulator", width / 2, 200);
 
   // the map command !!!!
   // takes your variable and maps it from range 1 to range 2
