@@ -236,6 +236,8 @@ function mainMenu(){
   strokeWeight(5);
   stroke("black");
   text("Beat the Goombud\nSimulator", width/2, 100);
+  textSize(25);
+  text("By Brennen, Hamza, and Gabe", width/2, 750);
   pop();
   textFont(fonts[0]);
   buttonCreate(0, "Start Game", 40, 10, width/2, height/2 - 100, 300, 100, "#7f11ed", "#550b9e");
@@ -246,6 +248,7 @@ function mainMenu(){
   image(goombudI, 0, 0, 200, 200);
   x++;
   pop();
+  for(let i = 0; i < songs.length; i++) if(songs[i].isPlaying())songs[i].stop();
 }
 
 //function for in game
