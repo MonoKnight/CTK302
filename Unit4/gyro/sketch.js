@@ -31,6 +31,7 @@ function draw() {
   textSize(50);
   textAlign(CENTER);
   text("Maoi\nSimulator", width / 2, 200);
+  text()
 
   // the map command !!!!
   // takes your variable and maps it from range 1 to range 2
