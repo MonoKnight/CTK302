@@ -101,8 +101,8 @@ function setup() {
   hancockImg = loadImage("assets/hancock.jpg");
   turnerImg = loadImage("assets/turner.jpg");
 
-   places.push(new Place(40.507, -88.990, "SUCCESSSSS!!!!!!", .02, susImg, s3)); // new Place object, for CVA room 17
-  places.push(new Place(40.47862, -88.9682, "Rose's House", 0.06, bridgeImg, s5));
+    places.push(new Place(40.507, -88.990, "SUCCESSSSS!!!!!!", .02, susImg, s3)); // new Place object, for CVA room 17
+    places.push(new Place(40.47862, -88.9682, "Rose's House", 0.06, bridgeImg, s5));
     places.push(new Place(40.50984400, -88.98906030, "JH 64", .02, susImg, s2)); // new Place object, for JH 64
     places.push(new Place(40.510824736433904, -88.99134151266699, "ISU College Bridge", .06, bridgeImg, s12)); // new Place object, for ISU bridge over College Ave
 
@@ -141,7 +141,7 @@ function draw() {
       background(255);
       fill("brown");
       text("figuring out your position", 10, 10, 400, 500);
-      intervalCurrentPosition(positionPing, 5000);
+      intervalCurrentPosition(positionPing, 1000);
       state = 2;
       break;
 
@@ -154,8 +154,8 @@ function positionPing(position) {
   textSize(24);
   num++;
   background(255);
-  text("lat: " + position.latitude.toFixed(8), 10, 340);
-  text("long: " + position.longitude.toFixed(8), 10, 390);
+  text("lat: " + position.latitude.toFixed(10), 10, 340);
+  text("long: " + position.longitude.toFixed(10), 10, 390);
   text("number of updates: " + num, 10, 440);
   distance = calcGeoDistance(
     locationData.latitude,
