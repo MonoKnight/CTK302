@@ -42,7 +42,8 @@ let randomCheck2 = [
   [false, false, false, false, false],
   [false, false, false, false, false, false]
 ];
-
+let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
+let batteryCheckArray = [false, false, false, false, false]
 //images
 let [images] = [[]];
 //loading gif Variables
@@ -56,6 +57,8 @@ let [randomItem, itemBool, itemCheckBool, randomLocation1, randomLocation2, rand
 //Keypad Variables
 let [keypadEntry] = [[-1, -1, -1, -1]];
 let [move] = [0]
+//battery Variables
+let [batTimer, batVar, batMap, batMaxTime, batCheck, batNumb, batFoundTimer, batFoundBool, batOrWrong] = [0, 0, 0, 0, false, 0, 0, false, false];
 
 let bState = [false];
 
@@ -70,6 +73,8 @@ function setup() {
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
+  batTimer = 300
+  batMaxTime = 300
 }
 
 function draw() {
@@ -89,18 +94,18 @@ function draw() {
 function mouseReleased() {
   if((bState[0] == true) && gameState == 0) gameState = 1;
   if((bState[1] == true))randBool1 = false, randBool2 = false, randCheckBool1 = false, randCheckBool2 = false, ghostMove(), move++;
-  if((bState[10] == true)) enterNumbers(1);
-  if((bState[11] == true)) enterNumbers(2);
-  if((bState[12] == true)) enterNumbers(3);
-  if((bState[13] == true)) enterNumbers(4);
-  if((bState[14] == true)) enterNumbers(5);
-  if((bState[15] == true)) enterNumbers(6);
-  if((bState[16] == true)) enterNumbers(7);
-  if((bState[17] == true)) enterNumbers(8);
-  if((bState[18] == true)) enterNumbers(9);
-  if((bState[19] == true)) deleteNumbers(-1);
-  if((bState[20] == true)) enterNumbers(0);
-  if((bState[21] == true) && keypadEntry[3] >= 0) print("success"), checkNumbers();
+  if((bState[10] == true && batFoundBool == false)) enterNumbers(1);
+  if((bState[11] == true && batFoundBool == false)) enterNumbers(2);
+  if((bState[12] == true && batFoundBool == false)) enterNumbers(3);
+  if((bState[13] == true && batFoundBool == false)) enterNumbers(4);
+  if((bState[14] == true && batFoundBool == false)) enterNumbers(5);
+  if((bState[15] == true && batFoundBool == false)) enterNumbers(6);
+  if((bState[16] == true && batFoundBool == false)) enterNumbers(7);
+  if((bState[17] == true && batFoundBool == false)) enterNumbers(8);
+  if((bState[18] == true && batFoundBool == false)) enterNumbers(9);
+  if((bState[19] == true && batFoundBool == false)) deleteNumbers(-1);
+  if((bState[20] == true && batFoundBool == false)) enterNumbers(0);
+  if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
 }
 //itemBool = false, itemCheckBool = false
 
@@ -117,6 +122,7 @@ function mainMenu(){
 //In Game Function
 function gameMenu(){
   switch (inGameState) {
+    //Finding Ghost Animation
     case 0:
       loadAnimTimer++
       if(loadAnimTimer <= 1*60){
@@ -135,6 +141,7 @@ function gameMenu(){
       }
       else (inGameState = 1);
       break;
+    //Main Game
     case 1:
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
@@ -199,41 +206,36 @@ function gameMenu(){
       //print(keypadEntry)
       fill("white");
       text("Ghosts Found: " + move, 200, 100);
-
+      battery();
+      if(batTimer <= 0) inGameState = 3;
+      print(batTimer);
       break;
+    //Ghost Found Loading Screen
     case 2:
       background("blue");
-      print("penis");
       fill("white");
       text("GHOST FOUND", width/2, height/2);
-      if(frameCount % 60 == 0) ghostCooldownTimer++, print("success17");
+      if(frameCount % 60 == 0) ghostCooldownTimer++;
       if(ghostCooldownTimer > 3) inGameState = 0;
-      for(let i = 0; i++; i < 4) {
-        keypadEntry[i] = -1;
-      }
+      break;
+    //Game Over
+    case 3:
+      fill("white");
+      text("GAME OVER", width/2, 250);
+      text("You Found " + move + " Ghosts!", width/2, height/2);
       break;
   }
-}
-
-function ghostReset (){
-  itemBool = false;
-  loadVT = 0;
-  inGameState = 0;
 }
 
 function ghostMove(){
-  for(let j = 0; j++; j < randomCheck1.length){
-    for(let i = 0; i++; i < randomCheck1[j].length)
+  for(let j = 0; j < randomCheck1.length; j++){
+    for(let i = 0; i < randomCheck1[j].length; i++)
     randomCheck1[j][i] = false;
   }
-  for(let j = 0; j++; j < randomCheck2.length){
-    for(let i = 0; i++; i < randomCheck2[j].length)
+  for(let j = 0; j < randomCheck2.length; j++){
+    for(let i = 0; i < randomCheck2[j].length; i++)
     randomCheck2[j][i] = false;
   }
-  keypadEntry[0] = -1; 
-  keypadEntry[1] = -1; 
-  keypadEntry[2] = -1; 
-  keypadEntry[3] = -1; 
   itemBool = false;
   itemCheckBool = false;
   hintTimer = 0;
@@ -270,10 +272,10 @@ function keypad(){
   buttonCreate(20, "0", 1650, 850, 125, 125, "#9e9e9e", "#636363");
   buttonCreate(21, "Enter", 1800, 850, 125, 125, "#9e9e9e", "#636363");
 
-  if(keypadEntry[0] >= 0) text(keypadEntry[0], 1575, 200);
-  if(keypadEntry[1] >= 0) text(keypadEntry[1], 1625, 200);
-  if(keypadEntry[2] >= 0) text(keypadEntry[2], 1675, 200);
-  if(keypadEntry[3] >= 0) text(keypadEntry[3], 1725, 200);
+  if(keypadEntry[0] >= 0) text(keypadEntry[0], 1575, 300);
+  if(keypadEntry[1] >= 0) text(keypadEntry[1], 1625, 300);
+  if(keypadEntry[2] >= 0) text(keypadEntry[2], 1675, 300);
+  if(keypadEntry[3] >= 0) text(keypadEntry[3], 1725, 300);
 }
 
 function enterNumbers(numb){
@@ -291,15 +293,53 @@ function deleteNumbers(numb){
 }
 
 function checkNumbers(){
-  print("success2");
-  if(keypadEntry[0] == passwordArray[whatGroupState[0]][whatGroupState[1]][0] && keypadEntry[1] == passwordArray[whatGroupState[0]][whatGroupState[1]][1] && keypadEntry[2] == passwordArray[whatGroupState[0]][whatGroupState[1]][2] && keypadEntry[3] == passwordArray[whatGroupState[0]][whatGroupState[1]][3]){
-    print("success3");
-    fill("White");
-    move++;
-    ghostMove();
+  for(let i = 0; i < 5; i++){
+    if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == false){
+      batTimer += 120;
+      if(batTimer > batMaxTime) batTimer = batMaxTime;
+      batteryCheckArray[i] = true;
+      batNumb++;
+      batCheck = true;
+    }
+    else if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == true){
+      batFoundBool = true;
+      batCheck = true;
+      batOrWrong = false;
+    }
   }
-  else{
-    print("success4");
-    fill("white");
+  if(batCheck == false){
+    if(keypadEntry[0] == passwordArray[whatGroupState[0]][whatGroupState[1]][0] && keypadEntry[1] == passwordArray[whatGroupState[0]][whatGroupState[1]][1] && keypadEntry[2] == passwordArray[whatGroupState[0]][whatGroupState[1]][2] && keypadEntry[3] == passwordArray[whatGroupState[0]][whatGroupState[1]][3]){
+      fill("White");
+      move++;
+      ghostMove();
+    }
+    else{
+      batTimer -= 30;
+      batFoundBool = true;
+      batOrWrong = true;
+    }
+  }
+  batCheck = false;
+  for(let i = 0; i < 4; i++) {
+    keypadEntry[i] = -1;
+  }
+}
+
+function battery(){
+  fill("white");
+  text(batNumb + " Batteries Found", 1650, 200);
+  rect(1650, 100, 460, 110);
+  if(frameCount % 60 == 0 && batTimer >= 0) batTimer += -1;
+  batMap = map(batTimer, 0, batMaxTime, 0, 450);
+  rectMode(CORNER);
+  fill("green");
+  rect(1425, 50, batMap, 100);
+  rectMode(CENTER);
+  if (batFoundBool == true){
+    fill("red");
+    if(batOrWrong == false) text("Battery Already Found!", 1650, 300);
+    else if(batOrWrong == true) text("Ghost not Found!", 1650, 300);
+    if(frameCount % 60 == 0 && batFoundTimer < 2) batFoundTimer++;
+    if(batFoundTimer >= 2) batFoundBool = false, batFoundTimer = 0;
   }
 }
