@@ -1,0 +1,544 @@
+      switch(whatGroupState[0]){
+        case 0:
+          text("The Ghost is in something Musical", 750, 100);
+          switch(whatGroupState[1]){
+            case 0:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 1:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 2:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 3:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+          }
+          break;
+        case 1:
+          text("The Ghost is in something Mechanical", width/2, 100);
+          switch(whatGroupState[1]){
+            case 0:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 1:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 2:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+            break;
+          }
+          break;
+        case 2:
+          text("The Ghost is in something Electrical", width/2, 100);
+          switch(whatGroupState[1]){
+            case 0:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 1:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 2:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 3:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 4:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            }
+          break;
+        case 3: 
+          text("The Ghost is in something Wet", width/2, 100);
+          switch(whatGroupState[1]){
+            case 0:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 1:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 2:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 3:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 4:
+              if(randBool1 == false){
+                randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool1 == false){
+                  randomLocation1[0] = int(random(0, (items.length)));
+                  randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                  randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                  randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                  randBool1 = true;
+                  if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                    randCheckBool1 = true;
+                  }
+                }
+              }
+              if(randBool2 == false){
+                randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                while(randCheckBool2 == false){
+                  randomLocation2[0] = int(random(0, (items.length)));
+                  randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                  randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                  randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                  randBool2 = true;
+                  if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                    randCheckBool2 = true;
+                  }
+                }
+              }
+              break;
+            case 5:
+                if(randBool1 == false){
+                  randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
+                  while(randCheckBool1 == false){
+                    randomLocation1[0] = int(random(0, (items.length)));
+                    randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
+                    randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
+                    randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+                    randBool1 = true;
+                    if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
+                      randCheckBool1 = true;
+                    }
+                  }
+                }
+                if(randBool2 == false){
+                  randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+                  randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+                  while(randCheckBool2 == false){
+                    randomLocation2[0] = int(random(0, (items.length)));
+                    randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+                    randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+                    randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+                    randBool2 = true;
+                    if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+                      randCheckBool2 = true;
+                    }
+                  }
+                }
+              break;
+            }
+          break;
+      }

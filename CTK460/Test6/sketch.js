@@ -229,3 +229,8 @@ function touchStarted() {
   getAudioContext().resume();
   if (state == 0) state = 1;
 }
+
+watchOptions = {
+  enableHighAccuracy: true,
+  timeout: 1000,
+}
