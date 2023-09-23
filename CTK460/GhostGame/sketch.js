@@ -17,7 +17,8 @@ let itemsLocation = [
   [[275, 825], [625, 475], [800, 650], [975, 650], [1150, 475]],
   [[450, 475], [625, 650], [800, 825], [975, 825], [1150, 650], [1150, 825]]
 ];
-let groupHintArray = ["Musical", "Mechanical", "Electrical", "Wet"];
+let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Antique"];
+
 let itemHintArray = [
   ["Hint 1", "Hint 2", "Hint 3", "Hint 4"],
   ["Hint 5", "Hint 6", "Hint 7"],
@@ -51,19 +52,26 @@ let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
 let [gameState, inGameState, whatGroupState] = [0, 0, []];
 //timer Variables
-let [loadAnimTimer, hintTimer, ghostCooldownTimer] = [0, 0, 0];
+let [loadAnimTimer, hintTimer, ghostCooldownTimer, ghostMin, ghostSec] = [0, 0, 0, 0, 0];
 //game logic Variables
 let [randomItem, itemBool, itemCheckBool, randomLocation1, randomLocation2, randomCord1, randomCord2, randBool1, randBool2, randCheckBool1, randCheckBool2] = [[], false, false, [], [], [], [], false, false, false, false];
 //Keypad Variables
 let [keypadEntry] = [[-1, -1, -1, -1]];
 let [move] = [0]
 //battery Variables
-let [batTimer, batVar, batMap, batMaxTime, batCheck, batNumb, batFoundTimer, batFoundBool, batOrWrong] = [0, 0, 0, 0, false, 0, 0, false, false];
-
+let [batTimer, batVar, batMap, batMaxTime, batCheck, batNumb, batFoundTimer, batFoundBool, batOrWrong, batCount] = [0, 0, 0, 0, false, 0, 0, false, false, 0];
+//Points Variables
+let [pointTotal, currentGhostTimer, ghostTimerVariable, currentGhostPoints, ghostTimeMedium, ghostTimeMax] = [0, 0, 0, 0, 0, 0];
+//UI Variables
+let [popupToggle] = [0];
+//Button Variables
 let bState = [false];
+//random Variable
+let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
 function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
+  images[1] = loadImage("Assets/Images/spookyghost.avif");
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
 }
 
@@ -73,8 +81,12 @@ function setup() {
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
-  batTimer = 300
-  batMaxTime = 300
+  batTimer = 600;
+  batMaxTime = 600;
+  ghostTimeMedium = 30;
+  ghostTimeMax = 60;
+  ghostX = width/4;
+  ghostY = height/2;
 }
 
 function draw() {
@@ -85,7 +97,6 @@ function draw() {
       break;
     //in game
     case 1:
-      background("blue");
       gameMenu();
       break;
   }
@@ -93,27 +104,35 @@ function draw() {
 
 function mouseReleased() {
   if((bState[0] == true) && gameState == 0) gameState = 1;
-  if((bState[1] == true))randBool1 = false, randBool2 = false, randCheckBool1 = false, randCheckBool2 = false, ghostMove(), move++;
-  if((bState[10] == true && batFoundBool == false)) enterNumbers(1);
-  if((bState[11] == true && batFoundBool == false)) enterNumbers(2);
-  if((bState[12] == true && batFoundBool == false)) enterNumbers(3);
-  if((bState[13] == true && batFoundBool == false)) enterNumbers(4);
-  if((bState[14] == true && batFoundBool == false)) enterNumbers(5);
-  if((bState[15] == true && batFoundBool == false)) enterNumbers(6);
-  if((bState[16] == true && batFoundBool == false)) enterNumbers(7);
-  if((bState[17] == true && batFoundBool == false)) enterNumbers(8);
-  if((bState[18] == true && batFoundBool == false)) enterNumbers(9);
-  if((bState[19] == true && batFoundBool == false)) deleteNumbers(-1);
-  if((bState[20] == true && batFoundBool == false)) enterNumbers(0);
+  if((bState[1] == true))ghostMove(), bState[1] = false;
+  if((bState[2] == true)){
+    if (batCount > 0){
+      batCount --;
+      batTimer += 120;
+      if(batTimer > batMaxTime) batTimer = batMaxTime; 
+    }
+  }
+  for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
+  if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
 }
-//itemBool = false, itemCheckBool = false
+
+function keyPressed(){
+  for (let i = 0; i < 10; i++){
+    if (keyCode == (i + 48)){
+      enterNumbers(i);
+    }
+  }
+  if (keyCode == BACKSPACE) deleteNumbers(-1);
+  if (keyCode == ENTER) checkNumbers();
+}
 
 //Main Menu Function
 function mainMenu(){
   background("white");
   textSize(30)
   strokeWeight(2);
+  ghostAnim();
   stroke("black");
   text("Ghost Game Demo", width/2, 200);
   buttonCreate(0, "Begin", width/2, height/2, 200, 100, "#325ea8", "#4832a8");
@@ -124,6 +143,9 @@ function gameMenu(){
   switch (inGameState) {
     //Finding Ghost Animation
     case 0:
+      ghostCooldownTimer = 0;
+      popupToggle = 0;
+      background("blue");
       loadAnimTimer++
       if(loadAnimTimer <= 1*60){
         text("Search for Ghost", width/2, 200);
@@ -143,6 +165,7 @@ function gameMenu(){
       break;
     //Main Game
     case 1:
+      background("blue");
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
         while(itemCheckBool == false){
@@ -156,16 +179,12 @@ function gameMenu(){
         }
         whatGroupState = randomItem;
       } 
-      //print(randomItem);
-      buttonCreate(1, "Move Ghost", 750, 300, 300, 100, "#325ea8", "#4832a8");
       for(let j = 0; j < 6; j++){
         for(let i = 0; i< 3; i++){
           fill("white");
           square((175 * (1 + j) + 100), (175 * (1 + i) + 300), 150)
         }
       }
-      //print(whatGroupState);
-      text("The Ghost is in Something " + groupHintArray[whatGroupState[0]], 750, 100);
       if(randBool1 == false){
         randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
         while(randCheckBool1 == false){
@@ -199,26 +218,56 @@ function gameMenu(){
       square(randomCord1[0], randomCord1[1], 150);
       fill("green");
       square(randomCord2[0], randomCord2[1], 150);
-      if(frameCount % 60 == 0) hintTimer++;
-      if(hintTimer > 5) fill("white"), text(itemHintArray[whatGroupState[0]][whatGroupState[1]], 750, 200);
-
       keypad();
-      //print(keypadEntry)
-      fill("white");
-      text("Ghosts Found: " + move, 200, 100);
       battery();
+      PointCalculation();
+      DebugMode();
       if(batTimer <= 0) inGameState = 3;
-      print(batTimer);
       break;
     //Ghost Found Loading Screen
     case 2:
-      background("blue");
-      fill("white");
-      text("GHOST FOUND", width/2, height/2);
       if(frameCount % 60 == 0) ghostCooldownTimer++;
-      if(ghostCooldownTimer > 3) inGameState = 0;
+      if(ghostCooldownTimer > 1) inGameState = 0;
       break;
     //Game Over
+    case 3:
+      background("blue");
+      break;
+  }
+
+  IGUI();
+}
+
+//On Screen UI
+function IGUI(){
+  switch(inGameState){
+    case 0:
+      break;
+    case 1:
+      fill("white");
+      text(batCount + "/5 Batteries Held", 1650, 200);
+      text("Ghosts Found: " + move, 200, 100);
+      text("Total Points: " + pointTotal, 200, 200);
+      text("The Ghost is in Something " + groupHintArray[whatGroupState[0]], 750, 100);
+      if(frameCount % 60 == 0) hintTimer++;
+      if(hintTimer > 5) fill("white"), text(itemHintArray[whatGroupState[0]][whatGroupState[1]], 750, 200);
+      ghostMin = Math.floor(currentGhostTimer / 60);
+      ghostSec = currentGhostTimer - (ghostMin * 60);
+      text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 350);
+      break;
+    case 2:
+      if(popupToggle < 70){
+        popupToggle += 10;
+        fill(0, 0, 0, popupToggle);
+        rect(width/2, height/2, width, height);
+      }
+      fill("gray");
+      rect(width/2, height/2, 500, 200);
+      fill(255, 255, 255);
+      textSize(60);
+      text("GHOST FOUND", width/2, height/2);
+      textSize(30);
+      break;
     case 3:
       fill("white");
       text("GAME OVER", width/2, 250);
@@ -227,7 +276,9 @@ function gameMenu(){
   }
 }
 
+//resets variables when ghost moves
 function ghostMove(){
+  move++;
   for(let j = 0; j < randomCheck1.length; j++){
     for(let i = 0; i < randomCheck1[j].length; i++)
     randomCheck1[j][i] = false;
@@ -238,38 +289,30 @@ function ghostMove(){
   }
   itemBool = false;
   itemCheckBool = false;
+  randBool1 = false;
+  randBool2 = false;
+  rendCheckBool1 = false;
+  randCheckBool2 = false
   hintTimer = 0;
   inGameState = 2;
   loadAnimTimer = 0;
   loadVT = 0;
+  AddPoints();
 }
 
-//Function to Create Buttons
-function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
-  bState[bSV] = false;
-  fill(bC);
-  if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2))){
-    fill(bC2);
-    bState[bSV] = true;
-  }
-  rect(bX, bY, bW, bH, 20);
-  fill(255);
-  textSize(40);
-  text(bT, bX, bY + 10);
-}
-
+//Creates Keypad
 function keypad(){
-  buttonCreate(10, "1", 1500, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(11, "2", 1650, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(12, "3", 1800, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(13, "4", 1500, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(14, "5", 1650, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(15, "6", 1800, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(16, "7", 1500, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(17, "8", 1650, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(18, "9", 1800, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(19, "Erase", 1500, 850, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(20, "0", 1650, 850, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(10, "0", 1650, 850, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(11, "1", 1500, 400, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(12, "2", 1650, 400, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(13, "3", 1800, 400, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(14, "4", 1500, 550, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(15, "5", 1650, 550, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(16, "6", 1800, 550, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(17, "7", 1500, 700, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(18, "8", 1650, 700, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(19, "9", 1800, 700, 125, 125, "#9e9e9e", "#636363");
+  buttonCreate(20, "Erase", 1500, 850, 125, 125, "#9e9e9e", "#636363");
   buttonCreate(21, "Enter", 1800, 850, 125, 125, "#9e9e9e", "#636363");
 
   if(keypadEntry[0] >= 0) text(keypadEntry[0], 1575, 300);
@@ -278,6 +321,7 @@ function keypad(){
   if(keypadEntry[3] >= 0) text(keypadEntry[3], 1725, 300);
 }
 
+//Adds Numbers
 function enterNumbers(numb){
   if(keypadEntry[0] < 0) keypadEntry[0] = numb;
   else if(keypadEntry[1] < 0) keypadEntry[1] = numb;
@@ -285,6 +329,7 @@ function enterNumbers(numb){
   else if(keypadEntry[3] < 0) keypadEntry[3] = numb;
 }
 
+//Removes Numbers
 function deleteNumbers(numb){
   if(keypadEntry[3] >= 0) keypadEntry[3] = numb;
   else if(keypadEntry[2] >= 0) keypadEntry[2] = numb;
@@ -292,14 +337,17 @@ function deleteNumbers(numb){
   else if(keypadEntry[0] >= 0) keypadEntry[0] = numb;
 }
 
+//Checks password
 function checkNumbers(){
   for(let i = 0; i < 5; i++){
     if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == false){
-      batTimer += 120;
-      if(batTimer > batMaxTime) batTimer = batMaxTime;
+      batCount += 1;
+      //batTimer += 120;
+      //if(batTimer > batMaxTime) batTimer = batMaxTime;
       batteryCheckArray[i] = true;
       batNumb++;
       batCheck = true;
+      pointTotal = pointTotal + 500;
     }
     else if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == true){
       batFoundBool = true;
@@ -325,9 +373,8 @@ function checkNumbers(){
   }
 }
 
+//Creates and Manages OnScreen Battery
 function battery(){
-  fill("white");
-  text(batNumb + " Batteries Found", 1650, 200);
   rect(1650, 100, 460, 110);
   if(frameCount % 60 == 0 && batTimer >= 0) batTimer += -1;
   batMap = map(batTimer, 0, batMaxTime, 0, 450);
@@ -342,4 +389,60 @@ function battery(){
     if(frameCount % 60 == 0 && batFoundTimer < 2) batFoundTimer++;
     if(batFoundTimer >= 2) batFoundBool = false, batFoundTimer = 0;
   }
+  buttonCreate(2, "Use Battery", 1250, 100, 225, 75, "#9e9e9e", "#636363");
+}
+
+//Calculates points earned from current Ghost
+function PointCalculation(){
+  if(frameCount % 60 == 0) currentGhostTimer++;
+  if(currentGhostTimer < ghostTimeMedium) currentGhostPoints = 1000, fill("green");
+  else if(currentGhostTimer >= ghostTimeMedium && currentGhostTimer< ghostTimeMax) {
+    currentGhostPoints = (1000 - map(currentGhostTimer, ghostTimeMedium, ghostTimeMax, 0, 900));
+    fill("yellow");
+  }
+  else if(currentGhostTimer >= ghostTimeMax) currentGhostPoints = 100, fill("red");
+}
+
+//Function to add Points when Ghost Moves
+function AddPoints(){
+  pointTotal = pointTotal + currentGhostPoints;
+  currentGhostPoints = 1000;
+  currentGhostTimer = 0;
+}
+
+//Adds Elements Helpful for Testing
+function DebugMode(){
+  buttonCreate(1, "Move Ghost", 750, 300, 300, 100, "#325ea8", "#4832a8");
+  fill("white");
+  text("Password: " + passwordArray[whatGroupState[0]][whatGroupState[1]], 200, 250);
+  text(currentGhostPoints, 200, 300);
+  //text(batTimer, 200, 400);
+}
+
+//Function to Create Buttons
+function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
+  bState[bSV] = false;
+  fill(bC);
+  if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2))){
+    fill(bC2);
+    bState[bSV] = true;
+  }
+  rect(bX, bY, bW, bH, 20);
+  fill(255);
+  textSize(40);
+  text(bT, bX, bY + 10);
+  textSize(30);
+}
+
+function ghostAnim(){
+  ghostSinV += 5;
+  ghostY = map(sin(ghostSinV), -1, 1, height * 3 / 8, height * 5 / 8);
+  if(ghostX >= width/4) ghostX = map(-cos(ghostSinV), -1, 1, width/4 - 0.01, width * 3 / 8), print("hi");
+  else if(ghostX < width/4) ghostX = map(cos(ghostSinV), -1, 1, width/8, width/4 + 0.01);
+  ghostRotate = map(ghostX, width/8, width*3/8, -15, 15);
+  push();
+  translate(ghostX, ghostY)
+  rotate(ghostRotate);
+  image(images[1], 0, 0, 200, 200);
+  pop();
 }
