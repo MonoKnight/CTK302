@@ -9,13 +9,13 @@ let itemsCheck = [
   [false, false, false, false],
   [false, false, false],
   [false, false, false, false, false],
-  [false, false, false, false, false, false]
+  [false, false, false, false, false, false],
 ];
 let itemsLocation = [
   [[275, 475], [450, 650], [625, 825], [975, 475]],
   [[275, 650], [450, 825], [800, 475]],
   [[275, 825], [625, 475], [800, 650], [975, 650], [1150, 475]],
-  [[450, 475], [625, 650], [800, 825], [975, 825], [1150, 650], [1150, 825]]
+  [[450, 475], [625, 650], [800, 825], [975, 825], [1150, 650], [1150, 825]],
 ];
 let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Antique"];
 
@@ -29,8 +29,8 @@ let passwordArray = [
   [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2], [4, 4, 0, 8]],
   [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
   [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9], [2, 1, 4, 4], [2, 5, 8, 1]],
-  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2], [4, 9, 0, 9], [8, 2, 2, 2], [4, 1, 1, 0]]
-]
+  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2], [4, 9, 0, 9], [8, 2, 2, 2], [4, 1, 1, 0]],
+];
 let randomCheck1 = [
   [false, false, false, false],
   [false, false],
@@ -44,28 +44,31 @@ let randomCheck2 = [
   [false, false, false, false, false, false]
 ];
 let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
-let batteryCheckArray = [false, false, false, false, false]
+let batteryCheckArray = [false, false, false, false, false];
+let minigameArray = ["Spacebar"];
 //images
 let [images] = [[]];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
-let [gameState, inGameState, whatGroupState] = [0, 0, []];
+let [gameState, inGameState, whatGroupState, minigameState] = [0, 0, [], 0];
 //timer Variables
 let [loadAnimTimer, hintTimer, ghostCooldownTimer, ghostMin, ghostSec] = [0, 0, 0, 0, 0];
 //game logic Variables
-let [randomItem, itemBool, itemCheckBool, randomLocation1, randomLocation2, randomCord1, randomCord2, randBool1, randBool2, randCheckBool1, randCheckBool2] = [[], false, false, [], [], [], [], false, false, false, false];
+let [randomItem, itemBool, itemCheckBool, randomLocation1, randomLocation2, randomCord1, randomCord2, randBool1, randBool2, randCheckBool1, randCheckBool2, playerCount] = [[], false, false, [], [], [], [], false, false, false, false, false];
 //Keypad Variables
 let [keypadEntry] = [[-1, -1, -1, -1]];
 let [move] = [0]
 //battery Variables
 let [batTimer, batVar, batMap, batMaxTime, batCheck, batNumb, batFoundTimer, batFoundBool, batOrWrong, batCount] = [0, 0, 0, 0, false, 0, 0, false, false, 0];
 //Points Variables
-let [pointTotal, currentGhostTimer, ghostTimerVariable, currentGhostPoints, ghostTimeMedium, ghostTimeMax] = [0, 0, 0, 0, 0, 0];
+let [pointTotal, currentGhostTimer, ghostTimerVariable, currentGhostPoints, ghostTimeMedium, ghostTimeMax, ghostMultiplier] = [0, 0, 0, 0, 0, 0, 0];
 //UI Variables
 let [popupToggle] = [0];
 //Button Variables
 let bState = [false];
+//Minigame Variables
+let [miniCooldown, miniVariable, miniProcChance, miniProcTimer, enableMinigames, minigameActive, spacebarCounter] = [0, 0, 0, 0, false, false, 0];
 //random Variable
 let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
@@ -76,7 +79,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(2000, 1000);
+  createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES);
   rectMode(CENTER);
   textAlign(CENTER);
@@ -87,6 +90,9 @@ function setup() {
   ghostTimeMax = 60;
   ghostX = width/4;
   ghostY = height/2;
+  miniCooldown = 90;
+  miniProcChance = 20;
+  miniProcTimer = 20;
 }
 
 function draw() {
@@ -103,8 +109,9 @@ function draw() {
 }
 
 function mouseReleased() {
-  if((bState[0] == true) && gameState == 0) gameState = 1;
-  if((bState[1] == true))ghostMove(), bState[1] = false;
+  if((bState[-1] == true) && gameState == 0) gameState = 1, playerCount = false;
+  if((bState[0] == true) && gameState == 0) gameState = 1, playerCount = true;
+  if((bState[1] == true)) ghostMove(), bState[1] = false;
   if((bState[2] == true)){
     if (batCount > 0){
       batCount --;
@@ -112,19 +119,35 @@ function mouseReleased() {
       if(batTimer > batMaxTime) batTimer = batMaxTime; 
     }
   }
+  if((bState[3] == true)) gameEnd(), bState[3] = false;
+  if((bState[4] == true)) resetGame(), bState[4] = false;
+  if((bState[6] == true)) minigameState = 1, bState[6] = false;
   for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
   if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
 }
 
 function keyPressed(){
-  for (let i = 0; i < 10; i++){
-    if (keyCode == (i + 48)){
-      enterNumbers(i);
-    }
+  switch(minigameState){
+    case 0:
+      for (let i = 0; i < 10; i++){
+        if (keyCode == (i + 48)){
+          enterNumbers(i);
+        }
+      }
+      if (keyCode == BACKSPACE) deleteNumbers(-1);
+      if (keyCode == ENTER) checkNumbers();
+      break;
+    case 1:
+      if(keyCode == 32){
+        spacebarCounter++;
+        if(spacebarCounter >= 10){
+          spacebarCounter = 0;
+          minigameState = 0;
+        }
+      }
+      break;
   }
-  if (keyCode == BACKSPACE) deleteNumbers(-1);
-  if (keyCode == ENTER) checkNumbers();
 }
 
 //Main Menu Function
@@ -135,7 +158,8 @@ function mainMenu(){
   ghostAnim();
   stroke("black");
   text("Ghost Game Demo", width/2, 200);
-  buttonCreate(0, "Begin", width/2, height/2, 200, 100, "#325ea8", "#4832a8");
+  buttonCreate(-1, "2 Players", width/2 - 300, height/2, 200, 100, "#325ea8", "#4832a8");
+  buttonCreate(0, "3+ Players", width/2 + 300, height/2, 200, 100, "#325ea8", "#4832a8");
 }
 
 //In Game Function
@@ -198,17 +222,19 @@ function gameMenu(){
           }
         }
       }
-      if(randBool2 == false){
-        randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
-        randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
-        while(randCheckBool2 == false){
-          randomLocation2[0] = int(random(0, (items.length)));
-          randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
-          randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
-          randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
-          randBool2 = true;
-          if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
-            randCheckBool2 = true;
+      if(playerCount == true){
+        if(randBool2 == false){
+          randomCheck2[randomLocation1[0]][randomLocation1[1]] = true;
+          randomCheck2[whatGroupState[0]][whatGroupState[1]] = true;
+          while(randCheckBool2 == false){
+            randomLocation2[0] = int(random(0, (items.length)));
+            randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
+            randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
+            randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+            randBool2 = true;
+            if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
+              randCheckBool2 = true;
+            }
           }
         }
       }
@@ -217,12 +243,13 @@ function gameMenu(){
       fill("Blue");
       square(randomCord1[0], randomCord1[1], 150);
       fill("green");
-      square(randomCord2[0], randomCord2[1], 150);
+      if(playerCount == true) square(randomCord2[0], randomCord2[1], 150);
       keypad();
       battery();
       PointCalculation();
       DebugMode();
-      if(batTimer <= 0) inGameState = 3;
+      minigames();
+      if(batTimer <= 0) gameEnd();
       break;
     //Ghost Found Loading Screen
     case 2:
@@ -234,7 +261,6 @@ function gameMenu(){
       background("blue");
       break;
   }
-
   IGUI();
 }
 
@@ -254,6 +280,20 @@ function IGUI(){
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 350);
+
+      switch(minigameState){
+        case 1:
+          fill(0, 0, 0, 70);
+          rect(width/2, height/2, width, height);
+          fill("gray");
+          rect(width/2, height/2, 1300, 400);
+          fill(255, 255, 255);
+          textSize(60);
+          text("DATA CORRUPTED SPAM SPACE BAR", width/2, height/2 - 100);
+          text(spacebarCounter + "/ 10", width/2, height / 2 + 100);
+          textSize(30);
+          break;
+      }
       break;
     case 2:
       if(popupToggle < 70){
@@ -267,11 +307,12 @@ function IGUI(){
       textSize(60);
       text("GHOST FOUND", width/2, height/2);
       textSize(30);
-      break;
     case 3:
       fill("white");
       text("GAME OVER", width/2, 250);
       text("You Found " + move + " Ghosts!", width/2, height/2);
+      text("Total Points: " + pointTotal, width/2, height/2 + 100);
+      buttonCreate(4, "Reset Game", width/2, height/2 + 300, 200, 100, "#325ea8", "#4832a8");
       break;
   }
 }
@@ -291,13 +332,52 @@ function ghostMove(){
   itemCheckBool = false;
   randBool1 = false;
   randBool2 = false;
-  rendCheckBool1 = false;
+  randCheckBool1 = false;
   randCheckBool2 = false
   hintTimer = 0;
   inGameState = 2;
   loadAnimTimer = 0;
   loadVT = 0;
   AddPoints();
+}
+
+function gameEnd(){
+  if(ghostMultiplier > 1) pointTotal = pointTotal * (1 + (0.5 * (ghostMultiplier - 1)));
+  inGameState = 3;
+}
+
+function resetGame(){
+  for(let j = 0; j < randomCheck1.length; j++){
+    for(let i = 0; i < randomCheck1[j].length; i++)
+    randomCheck1[j][i] = false;
+  }
+  for(let j = 0; j < randomCheck2.length; j++){
+    for(let i = 0; i < randomCheck2[j].length; i++)
+    randomCheck2[j][i] = false;
+  }
+  for(let j = 0; j < itemsCheck.length; j++){
+    for(let i = 0; i < itemsCheck[j].length; i++)
+    itemsCheck[j][i] = false;
+  }
+  move = 0;
+  itemBool = false;
+  itemCheckBool = false;
+  randBool1 = false;
+  randBool2 = false;
+  randCheckBool1 = false;
+  randCheckBool2 = false
+  hintTimer = 0;
+  loadAnimTimer = 0;
+  loadVT = 0;
+  pointTotal = 0;
+  batTimer = 600;
+  inGameState = 0;
+  gameState = 0;
+  ghostMultiplier = 0;
+  batCount = 0;
+  for(let i = 0; i < batteryCheckArray.length; i++){
+    batteryCheckArray[i] = false;
+  }
 }
 
 //Creates Keypad
@@ -358,7 +438,6 @@ function checkNumbers(){
   if(batCheck == false){
     if(keypadEntry[0] == passwordArray[whatGroupState[0]][whatGroupState[1]][0] && keypadEntry[1] == passwordArray[whatGroupState[0]][whatGroupState[1]][1] && keypadEntry[2] == passwordArray[whatGroupState[0]][whatGroupState[1]][2] && keypadEntry[3] == passwordArray[whatGroupState[0]][whatGroupState[1]][3]){
       fill("White");
-      move++;
       ghostMove();
     }
     else{
@@ -406,16 +485,22 @@ function PointCalculation(){
 //Function to add Points when Ghost Moves
 function AddPoints(){
   pointTotal = pointTotal + currentGhostPoints;
+  ghostMultiplier++;
   currentGhostPoints = 1000;
   currentGhostTimer = 0;
 }
 
+
 //Adds Elements Helpful for Testing
 function DebugMode(){
-  buttonCreate(1, "Move Ghost", 750, 300, 300, 100, "#325ea8", "#4832a8");
+  buttonCreate(1, "Move", 750, 300, 150, 100, "#325ea8", "#4832a8");
+  buttonCreate(3, "End", 1000, 300, 150, 100, "#325ea8", "#4832a8");
+  buttonCreate(6, "Space", 500, 300, 150, 100, "#325ea8", "#4832a8");
   fill("white");
   text("Password: " + passwordArray[whatGroupState[0]][whatGroupState[1]], 200, 250);
   text(currentGhostPoints, 200, 300);
+  //text((1 + (0.5 * (ghostMultiplier - 1))) +"x Multiplier", 200, 150);
+  text(miniVariable, 200, 150);
   //text(batTimer, 200, 400);
 }
 
@@ -423,7 +508,7 @@ function DebugMode(){
 function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
   bState[bSV] = false;
   fill(bC);
-  if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2))){
+  if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2)) && minigameState == 0){
     fill(bC2);
     bState[bSV] = true;
   }
@@ -437,12 +522,31 @@ function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
 function ghostAnim(){
   ghostSinV += 5;
   ghostY = map(sin(ghostSinV), -1, 1, height * 3 / 8, height * 5 / 8);
-  if(ghostX >= width/4) ghostX = map(-cos(ghostSinV), -1, 1, width/4 - 0.01, width * 3 / 8), print("hi");
+  if(ghostX >= width/4) ghostX = map(-cos(ghostSinV), -1, 1, width/4 - 0.01, width * 3 / 8);
   else if(ghostX < width/4) ghostX = map(cos(ghostSinV), -1, 1, width/8, width/4 + 0.01);
   ghostRotate = map(ghostX, width/8, width*3/8, -15, 15);
   push();
-  translate(ghostX, ghostY)
+  translate(ghostX, ghostY);
   rotate(ghostRotate);
   image(images[1], 0, 0, 200, 200);
   pop();
+}
+
+function minigames(){
+  switch(minigameState) {
+    case 0:
+      if(frameCount % 60 == 0) miniVariable++;
+      if(miniVariable >= miniCooldown) {
+        if(miniProcChance > int(random(0, 100))) minigameState = (int(random(0, minigameArray.length) + 1)), miniVariable = 0;
+        else miniVariable = miniVariable - miniProcTimer;
+      }
+      break;
+    case 1:
+      print(spacebarCounter);
+      break;
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
