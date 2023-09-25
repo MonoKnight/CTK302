@@ -307,6 +307,7 @@ function IGUI(){
       textSize(60);
       text("GHOST FOUND", width/2, height/2);
       textSize(30);
+      break;
     case 3:
       fill("white");
       text("GAME OVER", width/2, 250);
