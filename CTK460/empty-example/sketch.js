@@ -1,5 +1,8 @@
-let arr1 = [1, 2, 3, 4];
-let arr2 = [1, 2, 3, 4];
+let arr1 = [
+  [true, true],
+  [true, true],
+];
+let arr2 = [false, false, false, false];
 
 
 function setup() {
@@ -8,10 +11,8 @@ function setup() {
 }
 
 function draw() {
-  background("red");
-  if (areEqual(arr1, arr2)) {
-    background("blue");
-  }
+  background("blue");
+  if(arr1.flat().every(x => x === true) == true) print("hi");
 }
 
 

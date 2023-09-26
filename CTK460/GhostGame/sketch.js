@@ -46,8 +46,8 @@ let randomCheck2 = [
 let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
 let batteryCheckArray = [false, false, false, false, false];
 let minigameArray = ["Spacebar"];
-//images
-let [images] = [[]];
+//Assets
+let [images, fonts] = [[], []];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
@@ -68,7 +68,7 @@ let [popupToggle] = [0];
 //Button Variables
 let bState = [false];
 //Minigame Variables
-let [miniCooldown, miniVariable, miniProcChance, miniProcTimer, enableMinigames, minigameActive, spacebarCounter] = [0, 0, 0, 0, false, false, 0];
+let [miniCooldown, miniVariable, miniProcChance, miniProcTimer,enableMinigames, minigameActive, spacebarCounter] = [0, 0, 0, 0, false, false, 0];
 //random Variable
 let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
@@ -76,6 +76,7 @@ function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
   images[1] = loadImage("Assets/Images/spookyghost.avif");
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
+  fonts[0] = loadFont("Assets/Fonts/Top Show.otf");
 }
 
 function setup() {
@@ -90,9 +91,10 @@ function setup() {
   ghostTimeMax = 60;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 90;
+  miniCooldown = 10;
   miniProcChance = 20;
   miniProcTimer = 20;
+  textFont(fonts[0]);
 }
 
 function draw() {
@@ -271,7 +273,7 @@ function IGUI(){
       break;
     case 1:
       fill("white");
-      text(batCount + "/5 Batteries Held", 1650, 200);
+      text(batCount + "/5 Batteries Held", 1250, 200);
       text("Ghosts Found: " + move, 200, 100);
       text("Total Points: " + pointTotal, 200, 200);
       text("The Ghost is in Something " + groupHintArray[whatGroupState[0]], 750, 100);
@@ -329,6 +331,13 @@ function ghostMove(){
     for(let i = 0; i < randomCheck2[j].length; i++)
     randomCheck2[j][i] = false;
   }
+  if(itemsCheck.flat().every(x => x === true) == true){
+    for(let j = 0; j < itemsCheck.length; j++){
+      for(let i = 0; i < itemsCheck[j].length; i++)
+      itemsCheck[j][i] = false;
+    }
+    print("hi");
+  }
   itemBool = false;
   itemCheckBool = false;
   randBool1 = false;
@@ -339,6 +348,8 @@ function ghostMove(){
   inGameState = 2;
   loadAnimTimer = 0;
   loadVT = 0;
+  miniVariable = 0;
+  miniProcChance = 20;
   AddPoints();
 }
 
@@ -376,6 +387,8 @@ function resetGame(){
   gameState = 0;
   ghostMultiplier = 0;
   batCount = 0;
+  miniVariable = 0;
+  miniProcChance = 20;
   for(let i = 0; i < batteryCheckArray.length; i++){
     batteryCheckArray[i] = false;
   }
@@ -383,23 +396,30 @@ function resetGame(){
 
 //Creates Keypad
 function keypad(){
-  buttonCreate(10, "0", 1650, 850, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(11, "1", 1500, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(12, "2", 1650, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(13, "3", 1800, 400, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(14, "4", 1500, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(15, "5", 1650, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(16, "6", 1800, 550, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(17, "7", 1500, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(18, "8", 1650, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(19, "9", 1800, 700, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(20, "Erase", 1500, 850, 125, 125, "#9e9e9e", "#636363");
-  buttonCreate(21, "Enter", 1800, 850, 125, 125, "#9e9e9e", "#636363");
-
-  if(keypadEntry[0] >= 0) text(keypadEntry[0], 1575, 300);
-  if(keypadEntry[1] >= 0) text(keypadEntry[1], 1625, 300);
-  if(keypadEntry[2] >= 0) text(keypadEntry[2], 1675, 300);
-  if(keypadEntry[3] >= 0) text(keypadEntry[3], 1725, 300);
+  fill("#212224");
+  rect(1650, (550 + 700 - 100)/2, 500, 775, 20);
+  fill("#3e4045");
+  rect(1650, (550 + 700 - 100)/2, 475, 725, 20);
+  fill("#74876b");
+  rect(1650, 275, 375, 100, 20);
+  buttonCreate(10, "0", 1650, 850, 100, 100, "#636363", "#4D5053");
+  buttonCreate(11, "1", 1500, 400, 100, 100, "#636363", "#4D5053");
+  buttonCreate(12, "2", 1650, 400, 100, 100, "#636363", "#4D5053");
+  buttonCreate(13, "3", 1800, 400, 100, 100, "#636363", "#4D5053");
+  buttonCreate(14, "4", 1500, 550, 100, 100, "#636363", "#4D5053");
+  buttonCreate(15, "5", 1650, 550, 100, 100, "#636363", "#4D5053");
+  buttonCreate(16, "6", 1800, 550, 100, 100, "#636363", "#4D5053");
+  buttonCreate(17, "7", 1500, 700, 100, 100, "#636363", "#4D5053");
+  buttonCreate(18, "8", 1650, 700, 100, 100, "#636363", "#4D5053");
+  buttonCreate(19, "9", 1800, 700, 100, 100, "#636363", "#4D5053");
+  buttonCreate(20, "Back", 1500, 850, 100, 100, "#636363", "#4D5053");
+  buttonCreate(21, "#", 1800, 850, 100, 100, "#636363", "#4D5053");
+  textSize(40);
+  if(keypadEntry[0] >= 0) text(keypadEntry[0], 1530, 285);
+  if(keypadEntry[1] >= 0) text(keypadEntry[1], 1610, 285);
+  if(keypadEntry[2] >= 0) text(keypadEntry[2], 1690, 285);
+  if(keypadEntry[3] >= 0) text(keypadEntry[3], 1770, 285);
+  textSize(30);
 }
 
 //Adds Numbers
@@ -502,12 +522,15 @@ function DebugMode(){
   text(currentGhostPoints, 200, 300);
   //text((1 + (0.5 * (ghostMultiplier - 1))) +"x Multiplier", 200, 150);
   text(miniVariable, 200, 150);
+  text(miniProcChance, 300, 150);
   //text(batTimer, 200, 400);
 }
 
 //Function to Create Buttons
 function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
   bState[bSV] = false;
+  fill("#212224");
+  rect(bX, bY, bW + 10, bH + 10, 20);
   fill(bC);
   if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2)) && minigameState == 0){
     fill(bC2);
@@ -538,12 +561,11 @@ function minigames(){
     case 0:
       if(frameCount % 60 == 0) miniVariable++;
       if(miniVariable >= miniCooldown) {
-        if(miniProcChance > int(random(0, 100))) minigameState = (int(random(0, minigameArray.length) + 1)), miniVariable = 0;
-        else miniVariable = miniVariable - miniProcTimer;
+        if(miniProcChance > int(random(0, 100))) minigameState = (int(random(0, minigameArray.length) + 1)), miniVariable = 0, miniProcChance = 20;
+        else miniVariable = miniVariable - miniProcTimer, miniProcChance+=10;
       }
       break;
     case 1:
-      print(spacebarCounter);
       break;
   }
 }
