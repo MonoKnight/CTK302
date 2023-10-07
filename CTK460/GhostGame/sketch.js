@@ -1,53 +1,123 @@
 //IRL Game Items
 let items = [
-  ["G1I1", "G1I2", "G1I3", "G1I4"],
+  ["G1I1", "G1I2", "G1I3"],
   ["G2I1", "G2I2", "G2I3"],
-  ["G3I1", "G3I2", "G3I3", "G3I4", "G3I5"],
-  ["G4I1", "G4I2", "G4I3", "G4I4", "G4I5", "G4I6"],
+  ["G3I1", "G3I2", "G3I3"],
+  ["G4I1", "G4I2", "G4I3"],
+  ["G1I1", "G1I2", "G1I3"],
+  ["G2I1", "G2I2", "G2I3"],
+  ["G3I1", "G3I2", "G3I3"],
+  ["G4I1", "G4I2", "G4I3"],
+  ["G1I1", "G1I2", "G1I3"],
+  ["G2I1", "G2I2", "G2I3"],
+  ["G3I1", "G3I2", "G3I3"],
+  ["G4I1", "G4I2", "G4I3"],
 ];
 let itemsCheck = [
-  [false, false, false, false],
   [false, false, false],
-  [false, false, false, false, false],
-  [false, false, false, false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+];
+let itemRoomNumber = [
+ [0, 1, 2],
+ [3, 4, 5],
+ [6, 7, 8],
+ [9, 10, 11],
+ [0, 1, 2],
+ [3, 4, 5],
+ [6, 7, 8],
+ [9, 10, 11],
+ [0, 1, 2],
+ [3, 4, 5],
+ [6, 7, 8],
+ [9, 10, 11],
 ];
 let itemsLocation = [
-  [[275, 475], [450, 650], [625, 825], [975, 475]],
+  [[275, 475], [450, 650], [625, 825]],
   [[275, 650], [450, 825], [800, 475]],
-  [[275, 825], [625, 475], [800, 650], [975, 650], [1150, 475]],
-  [[450, 475], [625, 650], [800, 825], [975, 825], [1150, 650], [1150, 825]],
+  [[275, 825], [625, 475], [800, 650]],
+  [[450, 475], [625, 650], [800, 825]],
+  [[275, 475], [450, 650], [625, 825]],
+  [[275, 650], [450, 825], [800, 475]],
+  [[275, 825], [625, 475], [800, 650]],
+  [[450, 475], [625, 650], [800, 825]],
+  [[275, 475], [450, 650], [625, 825]],
+  [[275, 650], [450, 825], [800, 475]],
+  [[275, 825], [625, 475], [800, 650]],
+  [[450, 475], [625, 650], [800, 825]],
 ];
-let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Antique"];
+let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Antique", "Group 5", "Group 6", "Group 7", "Group 8", "Group 9", "Group 10", "Group 11", "Group 12"];
 
 let itemHintArray = [
-  ["Hint 1", "Hint 2", "Hint 3", "Hint 4"],
-  ["Hint 5", "Hint 6", "Hint 7"],
-  ["Hint 8", "Hint 9", "Hint 10", "Hint 11", "Hint 12"],
-  ["Hint 13", "Hint 14", "Hint 15", "Hint 16", "Hint 17", "Hint 18"],
+  ["Hint 1", "Hint 13", "Hint 25"],
+  ["Hint 2", "Hint 14", "Hint 26"],
+  ["Hint 3", "Hint 15", "Hint 27"],
+  ["Hint 4", "Hint 16", "Hint 28"],
+  ["Hint 5", "Hint 17", "Hint 29"],
+  ["Hint 6", "Hint 18", "Hint 30"],
+  ["Hint 7", "Hint 19", "Hint 31"],
+  ["Hint 8", "Hint 20", "Hint 32"],
+  ["Hint 9", "Hint 21", "Hint 33"],
+  ["Hint 10", "Hint 22", "Hint 34"],
+  ["Hint 11", "Hint 23", "Hint 35"],
+  ["Hint 12", "Hint 24", "Hint 36"],
 ];
 let passwordArray = [
-  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2], [4, 4, 0, 8]],
+  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
   [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
-  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9], [2, 1, 4, 4], [2, 5, 8, 1]],
-  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2], [4, 9, 0, 9], [8, 2, 2, 2], [4, 1, 1, 0]],
+  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
+  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
+  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
+  [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
+  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
+  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
+  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
+  [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
+  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
+  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
 ];
 let randomCheck1 = [
-  [false, false, false, false],
-  [false, false],
-  [false, false, false, false, false],
-  [false, false, false, false, false, false]
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
 ];
 let randomCheck2 = [
-  [false, false, false, false],
-  [false, false],
-  [false, false, false, false, false],
-  [false, false, false, false, false, false]
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
+  [false, false, false],
 ];
 let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
 let batteryCheckArray = [false, false, false, false, false];
-let minigameArray = ["Spacebar"];
+let minigameArray = ["Spacebar", "Frequency"];
 //Assets
-let [images, fonts] = [[], []];
+let [images, fonts, mapImages] = [[], [], []];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
@@ -69,13 +139,19 @@ let [popupToggle] = [0];
 let bState = [false];
 //Minigame Variables
 let [miniCooldown, miniVariable, miniProcChance, miniProcTimer,enableMinigames, minigameActive, spacebarCounter] = [0, 0, 0, 0, false, false, 0];
+//Frequency Minigame Variables
+let [strum, offset, offsetvar, setStrum, setStrumBool] = [12, 0, 5, 15, false];
+let whatSetStrum = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
 //random Variable
 let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
 function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
   images[1] = loadImage("Assets/Images/spookyghost.avif");
+  images[2] = loadImage("Assets/Images/LogoTransparent.png");
+  images[3] = loadImage("Assets/Images/MMBackground.jpg");
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
+  for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
   fonts[0] = loadFont("Assets/Fonts/Top Show.otf");
 }
 
@@ -123,7 +199,7 @@ function mouseReleased() {
   }
   if((bState[3] == true)) gameEnd(), bState[3] = false;
   if((bState[4] == true)) resetGame(), bState[4] = false;
-  if((bState[6] == true)) minigameState = 1, bState[6] = false;
+  if((bState[6] == true)) minigameState = 2, bState[6] = false;
   for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
   if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
@@ -143,25 +219,29 @@ function keyPressed(){
     case 1:
       if(keyCode == 32){
         spacebarCounter++;
-        if(spacebarCounter >= 10){
+        if(spacebarCounter >= 15){
           spacebarCounter = 0;
           minigameState = 0;
         }
       }
+      break;
+    case 2:
+      if (keyCode == UP_ARROW && strum > 10) strum += -2;
+      if (keyCode == DOWN_ARROW && strum < 26) strum += 2;
       break;
   }
 }
 
 //Main Menu Function
 function mainMenu(){
-  background("white");
+  image(images[3], width/2, height/2, width, height);
+  image(images[2], width/2, 250, 850, 850);
   textSize(30)
   strokeWeight(2);
   ghostAnim();
   stroke("black");
-  text("Ghost Game Demo", width/2, 200);
-  buttonCreate(-1, "2 Players", width/2 - 300, height/2, 200, 100, "#325ea8", "#4832a8");
-  buttonCreate(0, "3+ Players", width/2 + 300, height/2, 200, 100, "#325ea8", "#4832a8");
+  buttonCreate(-1, "2 Players", width/2 - 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
+  buttonCreate(0, "3+ Players", width/2 + 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
 }
 
 //In Game Function
@@ -205,19 +285,12 @@ function gameMenu(){
         }
         whatGroupState = randomItem;
       } 
-      for(let j = 0; j < 6; j++){
-        for(let i = 0; i< 3; i++){
-          fill("white");
-          square((175 * (1 + j) + 100), (175 * (1 + i) + 300), 150)
-        }
-      }
       if(randBool1 == false){
         randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
         while(randCheckBool1 == false){
           randomLocation1[0] = int(random(0, (items.length)));
           randomLocation1[1] = int(random(0, (items[randomLocation1[0]].length)));
-          randomCord1[0] = itemsLocation[randomLocation1[0]][randomLocation1[1]][0];
-          randomCord1[1] = itemsLocation[randomLocation1[0]][randomLocation1[1]][1];
+          randomCord1[0] = itemRoomNumber[randomLocation1[0]][randomLocation1[1]];
           randBool1 = true;
           if(randomCheck1[randomLocation1[0]][randomLocation1[1]] == false){
             randCheckBool1 = true;
@@ -231,8 +304,7 @@ function gameMenu(){
           while(randCheckBool2 == false){
             randomLocation2[0] = int(random(0, (items.length)));
             randomLocation2[1] = int(random(0, (items[randomLocation2[0]].length)));
-            randomCord2[0] = itemsLocation[randomLocation2[0]][randomLocation2[1]][0];
-            randomCord2[1] = itemsLocation[randomLocation2[0]][randomLocation2[1]][1];
+            randomCord2[0] = itemRoomNumber[randomLocation2[0]][randomLocation2[1]];
             randBool2 = true;
             if(randomCheck2[randomLocation2[0]][randomLocation2[1]] == false){
               randCheckBool2 = true;
@@ -240,12 +312,9 @@ function gameMenu(){
           }
         }
       }
-      fill("red");
-      square(itemsLocation[whatGroupState[0]][whatGroupState[1]][0], itemsLocation[whatGroupState[0]][whatGroupState[1]][1], 150);
-      fill("Blue");
-      square(randomCord1[0], randomCord1[1], 150);
-      fill("green");
-      if(playerCount == true) square(randomCord2[0], randomCord2[1], 150);
+      image(mapImages[itemRoomNumber[whatGroupState[0]][whatGroupState[1]]], 750, 600);
+      image(mapImages[randomCord1[0]], 750, 600);
+      if(playerCount == true) image(mapImages[randomCord2[0]], 750, 600);
       keypad();
       battery();
       PointCalculation();
@@ -284,7 +353,7 @@ function IGUI(){
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 350);
 
       switch(minigameState){
-        case 1:
+        case 1: //battery Minigame
           fill(0, 0, 0, 70);
           rect(width/2, height/2, width, height);
           fill("gray");
@@ -292,9 +361,43 @@ function IGUI(){
           fill(255, 255, 255);
           textSize(60);
           text("DATA CORRUPTED SPAM SPACE BAR", width/2, height/2 - 100);
-          text(spacebarCounter + "/ 10", width/2, height / 2 + 100);
+          text(spacebarCounter + "/ 15", width/2, height / 2 + 100);
           textSize(30);
           break;
+        case 2: //Frequency Minigame
+          fill(0, 0, 0, 70);
+          rect(width/2, height/2, width, height);
+          fill("gray");
+          rect(width/2, height/2, 800, 800);
+          fill("black");
+          rect(width/2, height/2, 600, 300);
+          fill(255, 255, 255);
+          textSize(60);
+          text("EMF READER OUT OF SYNC \n REALIGN USING ARROW KEYS", width/2, height/2 - 300);
+          textSize(30);
+          stroke("red");
+          noFill();
+          beginShape();
+          for(var x = width/2 - 300; x < width/2 + 300; x++){
+            //var angle = map(x, 0, width, 0, TWO_PI);
+            var angle = offset  + x * 1;
+            // map x between 0 and width to 0 and Two Pi
+            var y = map(sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
+            vertex(x, y);
+          }
+          endShape();
+          stroke("green");
+          beginShape();
+          for(var x = width/2 - 300; x < width/2 + 300; x++){
+            //var angle = map(x, 0, width, 0, TWO_PI);
+            var angle = offset + x * 1;
+            // map x between 0 and width to 0 and Two Pi
+            var y = map(sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
+            vertex(x, y);
+          }
+          endShape();
+          offset += offsetvar;
+          stroke("black");
       }
       break;
     case 2:
@@ -336,7 +439,6 @@ function ghostMove(){
       for(let i = 0; i < itemsCheck[j].length; i++)
       itemsCheck[j][i] = false;
     }
-    print("hi");
   }
   itemBool = false;
   itemCheckBool = false;
@@ -567,9 +669,17 @@ function minigames(){
       break;
     case 1:
       break;
+    case 2:
+      while(setStrumBool == false){
+        setStrum = whatSetStrum[Math.floor(Math.random() * whatSetStrum.length)];
+        if (setStrum != strum) setStrumBool = true;
+      }
+      if (strum == setStrum) setStrumBool = false, minigameState = 0;
+      break;
   }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
