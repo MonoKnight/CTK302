@@ -115,7 +115,7 @@ let randomCheck2 = [
 ];
 let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
 let batteryCheckArray = [false, false, false, false, false];
-let minigameArray = ["Spacebar", "Frequency"];
+let minigameArray = ["Spacebar", "Frequency", "Radar"];
 //Assets
 let [images, fonts, mapImages] = [[], [], []];
 //loading gif Variables
@@ -142,6 +142,8 @@ let [miniCooldown, miniVariable, miniProcChance, miniProcTimer,enableMinigames, 
 //Frequency Minigame Variables
 let [strum, offset, offsetvar, setStrum, setStrumBool] = [12, 0, 5, 15, false];
 let whatSetStrum = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
+//Radar Minigame Variables 
+let [dots, newLine, dotsCollected, dotsMax, speed, direction, linex] = [[], [], 0, 5, 5, 0, 1];
 //random Variable
 let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
@@ -171,6 +173,7 @@ function setup() {
   miniProcChance = 20;
   miniProcTimer = 20;
   textFont(fonts[0]);
+  newLine.push(new Line());
 }
 
 function draw() {
@@ -199,7 +202,11 @@ function mouseReleased() {
   }
   if((bState[3] == true)) gameEnd(), bState[3] = false;
   if((bState[4] == true)) resetGame(), bState[4] = false;
-  if((bState[6] == true)) minigameState = 2, bState[6] = false;
+  if((bState[6] == true)){
+    minigameState = 3;
+    bState[6] = false;
+    for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
+  } 
   for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
   if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
@@ -228,6 +235,21 @@ function keyPressed(){
     case 2:
       if (keyCode == UP_ARROW && strum > 10) strum += -2;
       if (keyCode == DOWN_ARROW && strum < 26) strum += 2;
+      break;
+    case 3:
+      if(keyCode == 32){
+        for(let i = 0; i < dots.length; i++) {
+           if(collideLineCircle(newLine[0].x2, newLine[0].y2, width/2, height/2, dots[i].x, dots[i].y, 15) == true){
+             dots.splice(i, 1);
+             dotsCollected++;
+             if(dotsCollected == dotsMax) {
+              print("you Win");
+              minigameState = 0;
+              dotsCollected = 0;
+            }
+          }      
+        }
+      }
       break;
   }
 }
@@ -398,6 +420,19 @@ function IGUI(){
           endShape();
           offset += offsetvar;
           stroke("black");
+          break;
+        case 3: //Radar Minigame
+          fill(0, 0, 0, 70);
+          rect(width/2, height/2, width, height);
+          fill("gray");
+          rect(width/2, height/2 - 50, 800, 800);
+          fill("white");
+          textSize(60);
+          text("RADAR DISRUPTED", width/2, height/2 - 375);
+          textSize(30);
+          text("PRESS SPACE WHEN THE LINE OVERLAPS THE CIRCLES", width/2, height/2 - 325);
+          radar();
+          break;
       }
       break;
     case 2:
@@ -663,7 +698,12 @@ function minigames(){
     case 0:
       if(frameCount % 60 == 0) miniVariable++;
       if(miniVariable >= miniCooldown) {
-        if(miniProcChance > int(random(0, 100))) minigameState = (int(random(0, minigameArray.length) + 1)), miniVariable = 0, miniProcChance = 20;
+        if(miniProcChance > int(random(0, 100))){
+          minigameState = (int(random(0, minigameArray.length) + 1));
+          if(minigameState == 3) for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
+          miniVariable = 0;
+          miniProcChance = 20;
+        } 
         else miniVariable = miniVariable - miniProcTimer, miniProcChance+=10;
       }
       break;
@@ -683,3 +723,78 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+function radar(){
+  push();
+  fill("black");
+  circle(width/2, height/2, 500);
+  // Green part
+  stroke(49, 171, 0);
+  strokeWeight(10); 
+  
+  // Green Lines
+  line(width / 2, (height / 2) - 235, width / 2, (height / 2) + 235)
+  line((width / 2) - 235, height / 2, (width / 2) + 235, height / 2)
+  
+  // Green circles
+  strokeWeight(5)
+  circle(width / 2, height / 2, 400);
+  circle(width / 2, height / 2, 325);
+  circle(width / 2, height / 2, 250);
+  circle(width / 2, height / 2, 175);
+  circle(width / 2, height / 2, 100);  
+  //dots
+  dots.forEach(function (Dots){
+    Dots.display();
+  });
+
+  //rotating line
+  checker();
+  // Grey part
+  noFill();
+  stroke(64)
+  strokeWeight(25);
+  circle(width / 2, height / 2, 500)
+  pop();
+}
+
+function checker(){
+  push();
+  stroke(49, 171, 0);
+  strokeWeight(10);
+  let angle = millis() / 20; 
+  newLine[0].update(angle, 250);
+  newLine[0].display();
+  pop();
+}
+
+class Dots{
+  constructor(){
+    this.angle = random(0, 360);
+    this.radius = random(50, 225); 
+    this.x = width / 2 + cos(this.angle) * this.radius;
+    this.y = height / 2 + sin(this.angle) * this.radius;
+
+  }
+  display(){
+    push();
+    noStroke();
+    fill(255, 0, 0);
+    ellipse(this.x, this.y, 45, 45);
+    pop();
+  }
+}
+
+class Line{
+  constructor(){
+    
+  }
+  
+  display(){
+    line(width / 2, height / 2, this.x2, this.y2);
+  }
+  
+  update(angle, lineLength){
+    this.x2 = width / 2 + cos(angle) * lineLength;
+    this.y2 = height / 2 + sin(angle) * lineLength;
+  }
+}
