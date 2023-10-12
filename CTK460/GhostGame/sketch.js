@@ -1,17 +1,17 @@
 //IRL Game Items
 let items = [
-  ["G1I1", "G1I2", "G1I3"],
-  ["G2I1", "G2I2", "G2I3"],
-  ["G3I1", "G3I2", "G3I3"],
-  ["G4I1", "G4I2", "G4I3"],
-  ["G1I1", "G1I2", "G1I3"],
-  ["G2I1", "G2I2", "G2I3"],
-  ["G3I1", "G3I2", "G3I3"],
-  ["G4I1", "G4I2", "G4I3"],
-  ["G1I1", "G1I2", "G1I3"],
-  ["G2I1", "G2I2", "G2I3"],
-  ["G3I1", "G3I2", "G3I3"],
-  ["G4I1", "G4I2", "G4I3"],
+  ["Folding Chair", "Umbrella"], //outdoorsy
+  ["Salad Dressing", "Water Bottle", "Hand Sanitzer"], //liquid 
+  ["DVD"], //film
+  ["Lamp", "Chair", "Photograph"], //vintage 
+  ["Computer Station", "Fan", "Electrical Plug", "Computer Station"], //electrical 
+  ["Trash Can", "Trash Can", "Trash Can"], //cleaning 
+  ["Desk", "Cabinets", "Pallets"], //wood 
+  ["Phone", "TV"], //appliance 
+  ["Metal Rack", "Ladder", "Trolly", "Fire Extinguisher"], //metal
+  ["Paint", "Paint Roller", "Board Game"], //arts/crafts
+  ["Printer", "Chalkboard", "Whiteboard"], //classroom
+  ["Analog Clock", "Analog Clock"], //time
 ];
 let itemsCheck = [
   [false, false, false],
@@ -55,35 +55,35 @@ let itemsLocation = [
   [[275, 825], [625, 475], [800, 650]],
   [[450, 475], [625, 650], [800, 825]],
 ];
-let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Antique", "Group 5", "Group 6", "Group 7", "Group 8", "Group 9", "Group 10", "Group 11", "Group 12"];
+let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Vintage", "Electrical", "Cleaning Related", "Wooden", "Device Related", "Metalic", "Arts/Crafts Related", "in a Classroom", "Time Related"];
 
 let itemHintArray = [
-  ["Hint 1", "Hint 13", "Hint 25"],
-  ["Hint 2", "Hint 14", "Hint 26"],
-  ["Hint 3", "Hint 15", "Hint 27"],
-  ["Hint 4", "Hint 16", "Hint 28"],
-  ["Hint 5", "Hint 17", "Hint 29"],
-  ["Hint 6", "Hint 18", "Hint 30"],
-  ["Hint 7", "Hint 19", "Hint 31"],
-  ["Hint 8", "Hint 20", "Hint 32"],
-  ["Hint 9", "Hint 21", "Hint 33"],
-  ["Hint 10", "Hint 22", "Hint 34"],
-  ["Hint 11", "Hint 23", "Hint 35"],
-  ["Hint 12", "Hint 24", "Hint 36"],
+  ["Folding Chair", "Umbrella"], //outdoorsy
+  ["Salad Dressing", "Water Bottle", "Hand Sanitzer"], //liquid 
+  ["DVD"], //film
+  ["Lamp", "Chair", "Photograph"], //vintage 
+  ["Computer Station", "Fan", "Electrical Plug", "Computer Station"], //electrical 
+  ["Trash Can", "Trash Can", "Trash Can"], //cleaning 
+  ["Desk", "Cabinets", "Pallets"], //wood 
+  ["Phone", "TV"], //appliance 
+  ["Metal Rack", "Ladder", "Trolly", "Fire Extinguisher"], //metal
+  ["Paint", "Paint Roller", "Board Game"], //arts/crafts
+  ["Printer", "Chalkboard", "Whiteboard"], //classroom
+  ["Analog Clock", "Analog Clock"], //time
 ];
 let passwordArray = [
-  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
-  [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
-  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
-  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
-  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
-  [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
-  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
-  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
-  [[4, 1, 9, 9], [2, 3, 1, 8], [4, 2, 9, 2]],
-  [[7, 6, 6, 7], [9, 3, 1, 8], [9, 3, 9, 4]],
-  [[1, 0, 1, 5], [3, 1, 7, 0], [2, 0, 9, 9]],
-  [[8, 7, 3, 3], [5, 2, 6, 8], [8, 9, 3, 2]],
+  [[3, 5, 2, 8], [4, 1, 3, 8]],
+  [[6, 8, 4, 0], [9, 4, 3, 9], [3, 7, 8, 7]],
+  [[9, 4, 3, 0]],
+  [[8, 7, 3, 0], [9, 4, 3, 1], [4, 5, 3, 2]],
+  [[7, 5, 2, 3], [7, 8, 2, 2], [6, 2, 1, 9], [8, 4, 4, 9]],
+  [[3, 1, 3, 6], [2, 1, 4, 7], [8, 7, 1, 8]],
+  [[5, 6, 2, 7], [6, 3, 2, 6], [6, 5, 2, 5]],
+  [[4, 2, 2, 4], [7, 4, 2, 0]],
+  [[4, 2, 4, 0], [7, 5, 4, 1], [8, 5, 4, 3], [4, 8, 4, 2]],
+  [[9, 5, 2, 9], [7, 5, 2, 3], [4, 1, 3, 5]],
+  [[4, 5, 2, 1], [2, 3, 3, 3], [4, 2, 1, 7]],
+  [[4, 8, 4, 6], [4, 2, 4, 8]],
 ];
 let randomCheck1 = [
   [false, false, false],
@@ -169,7 +169,7 @@ function setup() {
   ghostTimeMax = 60;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 10;
+  miniCooldown = 90;
   miniProcChance = 20;
   miniProcTimer = 20;
   textFont(fonts[0]);
@@ -239,7 +239,7 @@ function keyPressed(){
     case 3:
       if(keyCode == 32){
         for(let i = 0; i < dots.length; i++) {
-           if(collideLineCircle(newLine[0].x2, newLine[0].y2, width/2, height/2, dots[i].x, dots[i].y, 15) == true){
+           if(collideLineCircle(newLine[0].x2, newLine[0].y2, width/2, height/2, dots[i].x, dots[i].y, 45) == true){
              dots.splice(i, 1);
              dotsCollected++;
              if(dotsCollected == dotsMax) {
@@ -340,7 +340,7 @@ function gameMenu(){
       keypad();
       battery();
       PointCalculation();
-      DebugMode();
+      //DebugMode();
       minigames();
       if(batTimer <= 0) gameEnd();
       break;
@@ -770,7 +770,7 @@ function checker(){
 class Dots{
   constructor(){
     this.angle = random(0, 360);
-    this.radius = random(50, 225); 
+    this.radius = random(50, 200); 
     this.x = width / 2 + cos(this.angle) * this.radius;
     this.y = height / 2 + sin(this.angle) * this.radius;
 
