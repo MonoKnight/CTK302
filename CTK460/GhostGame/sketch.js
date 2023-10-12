@@ -169,7 +169,7 @@ function setup() {
   ghostTimeMax = 60;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 90;
+  miniCooldown = 10;
   miniProcChance = 20;
   miniProcTimer = 20;
   textFont(fonts[0]);
