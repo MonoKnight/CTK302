@@ -1,17 +1,17 @@
 //IRL Game Items
 let items = [
-  ["Folding Chair", "Umbrella"], //outdoorsy
-  ["Salad Dressing", "Water Bottle", "Hand Sanitzer"], //liquid 
-  ["DVD"], //film
-  ["Lamp", "Chair", "Photograph"], //vintage 
-  ["Computer Station", "Fan", "Electrical Plug", "Computer Station"], //electrical 
-  ["Trash Can", "Trash Can", "Trash Can"], //cleaning 
-  ["Desk", "Cabinets", "Pallets"], //wood 
-  ["Phone", "TV"], //appliance 
-  ["Metal Rack", "Ladder", "Trolly", "Fire Extinguisher"], //metal
-  ["Paint", "Paint Roller", "Board Game"], //arts/crafts
-  ["Printer", "Chalkboard", "Whiteboard"], //classroom
-  ["Analog Clock", "Analog Clock"], //time
+  ["Laptop", "Smartphone", "Calculator"], 
+  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
+  ["Notebook", "Pen", "Pencil"], 
+  ["Highlighter", "Sticky Notes", "Textbooks"], 
+  ["Planner", "Index Cards", "Wallet"], 
+  ["ID", "Keys", "Sunglasses"], 
+  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
+  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
+  ["Face Mask", "Tissues", "Chapstick"],
+  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
+  ["Backpack", "Shopping Bag", "Snack"], 
+  ["Umbrella", "Gum", "Smartphone Charger"], 
 ];
 let itemsCheck = [
   [false, false, false],
@@ -55,35 +55,48 @@ let itemsLocation = [
   [[275, 825], [625, 475], [800, 650]],
   [[450, 475], [625, 650], [800, 825]],
 ];
-let groupHintArray = ["Outdoorsy", "Liquidy", "Film Related", "Vintage", "Electrical", "Cleaning Related", "Wooden", "Device Related", "Metalic", "Arts/Crafts Related", "in a Classroom", "Time Related"];
+let itemHintArray1 = [
+  ["Laptop", "Smartphone", "Calculator"], 
+  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
+  ["Notebook", "Pen", "Pencil"], 
+  ["Highlighter", "Sticky Notes", "Textbooks"], 
+  ["Planner", "Index Cards", "Wallet"], 
+  ["ID", "Keys", "Sunglasses"], 
+  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
+  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
+  ["Face Mask", "Tissues", "Chapstick"],
+  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
+  ["Backpack", "Shopping Bag", "Snack"], 
+  ["Umbrella", "Gum", "Smartphone Charger"], 
+];
 
-let itemHintArray = [
-  ["Folding Chair", "Umbrella"], //outdoorsy
-  ["Salad Dressing", "Water Bottle", "Hand Sanitzer"], //liquid 
-  ["DVD"], //film
-  ["Lamp", "Chair", "Photograph"], //vintage 
-  ["Computer Station", "Fan", "Electrical Plug", "Computer Station"], //electrical 
-  ["Trash Can", "Trash Can", "Trash Can"], //cleaning 
-  ["Desk", "Cabinets", "Pallets"], //wood 
-  ["Phone", "TV"], //appliance 
-  ["Metal Rack", "Ladder", "Trolly", "Fire Extinguisher"], //metal
-  ["Paint", "Paint Roller", "Board Game"], //arts/crafts
-  ["Printer", "Chalkboard", "Whiteboard"], //classroom
-  ["Analog Clock", "Analog Clock"], //time
+let itemHintArray2 = [
+  ["Laptop", "Smartphone", "Calculator"], 
+  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
+  ["Notebook", "Pen", "Pencil"], 
+  ["Highlighter", "Sticky Notes", "Textbooks"], 
+  ["Planner", "Index Cards", "Wallet"], 
+  ["ID", "Keys", "Sunglasses"], 
+  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
+  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
+  ["Face Mask", "Tissues", "Chapstick"],
+  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
+  ["Backpack", "Shopping Bag", "Snack"], 
+  ["Umbrella", "Gum", "Smartphone Charger"], 
 ];
 let passwordArray = [
-  [[3, 5, 2, 8], [4, 1, 3, 8]],
+  [[3, 5, 2, 8], [4, 1, 3, 8], [8, 4, 4, 9]],
   [[6, 8, 4, 0], [9, 4, 3, 9], [3, 7, 8, 7]],
-  [[9, 4, 3, 0]],
+  [[9, 4, 3, 0], [8, 7, 4, 9], [8, 4, 2, 9]],
   [[8, 7, 3, 0], [9, 4, 3, 1], [4, 5, 3, 2]],
-  [[7, 5, 2, 3], [7, 8, 2, 2], [6, 2, 1, 9], [8, 4, 4, 9]],
+  [[7, 5, 2, 3], [7, 8, 2, 2], [6, 2, 1, 9]],
   [[3, 1, 3, 6], [2, 1, 4, 7], [8, 7, 1, 8]],
   [[5, 6, 2, 7], [6, 3, 2, 6], [6, 5, 2, 5]],
-  [[4, 2, 2, 4], [7, 4, 2, 0]],
-  [[4, 2, 4, 0], [7, 5, 4, 1], [8, 5, 4, 3], [4, 8, 4, 2]],
+  [[4, 2, 2, 4], [7, 4, 2, 0], [4, 8, 4, 2]],
+  [[4, 2, 4, 0], [7, 5, 4, 1], [8, 5, 4, 3]],
   [[9, 5, 2, 9], [7, 5, 2, 3], [4, 1, 3, 5]],
   [[4, 5, 2, 1], [2, 3, 3, 3], [4, 2, 1, 7]],
-  [[4, 8, 4, 6], [4, 2, 4, 8]],
+  [[4, 8, 4, 6], [4, 2, 4, 8], [4, 8, 4, 8]],
 ];
 let randomCheck1 = [
   [false, false, false],
@@ -113,9 +126,9 @@ let randomCheck2 = [
   [false, false, false],
   [false, false, false],
 ];
-let batteryPasswordArray = [[1, 4, 5, 2], [9, 9, 9, 3], [6, 3, 8, 2], [6, 9, 7, 3], [2, 3, 9, 8]];
+let batteryPasswordArray = [[1, 0, 0, 4], [0, 4, 2, 4], [3, 8, 5, 1], [0, 2, 5, 4], [2, 5, 3, 0], [1, 9, 0, 9], [1, 2, 1, 0], [4, 2, 8, 9], [9, 1, 4, 7], [3, 8, 6, 1]];
 let batteryCheckArray = [false, false, false, false, false];
-let minigameArray = ["Spacebar", "Frequency", "Radar"];
+let minigameArray = ["Spacebar", "Frequency", "Radar", "Ghost"];
 //Assets
 let [images, fonts, mapImages] = [[], [], []];
 //loading gif Variables
@@ -149,7 +162,7 @@ let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
 
 function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
-  images[1] = loadImage("Assets/Images/spookyghost.avif");
+  images[1] = loadImage("Assets/Images/spookyghost.png");
   images[2] = loadImage("Assets/Images/LogoTransparent.png");
   images[3] = loadImage("Assets/Images/MMBackground.jpg");
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
@@ -163,10 +176,10 @@ function setup() {
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
-  batTimer = 600;
-  batMaxTime = 600;
-  ghostTimeMedium = 30;
-  ghostTimeMax = 60;
+  batTimer = 300;
+  batMaxTime = 300;
+  ghostTimeMedium = 60;
+  ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
   miniCooldown = 90;
@@ -203,13 +216,14 @@ function mouseReleased() {
   if((bState[3] == true)) gameEnd(), bState[3] = false;
   if((bState[4] == true)) resetGame(), bState[4] = false;
   if((bState[6] == true)){
-    minigameState = 3;
+    minigameState = 4;
     bState[6] = false;
     for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
   } 
   for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
   if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
+  if(gameState == 1 && minigameState == 4) if(collidePointCircle(mouseX, mouseY, ghostX, ghostY, 200) == true) minigameState = 0;
 }
 
 function keyPressed(){
@@ -243,7 +257,6 @@ function keyPressed(){
              dots.splice(i, 1);
              dotsCollected++;
              if(dotsCollected == dotsMax) {
-              print("you Win");
               minigameState = 0;
               dotsCollected = 0;
             }
@@ -260,7 +273,7 @@ function mainMenu(){
   image(images[2], width/2, 250, 850, 850);
   textSize(30)
   strokeWeight(2);
-  ghostAnim();
+  ghostAnim((width/4), ((width * 3) / 4), (width/2), ((height * 3) / 8), ((height * 5) / 8), 1000, 10);
   stroke("black");
   buttonCreate(-1, "2 Players", width/2 - 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
   buttonCreate(0, "3+ Players", width/2 + 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
@@ -306,6 +319,7 @@ function gameMenu(){
           }
         }
         whatGroupState = randomItem;
+        print(whatGroupState);
       } 
       if(randBool1 == false){
         randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
@@ -340,7 +354,7 @@ function gameMenu(){
       keypad();
       battery();
       PointCalculation();
-      //DebugMode();
+      DebugMode();
       minigames();
       if(batTimer <= 0) gameEnd();
       break;
@@ -367,9 +381,9 @@ function IGUI(){
       text(batCount + "/5 Batteries Held", 1250, 200);
       text("Ghosts Found: " + move, 200, 100);
       text("Total Points: " + pointTotal, 200, 200);
-      text("The Ghost is in Something " + groupHintArray[whatGroupState[0]], 750, 100);
       if(frameCount % 60 == 0) hintTimer++;
-      if(hintTimer > 5) fill("white"), text(itemHintArray[whatGroupState[0]][whatGroupState[1]], 750, 200);
+      if(hintTimer > 1) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], 750, 100);
+      if(hintTimer > 5) fill("white"), text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], 750, 200);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 350);
@@ -432,6 +446,16 @@ function IGUI(){
           textSize(30);
           text("PRESS SPACE WHEN THE LINE OVERLAPS THE CIRCLES", width/2, height/2 - 325);
           radar();
+          break;
+        case 4:
+          ghostAnim((width / 2) - 300, (width / 2) + 300, width / 2, (height / 2) - 150, (height / 2) + 150, 200, 255);
+          push();
+          stroke("black");
+          strokeWeight(20);
+          fill("red");
+          textSize(100);
+          text("CLICK THE GHOST NOW NOW NOW NOW NOW", width/2, 200);
+          pop();
           break;
       }
       break;
@@ -680,17 +704,20 @@ function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
   textSize(30);
 }
 
-function ghostAnim(){
+function ghostAnim(ghostXMin, ghostXMax, ghostXMid, ghostYMin, ghostYMax, ghostSize, ghostTint){
   ghostSinV += 5;
-  ghostY = map(sin(ghostSinV), -1, 1, height * 3 / 8, height * 5 / 8);
-  if(ghostX >= width/4) ghostX = map(-cos(ghostSinV), -1, 1, width/4 - 0.01, width * 3 / 8);
-  else if(ghostX < width/4) ghostX = map(cos(ghostSinV), -1, 1, width/8, width/4 + 0.01);
-  ghostRotate = map(ghostX, width/8, width*3/8, -15, 15);
+  ghostY = map(sin(ghostSinV), -1, 1, ghostYMin, ghostYMax);
+  if(ghostX >= ghostXMid) ghostX = map(-cos(ghostSinV), -1, 1, ghostXMid - 0.01, ghostXMax);
+  else if(ghostX < ghostXMid) ghostX = map(cos(ghostSinV), -1, 1, ghostXMin, ghostXMid + 0.01);
+  ghostRotate = map(ghostX, ghostXMin, ghostXMax, -15, 15);
   push();
   translate(ghostX, ghostY);
   rotate(ghostRotate);
-  image(images[1], 0, 0, 200, 200);
+  tint(255, ghostTint);
+  image(images[1], 0, 0, ghostSize, ghostSize);
   pop();
+  noFill();
+  //circle(ghostX, ghostY, 200);
 }
 
 function minigames(){
@@ -715,6 +742,9 @@ function minigames(){
         if (setStrum != strum) setStrumBool = true;
       }
       if (strum == setStrum) setStrumBool = false, minigameState = 0;
+      break;
+    case 3:
+
       break;
   }
 }
