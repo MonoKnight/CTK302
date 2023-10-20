@@ -165,6 +165,10 @@ function preload() {
   images[1] = loadImage("Assets/Images/spookyghost.png");
   images[2] = loadImage("Assets/Images/LogoTransparent.png");
   images[3] = loadImage("Assets/Images/MMBackground.jpg");
+  images[4] = loadImage("Assets/Images/Minigame_Frame_Empty.png");
+  images[5] = loadImage("Assets/Images/ButtonNoHover.png");
+  images[6] = loadImage("Assets/Images/ButtonHover.png");
+  images[7] = loadImage("Assets/Images/Background2.jpg");
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
   for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
   fonts[0] = loadFont("Assets/Fonts/Top Show.otf");
@@ -275,8 +279,10 @@ function mainMenu(){
   strokeWeight(2);
   ghostAnim((width/4), ((width * 3) / 4), (width/2), ((height * 3) / 8), ((height * 5) / 8), 1000, 10);
   stroke("black");
-  buttonCreate(-1, "2 Players", width/2 - 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
-  buttonCreate(0, "3+ Players", width/2 + 200, height/2 + 100, 250, 100, "#b0b0b0", "#5c5c5c");
+  imageButtonCreate(-1, "2 Players", width/2 - 300, height/2 + 100, 428, 125, images[5], images[6]);
+  imageButtonCreate(0, "3+ Players", width/2 + 300, height/2 + 100, 428, 125, images[5], images[6]);
+  textSize(50);
+  text("Choose the Number of Players to Start", width/2, height/2 + 300);
 }
 
 //In Game Function
@@ -286,7 +292,7 @@ function gameMenu(){
     case 0:
       ghostCooldownTimer = 0;
       popupToggle = 0;
-      background("blue");
+      image(images[7], width/2, height/2 );
       loadAnimTimer++
       if(loadAnimTimer <= 1*60){
         text("Search for Ghost", width/2, 200);
@@ -365,7 +371,7 @@ function gameMenu(){
       break;
     //Game Over
     case 3:
-      background("blue");
+      image(images[7], width/2, height/2 );
       break;
   }
   IGUI();
@@ -392,8 +398,7 @@ function IGUI(){
         case 1: //battery Minigame
           fill(0, 0, 0, 70);
           rect(width/2, height/2, width, height);
-          fill("gray");
-          rect(width/2, height/2, 1300, 400);
+          image(images[4], width/2, height/2);
           fill(255, 255, 255);
           textSize(60);
           text("DATA CORRUPTED SPAM SPACE BAR", width/2, height/2 - 100);
@@ -401,18 +406,19 @@ function IGUI(){
           textSize(30);
           break;
         case 2: //Frequency Minigame
+          push();
           fill(0, 0, 0, 70);
           rect(width/2, height/2, width, height);
-          fill("gray");
-          rect(width/2, height/2, 800, 800);
+          image(images[4], width/2, height/2);
           fill("black");
           rect(width/2, height/2, 600, 300);
-          fill(255, 255, 255);
-          textSize(60);
-          text("EMF READER OUT OF SYNC \n REALIGN USING ARROW KEYS", width/2, height/2 - 300);
+          fill("#a1936d");
+          textSize(50);
+          text("EMF READER OUT OF SYNC \n REALIGN USING UP AND DOWN KEYS", width/2, height/2 - 250);
           textSize(30);
-          stroke("red");
+          strokeWeight(5);
           noFill();
+          stroke("red");
           beginShape();
           for(var x = width/2 - 300; x < width/2 + 300; x++){
             //var angle = map(x, 0, width, 0, TWO_PI);
@@ -432,19 +438,21 @@ function IGUI(){
             vertex(x, y);
           }
           endShape();
+          stroke("#292622");
+          rect(width/2, height/2, 600, 300);
           offset += offsetvar;
           stroke("black");
+          pop();
           break;
         case 3: //Radar Minigame
           fill(0, 0, 0, 70);
           rect(width/2, height/2, width, height);
-          fill("gray");
-          rect(width/2, height/2 - 50, 800, 800);
+          image(images[4], width/2, height/2 - 75, images[4].width * 1.25, images[4].height * 1.25);
           fill("white");
           textSize(60);
           text("RADAR DISRUPTED", width/2, height/2 - 375);
           textSize(30);
-          text("PRESS SPACE WHEN THE LINE OVERLAPS THE CIRCLES", width/2, height/2 - 325);
+          text("PRESS SPACE WHEN THE SENSOR LINE OVERLAPS THE RED ANOMALIES", width/2, height/2 - 300);
           radar();
           break;
         case 4:
@@ -557,6 +565,7 @@ function resetGame(){
 
 //Creates Keypad
 function keypad(){
+  /*
   fill("#212224");
   rect(1650, (550 + 700 - 100)/2, 500, 775, 20);
   fill("#3e4045");
@@ -575,6 +584,7 @@ function keypad(){
   buttonCreate(19, "9", 1800, 700, 100, 100, "#636363", "#4D5053");
   buttonCreate(20, "Back", 1500, 850, 100, 100, "#636363", "#4D5053");
   buttonCreate(21, "#", 1800, 850, 100, 100, "#636363", "#4D5053");
+  */
   textSize(40);
   if(keypadEntry[0] >= 0) text(keypadEntry[0], 1530, 285);
   if(keypadEntry[1] >= 0) text(keypadEntry[1], 1610, 285);
@@ -704,6 +714,19 @@ function buttonCreate(bSV, bT, bX, bY, bW, bH, bC, bC2) {
   textSize(30);
 }
 
+function imageButtonCreate(bSV, bT, bX, bY, bW, bH, image1, image2) {
+  bState[bSV] = false;
+  if(mouseX > (bX - (bW/2)) && mouseX < (bX + (bW/2)) && mouseY > (bY - (bH/2)) && mouseY < (bY + (bH/2)) && minigameState == 0){
+    image(image2, bX, bY, bW, bH);
+    bState[bSV] = true;
+  }
+  else image(image1, bX, bY, bW, bH);
+  fill(255);
+  textSize(40);
+  text(bT, bX, bY + 10);
+  textSize(30);
+}
+
 function ghostAnim(ghostXMin, ghostXMax, ghostXMid, ghostYMin, ghostYMax, ghostSize, ghostTint){
   ghostSinV += 5;
   ghostY = map(sin(ghostSinV), -1, 1, ghostYMin, ghostYMax);
@@ -716,7 +739,6 @@ function ghostAnim(ghostXMin, ghostXMax, ghostXMid, ghostYMin, ghostYMax, ghostS
   tint(255, ghostTint);
   image(images[1], 0, 0, ghostSize, ghostSize);
   pop();
-  noFill();
   //circle(ghostX, ghostY, 200);
 }
 
@@ -790,7 +812,7 @@ function radar(){
 function checker(){
   push();
   stroke(49, 171, 0);
-  strokeWeight(10);
+  strokeWeight(7);
   let angle = millis() / 20; 
   newLine[0].update(angle, 250);
   newLine[0].display();
