@@ -551,7 +551,7 @@ function resetGame(){
   loadAnimTimer = 0;
   loadVT = 0;
   pointTotal = 0;
-  batTimer = 600;
+  batTimer = 300;
   inGameState = 0;
   gameState = 0;
   ghostMultiplier = 0;
