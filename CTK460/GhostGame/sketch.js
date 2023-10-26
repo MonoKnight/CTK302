@@ -29,18 +29,34 @@ let itemsCheck = [
 ];
 let itemRoomNumber = [
  [0, 1, 2],
- [3, 4, 5],
- [6, 7, 8],
- [9, 10, 11],
+ [3, 0, 1],
+ [2, 3, 0],
+ [1, 2, 3],
  [0, 1, 2],
- [3, 4, 5],
- [6, 7, 8],
- [9, 10, 11],
+ [3, 0, 1],
+ [2, 3, 0],
+ [1, 2, 3],
  [0, 1, 2],
- [3, 4, 5],
- [6, 7, 8],
- [9, 10, 11],
+ [3, 0, 1],
+ [2, 3, 0],
+ [1, 2, 3],
 ];
+
+let whatFloor = [
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [1, 1, 1],
+  [1, 1, 1],
+  [1, 1, 1],
+  [1, 1, 1],
+  [1, 1, 1],
+  [1, 1, 1],
+ ];
+
 let itemsLocation = [
   [[275, 475], [450, 650], [625, 825]],
   [[275, 650], [450, 825], [800, 475]],
@@ -84,6 +100,22 @@ let itemHintArray2 = [
   ["Backpack", "Shopping Bag", "Snack"], 
   ["Umbrella", "Gum", "Smartphone Charger"], 
 ];
+
+let itemHintArray3 = [
+  ["Laptop", "Smartphone", "Calculator"], 
+  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
+  ["Notebook", "Pen", "Pencil"], 
+  ["Highlighter", "Sticky Notes", "Textbooks"], 
+  ["Planner", "Index Cards", "Wallet"], 
+  ["ID", "Keys", "Sunglasses"], 
+  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
+  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
+  ["Face Mask", "Tissues", "Chapstick"],
+  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
+  ["Backpack", "Shopping Bag", "Snack"], 
+  ["Umbrella", "Gum", "Smartphone Charger"], 
+];
+
 let passwordArray = [
   [[3, 5, 2, 8], [4, 1, 3, 8], [8, 4, 4, 9]],
   [[6, 8, 4, 0], [9, 4, 3, 9], [3, 7, 8, 7]],
@@ -130,7 +162,7 @@ let batteryPasswordArray = [[1, 0, 0, 4], [0, 4, 2, 4], [3, 8, 5, 1], [0, 2, 5, 
 let batteryCheckArray = [false, false, false, false, false];
 let minigameArray = ["Spacebar", "Frequency", "Radar", "Ghost"];
 //Assets
-let [images, fonts, mapImages] = [[], [], []];
+let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages] = [[], [], [], [], [], [], [], []];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
@@ -169,9 +201,33 @@ function preload() {
   images[5] = loadImage("Assets/Images/ButtonNoHover.png");
   images[6] = loadImage("Assets/Images/ButtonHover.png");
   images[7] = loadImage("Assets/Images/Background2.jpg");
+  mainMenuAsset[0] = loadImage("Assets/Images/MainMenu/MMBackground.jpg");
+  mainMenuAsset[1] = loadImage("Assets/Images/MainMenu/Black.png");
+  mainMenuAsset[2] = loadImage("Assets/Images/MainMenu/Yellow.png");
+  mainMenuAsset[3] = loadImage("Assets/Images/MainMenu/2P.png");
+  mainMenuAsset[4] = loadImage("Assets/Images/MainMenu/3P.png");
+  mainMenuAsset[5] = loadImage("Assets/Images/MainMenu/Subtitle.png");
+  mainMenuAsset[6] = loadImage("Assets/Images/MainMenu/Line.png");
+  inGameAsset[0] = loadImage("Assets/Images/InGameMenu/Background.png");
+  inGameAsset[1] = loadImage("Assets/Images/InGameMenu/Battery.png");
+  inGameAsset[2] = loadImage("Assets/Images/InGameMenu/GhostIcon.png");
+  inGameAsset[3] = loadImage("Assets/Images/InGameMenu/Frame.png");
+  inGameAsset[4] = loadImage("Assets/Images/InGameMenu/Corner1.png");
+  inGameAsset[5] = loadImage("Assets/Images/InGameMenu/Corner2.png");
+  inGameAsset[6] = loadImage("Assets/Images/InGameMenu/Basement.png");
+  inGameAsset[7] = loadImage("Assets/Images/InGameMenu/First_Floor.png");
+  inGameAsset[8] = loadImage("Assets/Images/InGameMenu/Hint1.png");
+  inGameAsset[9] = loadImage("Assets/Images/InGameMenu/Hint2.png");
+  inGameAsset[10] = loadImage("Assets/Images/InGameMenu/Input.png");
+  inGameAsset[11] = loadImage("Assets/Images/InGameMenu/Logo.png");
+  inGameAsset[12] = loadImage("Assets/Images/InGameMenu/DarkenedBattery.png");
+  endImages[0] = loadImage("Assets/Images/GameOver/PlayAgain.png");
+
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
-  for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
-  fonts[0] = loadFont("Assets/Fonts/Top Show.otf");
+  //for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
+  for(let i = 0; i < 4; i++) basementImages[i] = loadImage("Assets/Images/Basement/Basement" + (i+1) + ".png");
+  for(let i = 0; i < 4; i++) groundImages[i] = loadImage("Assets/Images/GroundFloor/First_Floor" + (i+1) + ".png");
+  fonts[0] = loadFont("Assets/Fonts/Cambria.ttf");
 }
 
 function setup() {
@@ -207,7 +263,7 @@ function draw() {
 }
 
 function mouseReleased() {
-  if((bState[-1] == true) && gameState == 0) gameState = 1, playerCount = false;
+  if((bState[-1] == true) && gameState == 0) gameState = 1, playerCount = false, inGameState = 1;
   if((bState[0] == true) && gameState == 0) gameState = 1, playerCount = true;
   if((bState[1] == true)) ghostMove(), bState[1] = false;
   if((bState[2] == true)){
@@ -273,29 +329,42 @@ function keyPressed(){
 
 //Main Menu Function
 function mainMenu(){
-  image(images[3], width/2, height/2, width, height);
-  image(images[2], width/2, 250, 850, 850);
-  textSize(30)
-  strokeWeight(2);
+  //background
+  image(mainMenuAsset[0], width/2, height/2, width, height);
+  //logo
+  image(images[2], width/2, 250, 750, 750);
+  //teehee don't delete
   ghostAnim((width/4), ((width * 3) / 4), (width/2), ((height * 3) / 8), ((height * 5) / 8), 1000, 10);
-  stroke("black");
-  imageButtonCreate(-1, "2 Players", width/2 - 300, height/2 + 100, 428, 125, images[5], images[6]);
-  imageButtonCreate(0, "3+ Players", width/2 + 300, height/2 + 100, 428, 125, images[5], images[6]);
-  textSize(50);
-  text("Choose the Number of Players to Start", width/2, height/2 + 300);
+  //buttons
+  image(mainMenuAsset[1], width/2 - 200, height/2 + 250);
+  image(mainMenuAsset[1], width/2 + 200, height/2 + 250);
+  imageButtonCreate(-1, "", width/2 - 200, height/2 + 250, mainMenuAsset[1].width, mainMenuAsset[1].height, mainMenuAsset[1], mainMenuAsset[2]);
+  imageButtonCreate(0, "", width/2 + 200, height/2 + 250, mainMenuAsset[1].width, mainMenuAsset[1].height, mainMenuAsset[1], mainMenuAsset[2]);
+  image(mainMenuAsset[3], width/2 - 200, height/2 + 250, mainMenuAsset[3].width * 0.75, mainMenuAsset[3].height * 0.75);
+  image(mainMenuAsset[4], width/2 + 200, height/2 + 250, mainMenuAsset[3].width * 0.75, mainMenuAsset[3].height * 0.75);
+  //Subtitle
+  image(mainMenuAsset[5], width/2, height/2 + 100, mainMenuAsset[5].width * 0.6, mainMenuAsset[5].height * 0.6);
+  image(mainMenuAsset[6], width/2, height/2 + 130, mainMenuAsset[6].width * 0.6, mainMenuAsset[6].height * 0.6);
+  image(mainMenuAsset[6], width/2, height/2 + 125, mainMenuAsset[6].width * 0.6, mainMenuAsset[6].height * 0.6);
+  textSize(40);
+  fill("#C5bba3");
+  text("Choose the Number of Players to Start", width/2, height/2 + 350);
 }
 
 //In Game Function
 function gameMenu(){
+  IGUI();
   switch (inGameState) {
     //Finding Ghost Animation
     case 0:
+      fill("#e7e1da");
+      textSize(70);
       ghostCooldownTimer = 0;
       popupToggle = 0;
       image(images[7], width/2, height/2 );
       loadAnimTimer++
       if(loadAnimTimer <= 1*60){
-        text("Search for Ghost", width/2, 200);
+        text("Searching for Ghost", width/2, 200);
         loadVT++;
         if(loadVT > 0.02 * 60){
           loadV++;
@@ -312,7 +381,6 @@ function gameMenu(){
       break;
     //Main Game
     case 1:
-      background("blue");
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
         while(itemCheckBool == false){
@@ -354,9 +422,27 @@ function gameMenu(){
           }
         }
       }
-      image(mapImages[itemRoomNumber[whatGroupState[0]][whatGroupState[1]]], 750, 600);
-      image(mapImages[randomCord1[0]], 750, 600);
-      if(playerCount == true) image(mapImages[randomCord2[0]], 750, 600);
+      //Displays the Dots on the Map
+      if(whatFloor[whatGroupState[0]][whatGroupState[1]] == 0) {
+        image(basementImages[itemRoomNumber[whatGroupState[0]][whatGroupState[1]]], width/2 - 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+      }
+      else if(whatFloor[whatGroupState[0]][whatGroupState[1]] == 1) {
+        image(groundImages[itemRoomNumber[whatGroupState[0]][whatGroupState[1]]], width/2 + 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+      }
+      if(whatFloor[randomLocation1[0]][randomLocation1[1]] == 0){
+        image(basementImages[randomCord1[0]], width/2 - 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+      }
+      else if(whatFloor[randomLocation1[0]][randomLocation1[1]] == 1){
+        image(groundImages[randomCord1[0]], width/2 + 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+      }
+      if(playerCount == true){
+        if(whatFloor[randomLocation2[0]][randomLocation2[1]] == 0){
+          image(basementImages[randomCord2[0]], width/2 - 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+        }
+        else if(whatFloor[randomLocation2[0]][randomLocation2[1]] == 1){
+          image(groundImages[randomCord2[0]], width/2 + 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+        }
+      }
       keypad();
       battery();
       PointCalculation();
@@ -371,10 +457,8 @@ function gameMenu(){
       break;
     //Game Over
     case 3:
-      image(images[7], width/2, height/2 );
       break;
   }
-  IGUI();
 }
 
 //On Screen UI
@@ -383,16 +467,40 @@ function IGUI(){
     case 0:
       break;
     case 1:
-      fill("white");
-      text(batCount + "/5 Batteries Held", 1250, 200);
+      //Background
+      image(inGameAsset[0], width/2, height/2, width, height);
+      //Map
+      push();
+      tint(255, 75);
+      image(inGameAsset[3], width/2, height/2, inGameAsset[3].width * 0.7, inGameAsset[3].height * 0.55);
+      pop();
+      image(inGameAsset[4], width/2 - (inGameAsset[3].width * 0.235), height/2 - (inGameAsset[3].height * 0.1), inGameAsset[4].width * 0.5, inGameAsset[4].height * 0.375);
+      image(inGameAsset[5], width/2 + (inGameAsset[3].width * 0.235), height/2 + (inGameAsset[3].height * 0.1), inGameAsset[5].width * 0.5, inGameAsset[5].height * 0.375);
+      image(inGameAsset[6], width/2 - 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
+      image(inGameAsset[7], width/2 + 450, height/2 + 20, inGameAsset[7].width * 0.2, inGameAsset[7].height * 0.2);
+      fill("#e7e1da");
+      text("Basement", width/2 - 750, height/2 - 175);
+      text("Ground Floor", width/2 + 725, height/2 - 175);
+      //Buttons on Bottom
+      image(inGameAsset[8], width/2 - 675, height/2 + 325, inGameAsset[8].width * 0.5, inGameAsset[8].height * 0.7);
+      image(inGameAsset[9], width/2, height/2 + 325, inGameAsset[8].width * 0.5, inGameAsset[8].height * 0.7);
+      image(inGameAsset[9], width/2 + 675, height/2 + 325, inGameAsset[8].width * 0.5, inGameAsset[8].height * 0.7);
+      image(inGameAsset[10], width/2, height/2 + 425, inGameAsset[8].width * 0.4, inGameAsset[8].height * 0.75);
+      text(batCount + " Batteries Held", 1600, 200);
       text("Ghosts Found: " + move, 200, 100);
-      text("Total Points: " + pointTotal, 200, 200);
+      //text("Total Points: " + pointTotal, 200, 200);
+      //Displays Hints
+      textSize(40);
+      fill("#694f35");
       if(frameCount % 60 == 0) hintTimer++;
-      if(hintTimer > 1) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], 750, 100);
-      if(hintTimer > 5) fill("white"), text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], 750, 200);
+      if(whatGroupState[0] != undefined) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], width/2 - 675, height/2 + 335);
+      if(hintTimer > 5) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
+      else text("Hint 2 Locked", width/2, height/2 + 335);
+      if(hintTimer > 10) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
+      else text("Hint 3 Locked", width/2 + 675, height/2 + 335);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
-      text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 350);
+      text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
 
       switch(minigameState){
         case 1: //battery Minigame
@@ -481,11 +589,26 @@ function IGUI(){
       textSize(30);
       break;
     case 3:
-      fill("white");
-      text("GAME OVER", width/2, 250);
-      text("You Found " + move + " Ghosts!", width/2, height/2);
-      text("Total Points: " + pointTotal, width/2, height/2 + 100);
-      buttonCreate(4, "Reset Game", width/2, height/2 + 300, 200, 100, "#325ea8", "#4832a8");
+      //background
+      image(images[7], width/2, height/2 );
+      //logo
+      image(images[2], width/2, 250, 500, 500);
+      //game over message
+      image(mainMenuAsset[6], width/2, height/2 + 105, mainMenuAsset[6].width * 0.6, mainMenuAsset[6].height * 0.6);
+      image(mainMenuAsset[6], width/2, height/2 + 100, mainMenuAsset[6].width * 0.6, mainMenuAsset[6].height * 0.6);
+      fill("#e7e1da");
+      textSize(150);
+      text("GAME OVER", width/2, height/2 + 60);
+      //ghost count
+      textSize(50);
+      text("You Found " + move + " Ghosts!", width/2, height/2 + 200);
+      //text("Total Points: " + pointTotal, width/2, height/2 + 100);
+      //buttonCreate(4, "Reset Game", width/2, height/2 + 300, 200, 100, "#325ea8", "#4832a8");
+      //play again button
+      image(mainMenuAsset[1], width/2, height/2 + 300, mainMenuAsset[1].width * 1.25, mainMenuAsset[1].height * 1.25);
+      imageButtonCreate(4, "", width/2, height/2 + 300, mainMenuAsset[1].width * 1.25, mainMenuAsset[1].height * 1.25, mainMenuAsset[1],
+      mainMenuAsset[2]);
+      image(endImages[0], width/2, height/2 + 300, endImages[0].width * 0.75, endImages[0].height * 0.75);
       break;
   }
 }
@@ -586,10 +709,15 @@ function keypad(){
   buttonCreate(21, "#", 1800, 850, 100, 100, "#636363", "#4D5053");
   */
   textSize(40);
-  if(keypadEntry[0] >= 0) text(keypadEntry[0], 1530, 285);
-  if(keypadEntry[1] >= 0) text(keypadEntry[1], 1610, 285);
-  if(keypadEntry[2] >= 0) text(keypadEntry[2], 1690, 285);
-  if(keypadEntry[3] >= 0) text(keypadEntry[3], 1770, 285);
+  fill("#694f35");
+  if(keypadEntry[0] >= 0) text(keypadEntry[0], width/2 - 120, height/2 + 435);
+  else if(keypadEntry[0] < 0) text("__", width/2 - 120, height/2 + 435);
+  if(keypadEntry[1] >= 0) text(keypadEntry[1], width/2 - 40, height/2 + 435);
+  else if(keypadEntry[1] < 0) text("__", width/2 - 40, height/2 + 435);
+  if(keypadEntry[2] >= 0) text(keypadEntry[2], width/2 + 40, height/2 + 435);
+  else if(keypadEntry[2] < 0) text("__", width/2 + 40, height/2 + 435);
+  if(keypadEntry[3] >= 0) text(keypadEntry[3], width/2 + 120, height/2 + 435);
+  else if(keypadEntry[3] < 0) text("__", width/2 + 120, height/2 + 435);
   textSize(30);
 }
 
@@ -646,21 +774,29 @@ function checkNumbers(){
 
 //Creates and Manages OnScreen Battery
 function battery(){
-  rect(1650, 100, 460, 110);
+  fill("gray");
+  rect(1850, 100, 310, 60);
   if(frameCount % 60 == 0 && batTimer >= 0) batTimer += -1;
-  batMap = map(batTimer, 0, batMaxTime, 0, 450);
+  batMap = map(batTimer, 0, batMaxTime, 0, 300);
   rectMode(CORNER);
   fill("green");
-  rect(1425, 50, batMap, 100);
+  rect(1700, 75, batMap, 50);
   rectMode(CENTER);
   if (batFoundBool == true){
     fill("red");
     if(batOrWrong == false) text("Battery Already Found!", 1650, 300);
-    else if(batOrWrong == true) text("Ghost not Found!", 1650, 300);
+    else if(batOrWrong == true) {
+      fill("#AF9F81");
+      rect(width/2, height/2, 500, 200);
+      fill("#e7e1da");
+      textSize(50);
+      text("Ghost Not Found!", width/2, height/2 + 10)
+    }
     if(frameCount % 60 == 0 && batFoundTimer < 2) batFoundTimer++;
     if(batFoundTimer >= 2) batFoundBool = false, batFoundTimer = 0;
   }
-  buttonCreate(2, "Use Battery", 1250, 100, 225, 75, "#9e9e9e", "#636363");
+  //buttonCreate(2, "Use Battery", 1250, 100, 225, 75, "#9e9e9e", "#636363");
+  imageButtonCreate(2, "", 1600, 100, 100, 100, inGameAsset[1], inGameAsset[12])
 }
 
 //Calculates points earned from current Ghost
@@ -685,15 +821,15 @@ function AddPoints(){
 
 //Adds Elements Helpful for Testing
 function DebugMode(){
-  buttonCreate(1, "Move", 750, 300, 150, 100, "#325ea8", "#4832a8");
-  buttonCreate(3, "End", 1000, 300, 150, 100, "#325ea8", "#4832a8");
-  buttonCreate(6, "Space", 500, 300, 150, 100, "#325ea8", "#4832a8");
+  buttonCreate(1, "Move", 500, 200, 150, 100, "#325ea8", "#4832a8");
+  buttonCreate(3, "End", 700, 200, 150, 100, "#325ea8", "#4832a8");
+  buttonCreate(6, "Space", 900, 200, 150, 100, "#325ea8", "#4832a8");
   fill("white");
   text("Password: " + passwordArray[whatGroupState[0]][whatGroupState[1]], 200, 250);
   text(currentGhostPoints, 200, 300);
   //text((1 + (0.5 * (ghostMultiplier - 1))) +"x Multiplier", 200, 150);
-  text(miniVariable, 200, 150);
-  text(miniProcChance, 300, 150);
+  //text(miniVariable, 200, 150);
+  //text(miniProcChance, 300, 150);
   //text(batTimer, 200, 400);
 }
 
