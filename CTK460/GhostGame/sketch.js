@@ -1,17 +1,17 @@
 //IRL Game Items
 let items = [
-  ["Laptop", "Smartphone", "Calculator"], 
-  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
-  ["Notebook", "Pen", "Pencil"], 
-  ["Highlighter", "Sticky Notes", "Textbooks"], 
-  ["Planner", "Index Cards", "Wallet"], 
-  ["ID", "Keys", "Sunglasses"], 
-  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
-  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
-  ["Face Mask", "Tissues", "Chapstick"],
-  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
-  ["Backpack", "Shopping Bag", "Snack"], 
-  ["Umbrella", "Gum", "Smartphone Charger"], 
+  ["Laptop Charger", "Notebook", "Backpack"], 
+  ["First Aid Kit", "Lotion", "Gum"],
+  ["Speaker", "Water Bottle", "Table Clock"], 
+  ["Calculator", "Pen", "Keys"], 
+  ["Index Cards", "Pocket Mirror", "Deodorant"], 
+  ["Smartphone", "Highlighter", "Snack"], 
+  ["Reading Glasses", "Hairbrush", "Tissue Packet"], 
+  ["Portable Charger", "Textbooks", "Planner"], 
+  ["Wallet", "ID", "Face Mask"],
+  ["Sunglasses", "Umbrella", "Chapstick"], 
+  ["Smartphone Charger", "Pencil", "Shopping Bag"], 
+  ["Laptop", "Sticky Notes", "Hand Sanitizer"], 
 ];
 let itemsCheck = [
   [false, false, false],
@@ -72,48 +72,48 @@ let itemsLocation = [
   [[450, 475], [625, 650], [800, 825]],
 ];
 let itemHintArray1 = [
-  ["Laptop", "Smartphone", "Calculator"], 
-  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
-  ["Notebook", "Pen", "Pencil"], 
-  ["Highlighter", "Sticky Notes", "Textbooks"], 
-  ["Planner", "Index Cards", "Wallet"], 
-  ["ID", "Keys", "Sunglasses"], 
-  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
-  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
-  ["Face Mask", "Tissues", "Chapstick"],
-  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
-  ["Backpack", "Shopping Bag", "Snack"], 
-  ["Umbrella", "Gum", "Smartphone Charger"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is Related to Studying"], 
+  ["This Item is Related to Hygiene", "This Item is Related to Hygiene", "This Item is Related to Hygiene"],
+  ["This Item is Related to Electronics", "This Item is a Personal Item", "This Item is a Personal Item"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
+  ["This Item is Related to Studying", "This Item is a Personal Item", "This Item is Related to Hygiene"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
+  ["This Item is a Personal Item", "This Item is a Personal Item", "This Item is Related to Hygiene"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is Related to Studying"], 
+  ["This Item is a Personal Item", "This is a Personal Item", "This Item is Related to Hygiene"],
+  ["This Item is a Personal Item", "This is a Personal Item", "This Item is Related to Hygiene"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
+  ["This Item is Related to Electronisc", "This Item is Related to Studying", "This Item is Related to Hygiene"], 
 ];
 
 let itemHintArray2 = [
-  ["Laptop", "Smartphone", "Calculator"], 
-  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
-  ["Notebook", "Pen", "Pencil"], 
-  ["Highlighter", "Sticky Notes", "Textbooks"], 
-  ["Planner", "Index Cards", "Wallet"], 
-  ["ID", "Keys", "Sunglasses"], 
-  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
-  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
-  ["Face Mask", "Tissues", "Chapstick"],
-  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
-  ["Backpack", "Shopping Bag", "Snack"], 
-  ["Umbrella", "Gum", "Smartphone Charger"], 
+  ["This Item helps Power other Technology", "This Item can Open", "Almost every Student has One"], 
+  ["This Item is Small", "This Item Smell Nice", "This Item Smells Nice"],
+  ["This Item is Black", "This item holds Liquids", "This Item is White"], 
+  ["This Item can fit in One Hand", "This Item is used to Write", "Almost every College Student has One"], 
+  ["This Item can fit in One Hand", "This Item can fit in One Hand", "This Item Smells Nice"], 
+  ["This Item can fit in One Hand", "This Item typically has Bright Colors", "This Item can fit in One Hand"], 
+  ["This Item can be Worn", "This Item is Gray", "This Item is Disposable"], 
+  ["This Item helps Power other Technology", "This Item can Open", "Almost every College Student has One"], 
+  ["This Item can Open", "Alost every College Student has One", "This  Item can be Worn"],
+  ["This Item can be Worn", "This Item is Black", "This Item smells Nice"], 
+  ["This Item helps pPower other Technology", "This Item is used to Write", "This Item is Disposable"], 
+  ["This Item can Open", "This Item typically has Bright Colors", "This item contains Liquid"], 
 ];
 
 let itemHintArray3 = [
-  ["Laptop", "Smartphone", "Calculator"], 
-  ["Laptop Charger", "Portable Battery Charger", "Portable Speaker"],
-  ["Notebook", "Pen", "Pencil"], 
-  ["Highlighter", "Sticky Notes", "Textbooks"], 
-  ["Planner", "Index Cards", "Wallet"], 
-  ["ID", "Keys", "Sunglasses"], 
-  ["Reading Glasses", "Hairbrush", "Pocket Mirror"], 
-  ["Water Bottle", "Table Clock", "Hand Sanitizer"], 
-  ["Face Mask", "Tissues", "Chapstick"],
-  ["Hand Lotion", "Deodorant", "First Aid Kit"], 
-  ["Backpack", "Shopping Bag", "Snack"], 
-  ["Umbrella", "Gum", "Smartphone Charger"], 
+  ["If you lose this, you can't get into Canvass", "This starts off blank, but will be filled with Information", "Holds everything you need for Class"], 
+  ["This helps with Cuts and Scrapes", "This makes your Hands Soft", "This makes  your breath Smell Fresh"],
+  ["This is used to play Music Loudly", "This holds what you need to Live", "This tells you when to Wake Up"], 
+  ["This helps someone bad at Math", "This is almost always Permanent", "This helps you get into your Home"], 
+  ["These items are useful for Studying", "This helps you fix you appearence on the Go", "This item should be used Daily"], 
+  ["Most people have this with them 24/7", "This item is used to Mark important things in Color", "This is useful when you're Hungry between Meals"], 
+  ["This helps when you don't have 20/20 Vision", "This helps with Tangles and Knots", "This helps when you get a Runny Nose"], 
+  ["This helps with low battery on the Go", "This is needed for most Gen-Eds for a steep Price", "This is used to keep track of Dates and Dealines"], 
+  ["Holds all sorts of Cards and Currencies", "You can use this to prove you go to ISU", "This was used globally in 2020"],
+  ["This is used when its extremely Bright Outside", "This is used when its Wet Outside", "This is used when your Lips are Dry"], 
+  ["This helps charge your most important Device", "This one can be Erased", "This holds things, but can easily Rip"], 
+  ["This is used for Watching Videos, Playing Games, and Studying", "This item can be stuck almost Anywhere", "This items helps keep your Hands Clean"], 
 ];
 
 let passwordArray = [
@@ -162,7 +162,7 @@ let batteryPasswordArray = [[1, 0, 0, 4], [0, 4, 2, 4], [3, 8, 5, 1], [0, 2, 5, 
 let batteryCheckArray = [false, false, false, false, false];
 let minigameArray = ["Spacebar", "Frequency", "Radar", "Ghost"];
 //Assets
-let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages] = [[], [], [], [], [], [], [], []];
+let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages, sounds, buttons] = [[], [], [], [], [], [], [], [], [], []];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
@@ -183,7 +183,7 @@ let [popupToggle] = [0];
 //Button Variables
 let bState = [false];
 //Minigame Variables
-let [miniCooldown, miniVariable, miniProcChance, miniProcTimer,enableMinigames, minigameActive, spacebarCounter] = [0, 0, 0, 0, false, false, 0];
+let [miniCooldown, miniVariable, miniProcChance, miniProcTimer,enableMinigames, minigameActive, spacebarCounter, finishV] = [0, 0, 0, 0, false, false, 0, 0];
 //Frequency Minigame Variables
 let [strum, offset, offsetvar, setStrum, setStrumBool] = [12, 0, 5, 15, false];
 let whatSetStrum = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
@@ -222,6 +222,17 @@ function preload() {
   inGameAsset[11] = loadImage("Assets/Images/InGameMenu/Logo.png");
   inGameAsset[12] = loadImage("Assets/Images/InGameMenu/DarkenedBattery.png");
   endImages[0] = loadImage("Assets/Images/GameOver/PlayAgain.png");
+  sounds[0] = loadSound("Assets/Sounds/BatteryAdd.wav");
+  sounds[1] = loadSound("Assets/Sounds/GhostCaught.mp3");
+  sounds[2] = loadSound("Assets/Sounds/GameStart.mp3");
+  sounds[3] = loadSound("Assets/Sounds/Ping.wav");
+  sounds[4] = loadSound("Assets/Sounds/Error.wav");
+  sounds[5] = loadSound("Assets/Sounds/Beep.wav");
+  sounds[6] = loadSound("Assets/Sounds/Success.mp3");
+  sounds[7] = loadSound("Assets/Sounds/GameEnd.mp3");
+  buttons[0] = loadSound("Assets/Sounds/Button1.mp3");
+  buttons[1] = loadSound("Assets/Sounds/Button2.mp3");
+  buttons[2] = loadSound("Assets/Sounds/Button3.mp3");
 
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
   //for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
@@ -242,7 +253,7 @@ function setup() {
   ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 10;
+  miniCooldown = 90;
   miniProcChance = 20;
   miniProcTimer = 20;
   textFont(fonts[0]);
@@ -263,27 +274,28 @@ function draw() {
 }
 
 function mouseReleased() {
-  if((bState[-1] == true) && gameState == 0) gameState = 1, playerCount = false, inGameState = 1;
-  if((bState[0] == true) && gameState == 0) gameState = 1, playerCount = true;
+  if((bState[-1] == true) && gameState == 0) gameState = 1, playerCount = false, sounds[2].play(), buttonClick();
+  if((bState[0] == true) && gameState == 0) gameState = 1, playerCount = true, sounds[2].play(), buttonClick();
   if((bState[1] == true)) ghostMove(), bState[1] = false;
   if((bState[2] == true)){
     if (batCount > 0){
       batCount --;
       batTimer += 120;
       if(batTimer > batMaxTime) batTimer = batMaxTime; 
+      buttonClick();
     }
   }
   if((bState[3] == true)) gameEnd(), bState[3] = false;
-  if((bState[4] == true)) resetGame(), bState[4] = false;
+  if((bState[4] == true)) resetGame(), bState[4] = false, buttonClick();
   if((bState[6] == true)){
-    minigameState = 4;
+    minigameState = 3;
     bState[6] = false;
     for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
   } 
   for(let i = 10; i < 20; i++) if((bState[i] == true && batFoundBool == false)) enterNumbers(i - 10);
   if((bState[20] == true) && batFoundBool == false) deleteNumbers(-1);
   if((bState[21] == true) && keypadEntry[3] >= 0 && batFoundBool == false) checkNumbers();
-  if(gameState == 1 && minigameState == 4) if(collidePointCircle(mouseX, mouseY, ghostX, ghostY, 200) == true) minigameState = 0;
+  if(gameState == 1 && minigameState == 4) if(collidePointCircle(mouseX, mouseY, ghostX, ghostY, 200) == true) minigameState = 10;
 }
 
 function keyPressed(){
@@ -291,24 +303,24 @@ function keyPressed(){
     case 0:
       for (let i = 0; i < 10; i++){
         if (keyCode == (i + 48)){
-          enterNumbers(i);
+          enterNumbers(i), buttonClick();
         }
       }
-      if (keyCode == BACKSPACE) deleteNumbers(-1);
-      if (keyCode == ENTER) checkNumbers();
+      if (keyCode == BACKSPACE) deleteNumbers(-1), buttonClick();
+      if (keyCode == ENTER) checkNumbers(), buttonClick();
       break;
     case 1:
       if(keyCode == 32){
         spacebarCounter++;
         if(spacebarCounter >= 15){
           spacebarCounter = 0;
-          minigameState = 0;
+          minigameState = 10;
         }
       }
       break;
     case 2:
-      if (keyCode == UP_ARROW && strum > 10) strum += -2;
-      if (keyCode == DOWN_ARROW && strum < 26) strum += 2;
+      if (keyCode == UP_ARROW && strum > 10) strum += -2, buttonClick();
+      if (keyCode == DOWN_ARROW && strum < 26) strum += 2, buttonClick();
       break;
     case 3:
       if(keyCode == 32){
@@ -316,8 +328,9 @@ function keyPressed(){
            if(collideLineCircle(newLine[0].x2, newLine[0].y2, width/2, height/2, dots[i].x, dots[i].y, 45) == true){
              dots.splice(i, 1);
              dotsCollected++;
+             sounds[5].play();
              if(dotsCollected == dotsMax) {
-              minigameState = 0;
+              minigameState = 10;
               dotsCollected = 0;
             }
           }      
@@ -363,7 +376,7 @@ function gameMenu(){
       popupToggle = 0;
       image(images[7], width/2, height/2 );
       loadAnimTimer++
-      if(loadAnimTimer <= 1*60){
+      if(loadAnimTimer <= 2*60){
         text("Searching for Ghost", width/2, 200);
         loadVT++;
         if(loadVT > 0.02 * 60){
@@ -373,9 +386,10 @@ function gameMenu(){
         }
         image(load[loadV], width/2, height/2);
       }
-      else if (loadAnimTimer > 1*60 && loadAnimTimer <= 2*60) {
+      else if (loadAnimTimer > 2*60 && loadAnimTimer <= 3*60) {
         text("Ghost Found!", width/2, 200);
         image(images[0], width/2, height/2);
+        if(!sounds[3].isPlaying()) sounds[3].play();
       }
       else (inGameState = 1);
       break;
@@ -448,6 +462,7 @@ function gameMenu(){
       PointCalculation();
       DebugMode();
       minigames();
+      minigameUI();
       if(batTimer <= 0) gameEnd();
       break;
     //Ghost Found Loading Screen
@@ -490,90 +505,17 @@ function IGUI(){
       text("Ghosts Found: " + move, 200, 100);
       //text("Total Points: " + pointTotal, 200, 200);
       //Displays Hints
-      textSize(40);
+      textSize(25);
       fill("#694f35");
       if(frameCount % 60 == 0) hintTimer++;
       if(whatGroupState[0] != undefined) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], width/2 - 675, height/2 + 335);
-      if(hintTimer > 5) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
+      if(hintTimer >= 1) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
       else text("Hint 2 Locked", width/2, height/2 + 335);
-      if(hintTimer > 10) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
+      if(hintTimer >= 1) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
       else text("Hint 3 Locked", width/2 + 675, height/2 + 335);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
-
-      switch(minigameState){
-        case 1: //battery Minigame
-          fill(0, 0, 0, 70);
-          rect(width/2, height/2, width, height);
-          image(images[4], width/2, height/2);
-          fill(255, 255, 255);
-          textSize(60);
-          text("DATA CORRUPTED SPAM SPACE BAR", width/2, height/2 - 100);
-          text(spacebarCounter + "/ 15", width/2, height / 2 + 100);
-          textSize(30);
-          break;
-        case 2: //Frequency Minigame
-          push();
-          fill(0, 0, 0, 70);
-          rect(width/2, height/2, width, height);
-          image(images[4], width/2, height/2);
-          fill("black");
-          rect(width/2, height/2, 600, 300);
-          fill("#a1936d");
-          textSize(50);
-          text("EMF READER OUT OF SYNC \n REALIGN USING UP AND DOWN KEYS", width/2, height/2 - 250);
-          textSize(30);
-          strokeWeight(5);
-          noFill();
-          stroke("red");
-          beginShape();
-          for(var x = width/2 - 300; x < width/2 + 300; x++){
-            //var angle = map(x, 0, width, 0, TWO_PI);
-            var angle = offset  + x * 1;
-            // map x between 0 and width to 0 and Two Pi
-            var y = map(sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
-            vertex(x, y);
-          }
-          endShape();
-          stroke("green");
-          beginShape();
-          for(var x = width/2 - 300; x < width/2 + 300; x++){
-            //var angle = map(x, 0, width, 0, TWO_PI);
-            var angle = offset + x * 1;
-            // map x between 0 and width to 0 and Two Pi
-            var y = map(sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
-            vertex(x, y);
-          }
-          endShape();
-          stroke("#292622");
-          rect(width/2, height/2, 600, 300);
-          offset += offsetvar;
-          stroke("black");
-          pop();
-          break;
-        case 3: //Radar Minigame
-          fill(0, 0, 0, 70);
-          rect(width/2, height/2, width, height);
-          image(images[4], width/2, height/2 - 75, images[4].width * 1.25, images[4].height * 1.25);
-          fill("white");
-          textSize(60);
-          text("RADAR DISRUPTED", width/2, height/2 - 375);
-          textSize(30);
-          text("PRESS SPACE WHEN THE SENSOR LINE OVERLAPS THE RED ANOMALIES", width/2, height/2 - 300);
-          radar();
-          break;
-        case 4:
-          ghostAnim((width / 2) - 300, (width / 2) + 300, width / 2, (height / 2) - 150, (height / 2) + 150, 200, 255);
-          push();
-          stroke("black");
-          strokeWeight(20);
-          fill("red");
-          textSize(100);
-          text("CLICK THE GHOST NOW NOW NOW NOW NOW", width/2, 200);
-          pop();
-          break;
-      }
       break;
     case 2:
       if(popupToggle < 70){
@@ -581,11 +523,10 @@ function IGUI(){
         fill(0, 0, 0, popupToggle);
         rect(width/2, height/2, width, height);
       }
-      fill("gray");
-      rect(width/2, height/2, 500, 200);
-      fill(255, 255, 255);
+      image(inGameAsset[8], width/2, height/2, 500, 200);
+      fill("#e7e1da");
       textSize(60);
-      text("GHOST FOUND", width/2, height/2);
+      text("GHOST FOUND", width/2, height/2 + 20);
       textSize(30);
       break;
     case 3:
@@ -613,8 +554,96 @@ function IGUI(){
   }
 }
 
+function minigameUI(){
+  switch(minigameState){
+    case 1: //battery Minigame
+      fill(0, 0, 0, 70);
+      rect(width/2, height/2, width, height);
+      image(images[4], width/2, height/2);
+      fill("#e7e1da");
+      textSize(50);
+      text("DATA CORRUPTED SPAM SPACE BAR", width/2, height/2 - 100);
+      text(spacebarCounter + "/ 15", width/2, height / 2 + 100);
+      textSize(30);
+      break;
+    case 2: //Frequency Minigame
+      push();
+      fill(0, 0, 0, 70);
+      rect(width/2, height/2, width, height);
+      image(images[4], width/2, height/2);
+      fill("black");
+      rect(width/2, height/2, 600, 300);
+      fill("#a1936d");
+      textSize(50);
+      text("EMF READER OUT OF SYNC \n REALIGN USING UP AND DOWN KEYS", width/2, height/2 - 250);
+      textSize(30);
+      strokeWeight(5);
+      noFill();
+      stroke("red");
+      beginShape();
+      for(var x = width/2 - 300; x < width/2 + 300; x++){
+        //var angle = map(x, 0, width, 0, TWO_PI);
+        var angle = offset  + x * 1;
+        // map x between 0 and width to 0 and Two Pi
+        var y = map(sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
+        vertex(x, y);
+      }
+      endShape();
+      stroke("green");
+      beginShape();
+      for(var x = width/2 - 300; x < width/2 + 300; x++){
+        //var angle = map(x, 0, width, 0, TWO_PI);
+        var angle = offset + x * 1;
+        // map x between 0 and width to 0 and Two Pi
+        var y = map(sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
+        vertex(x, y);
+      }
+      endShape();
+      stroke("#292622");
+      rect(width/2, height/2, 600, 300);
+      offset += offsetvar;
+      stroke("black");
+      pop();
+      break;
+    case 3: //Radar Minigame
+      fill(0, 0, 0, 70);
+      rect(width/2, height/2, width, height);
+      image(images[4], width/2, height/2 - 75, images[4].width * 1.25, images[4].height * 1.25);
+      fill("#e7e1da");
+      textSize(60);
+      text("RADAR DISRUPTED", width/2, height/2 - 375);
+      textSize(30);
+      text("PRESS SPACE WHEN THE SENSOR LINE OVERLAPS THE RED ANOMALIES", width/2, height/2 - 300);
+      radar();
+      break;
+    case 4:
+      ghostAnim((width / 2) - 300, (width / 2) + 300, width / 2, (height / 2) - 150, (height / 2) + 150, 200, 255);
+      push();
+      stroke("black");
+      strokeWeight(20);
+      fill("red");
+      textSize(100);
+      text("CLICK THE GHOST NOW NOW NOW NOW NOW", width/2, 200);
+      pop();
+      break;
+    case 10:
+      if(!sounds[6].isPlaying() && finishV < 1) sounds[6].play();
+      if(frameCount % 60 == 0) finishV++;
+      if(finishV > 1) minigameState = 0, finishV = 0;
+      fill(0, 0, 0, 70);
+      rect(width/2, height/2, width, height);
+      image(images[4], width/2, height/2, 600, 300);
+      push();
+      textSize(50);
+      fill("white");
+      text("All Services Back Online!", width/2, height/2);
+      pop();
+      break;
+  }
+}
 //resets variables when ghost moves
 function ghostMove(){
+  sounds[1].play();
   move++;
   for(let j = 0; j < randomCheck1.length; j++){
     for(let i = 0; i < randomCheck1[j].length; i++)
@@ -647,6 +676,7 @@ function ghostMove(){
 
 function gameEnd(){
   if(ghostMultiplier > 1) pointTotal = pointTotal * (1 + (0.5 * (ghostMultiplier - 1)));
+  sounds[7].play();
   inGameState = 3;
 }
 
@@ -742,6 +772,7 @@ function checkNumbers(){
   for(let i = 0; i < 5; i++){
     if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == false){
       batCount += 1;
+      sounds[0].play();
       //batTimer += 120;
       //if(batTimer > batMaxTime) batTimer = batMaxTime;
       batteryCheckArray[i] = true;
@@ -757,7 +788,7 @@ function checkNumbers(){
   }
   if(batCheck == false){
     if(keypadEntry[0] == passwordArray[whatGroupState[0]][whatGroupState[1]][0] && keypadEntry[1] == passwordArray[whatGroupState[0]][whatGroupState[1]][1] && keypadEntry[2] == passwordArray[whatGroupState[0]][whatGroupState[1]][2] && keypadEntry[3] == passwordArray[whatGroupState[0]][whatGroupState[1]][3]){
-      fill("White");
+      fill("#e7e1da");
       ghostMove();
     }
     else{
@@ -787,7 +818,7 @@ function battery(){
     if(batOrWrong == false) text("Battery Already Found!", 1650, 300);
     else if(batOrWrong == true) {
       fill("#AF9F81");
-      rect(width/2, height/2, 500, 200);
+      image(inGameAsset[8], width/2, height/2, 500, 200);
       fill("#e7e1da");
       textSize(50);
       text("Ghost Not Found!", width/2, height/2 + 10)
@@ -824,7 +855,7 @@ function DebugMode(){
   buttonCreate(1, "Move", 500, 200, 150, 100, "#325ea8", "#4832a8");
   buttonCreate(3, "End", 700, 200, 150, 100, "#325ea8", "#4832a8");
   buttonCreate(6, "Space", 900, 200, 150, 100, "#325ea8", "#4832a8");
-  fill("white");
+  fill("#e7e1da");
   text("Password: " + passwordArray[whatGroupState[0]][whatGroupState[1]], 200, 250);
   text(currentGhostPoints, 200, 300);
   //text((1 + (0.5 * (ghostMultiplier - 1))) +"x Multiplier", 200, 150);
@@ -888,6 +919,7 @@ function minigames(){
           if(minigameState == 3) for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
           miniVariable = 0;
           miniProcChance = 20;
+          sounds[4].play();
         } 
         else miniVariable = miniVariable - miniProcTimer, miniProcChance+=10;
       }
@@ -953,6 +985,10 @@ function checker(){
   newLine[0].update(angle, 250);
   newLine[0].display();
   pop();
+}
+
+function buttonClick(){
+  buttons[int(random(0, buttons.length))].play();
 }
 
 class Dots{
