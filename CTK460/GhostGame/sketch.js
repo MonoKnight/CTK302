@@ -219,7 +219,7 @@ function preload() {
   inGameAsset[8] = loadImage("Assets/Images/InGameMenu/Hint1.png");
   inGameAsset[9] = loadImage("Assets/Images/InGameMenu/Hint2.png");
   inGameAsset[10] = loadImage("Assets/Images/InGameMenu/Input.png");
-  inGameAsset[11] = loadImage("Assets/Images/InGameMenu/Logo.png");
+  inGameAsset[11] = loadImage("Assets/Images/InGameMenu/logo.png");
   inGameAsset[12] = loadImage("Assets/Images/InGameMenu/DarkenedBattery.png");
   endImages[0] = loadImage("Assets/Images/GameOver/PlayAgain.png");
 
