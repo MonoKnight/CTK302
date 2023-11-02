@@ -28,18 +28,18 @@ let itemsCheck = [
   [false, false, false],
 ];
 let itemRoomNumber = [
- [0, 1, 2],
- [3, 0, 1],
- [2, 3, 0],
- [1, 2, 3],
- [0, 1, 2],
- [3, 0, 1],
- [2, 3, 0],
- [1, 2, 3],
- [0, 1, 2],
- [3, 0, 1],
- [2, 3, 0],
- [1, 2, 3],
+ [17, 17, 17],
+ [30, 30, 30],
+ [45, 45, 45],
+ [48, 48, 48],
+ [50, 50, 50],
+ [124, 124, 124],
+ [130, 130, 130],
+ [132, 132, 132],
+ [133, 133, 133],
+ [140, 140, 140],
+ [134, 134, 134],
+ [135, 135, 135],
 ];
 
 let whatFloor = [
@@ -48,7 +48,7 @@ let whatFloor = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
-  [0, 0, 0],
+  [1, 1, 1],
   [1, 1, 1],
   [1, 1, 1],
   [1, 1, 1],
@@ -110,25 +110,25 @@ let itemHintArray3 = [
   ["Most people have this with them 24/7", "This item is used to Mark important things in Color", "This is useful when you're Hungry between Meals"], 
   ["This helps when you don't have 20/20 Vision", "This helps with Tangles and Knots", "This helps when you get a Runny Nose"], 
   ["This helps with low battery on the Go", "This is needed for most Gen-Eds for a steep Price", "This is used to keep track of Dates and Dealines"], 
-  ["Holds all sorts of Cards and Currencies", "You can use this to prove you go to ISU", "This was used globally in 2020"],
+  ["Holds all sorts of Cards and Currencies", "You can use this to prove you go to ISU", "This is used to Soften your Skin"],
   ["This is used when its extremely Bright Outside", "This is used when its Wet Outside", "This is used when your Lips are Dry"], 
   ["This helps charge your most important Device", "This one can be Erased", "This holds things, but can easily Rip"], 
   ["This is used for Watching Videos, Playing Games, and Studying", "This item can be stuck almost Anywhere", "This items helps keep your Hands Clean"], 
 ];
 
 let passwordArray = [
-  [[3, 5, 2, 8], [4, 1, 3, 8], [8, 4, 4, 9]],
-  [[6, 8, 4, 0], [9, 4, 3, 9], [3, 7, 8, 7]],
-  [[9, 4, 3, 0], [8, 7, 4, 9], [8, 4, 2, 9]],
-  [[8, 7, 3, 0], [9, 4, 3, 1], [4, 5, 3, 2]],
-  [[7, 5, 2, 3], [7, 8, 2, 2], [6, 2, 1, 9]],
-  [[3, 1, 3, 6], [2, 1, 4, 7], [8, 7, 1, 8]],
-  [[5, 6, 2, 7], [6, 3, 2, 6], [6, 5, 2, 5]],
-  [[4, 2, 2, 4], [7, 4, 2, 0], [4, 8, 4, 2]],
-  [[4, 2, 4, 0], [7, 5, 4, 1], [8, 5, 4, 3]],
-  [[9, 5, 2, 9], [7, 5, 2, 3], [4, 1, 3, 5]],
-  [[4, 5, 2, 1], [2, 3, 3, 3], [4, 2, 1, 7]],
-  [[4, 8, 4, 6], [4, 2, 4, 8], [4, 8, 4, 8]],
+  [[7, 0, 5, 3], [5, 0, 4, 2], [8, 5, 0, 1]],
+  [[4, 0, 3, 0], [8, 0, 2, 8], [6, 0, 3, 1]],
+  [[5, 8, 7, 4], [2, 4, 9, 4], [6, 3, 7, 5]],
+  [[9, 0, 1, 3], [1, 5, 1, 4], [2, 0, 1, 5]],
+  [[5, 0, 3, 4], [7, 0, 3, 2], [3, 0, 3, 3]],
+  [[4, 0, 1, 1], [1, 0, 1, 2], [1, 0, 1, 0]],
+  [[4, 0, 2, 5], [6, 0, 2, 7], [1, 0, 2, 6]],
+  [[3, 0, 2, 1], [7, 0, 1, 9], [5, 0, 2, 0]],
+  [[1, 0, 1, 6], [4, 0, 1, 7], [1, 0, 1, 8]],
+  [[6, 0, 2, 4], [4, 0, 2, 3], [7, 0, 2, 2]],
+  [[1, 0, 9, 6], [6, 1, 0, 4], [8, 8, 0, 5]],
+  [[1, 0, 8, 8], [8, 0, 0, 7], [4, 7, 0, 9]],
 ];
 let randomCheck1 = [
   [false, false, false],
@@ -236,8 +236,20 @@ function preload() {
 
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
   //for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
-  for(let i = 0; i < 4; i++) basementImages[i] = loadImage("Assets/Images/Basement/Basement" + (i+1) + ".png");
-  for(let i = 0; i < 4; i++) groundImages[i] = loadImage("Assets/Images/GroundFloor/First_Floor" + (i+1) + ".png");
+  //for(let i = 0; i < 4; i++) basementImages[i] = loadImage("Assets/Images/Basement/Basement" + (i+1) + ".png");
+  //for(let i = 0; i < 4; i++) groundImages[i] = loadImage("Assets/Images/GroundFloor/First_Floor" + (i+1) + ".png");
+  basementImages[17] = loadImage("Assets/Images/Basement/Basement17.png");
+  basementImages[30] = loadImage("Assets/Images/Basement/Basement30.png");
+  basementImages[45] = loadImage("Assets/Images/Basement/Basement45.png");
+  basementImages[48] = loadImage("Assets/Images/Basement/Basement48.png");
+  basementImages[50] = loadImage("Assets/Images/Basement/Basement50.png");
+  groundImages[124] = loadImage("Assets/Images/GroundFloor/First_Floor124.png");
+  groundImages[130] = loadImage("Assets/Images/GroundFloor/First_Floor130.png");
+  groundImages[132] = loadImage("Assets/Images/GroundFloor/First_Floor132.png");
+  groundImages[133] = loadImage("Assets/Images/GroundFloor/First_Floor133.png");
+  groundImages[134] = loadImage("Assets/Images/GroundFloor/First_Floor134a.png");
+  groundImages[135] = loadImage("Assets/Images/GroundFloor/First_Floor134b.png");
+  groundImages[140] = loadImage("Assets/Images/GroundFloor/First_Floor140.png");
   fonts[0] = loadFont("Assets/Fonts/Cambria.ttf");
 }
 
@@ -253,9 +265,9 @@ function setup() {
   ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 90;
+  miniCooldown = 45;
   miniProcChance = 20;
-  miniProcTimer = 20;
+  miniProcTimer = 15;
   textFont(fonts[0]);
   newLine.push(new Line());
 }
@@ -509,9 +521,9 @@ function IGUI(){
       fill("#694f35");
       if(frameCount % 60 == 0) hintTimer++;
       if(whatGroupState[0] != undefined) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], width/2 - 675, height/2 + 335);
-      if(hintTimer >= 1) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
+      if(hintTimer >= 30) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
       else text("Hint 2 Locked", width/2, height/2 + 335);
-      if(hintTimer >= 1) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
+      if(hintTimer >= 60) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
       else text("Hint 3 Locked", width/2 + 675, height/2 + 335);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
