@@ -160,7 +160,9 @@ let randomCheck2 = [
 ];
 let batteryPasswordArray = [[1, 0, 0, 4], [0, 4, 2, 4], [3, 8, 5, 1], [0, 2, 5, 4], [2, 5, 3, 0], [1, 9, 0, 9], [1, 2, 1, 0], [4, 2, 8, 9], [9, 1, 4, 7], [3, 8, 6, 1]];
 let batteryCheckArray = [false, false, false, false, false];
-let minigameArray = ["Spacebar", "Frequency", "Radar", "Ghost"];
+let minigameArray = ["Spacebar", "Frequency", "Radar"];
+//"Ghost"
+
 //Assets
 let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages, sounds, buttons] = [[], [], [], [], [], [], [], [], [], []];
 //loading gif Variables
