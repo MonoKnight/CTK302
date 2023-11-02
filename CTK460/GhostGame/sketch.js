@@ -472,7 +472,7 @@ function gameMenu(){
       keypad();
       battery();
       PointCalculation();
-      DebugMode();
+      //DebugMode();
       minigames();
       minigameUI();
       if(batTimer <= 0) gameEnd();
