@@ -949,7 +949,7 @@ function minigames(){
         setStrum = whatSetStrum[Math.floor(Math.random() * whatSetStrum.length)];
         if (setStrum != strum) setStrumBool = true;
       }
-      if (strum == setStrum) setStrumBool = false, minigameState = 0;
+      if (strum == setStrum) setStrumBool = false, minigameState = 10;
       break;
     case 3:
 
