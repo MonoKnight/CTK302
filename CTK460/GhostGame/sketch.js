@@ -159,7 +159,7 @@ let randomCheck2 = [
   [false, false, false],
 ];
 let batteryPasswordArray = [[1, 0, 0, 4], [0, 4, 2, 4], [3, 8, 5, 1], [0, 2, 5, 4], [2, 5, 3, 0], [1, 9, 0, 9], [1, 2, 1, 0], [4, 2, 8, 9], [9, 1, 4, 7], [3, 8, 6, 1]];
-let batteryCheckArray = [false, false, false, false, false];
+let batteryCheckArray = [false, false, false, false, false, false, false, false, false, false];
 let minigameArray = ["Spacebar", "Frequency", "Radar"];
 //"Ghost"
 
@@ -279,6 +279,7 @@ function draw() {
     //main menu
     case 0:
       mainMenu();
+      print(batteryPasswordArray)
       break;
     //in game
     case 1:
@@ -421,7 +422,7 @@ function gameMenu(){
           }
         }
         whatGroupState = randomItem;
-        print(whatGroupState);
+        //print(whatGroupState);
       } 
       if(randBool1 == false){
         randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
@@ -783,7 +784,9 @@ function deleteNumbers(numb){
 
 //Checks password
 function checkNumbers(){
-  for(let i = 0; i < 5; i++){
+  print(batteryPasswordArray[0]);
+  print(keypadEntry);
+  for(let i = 0; i < 10; i++){
     if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == false){
       batCount += 1;
       sounds[0].play();
@@ -793,6 +796,7 @@ function checkNumbers(){
       batNumb++;
       batCheck = true;
       pointTotal = pointTotal + 500;
+      //print("hello");
     }
     else if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == true){
       batFoundBool = true;
