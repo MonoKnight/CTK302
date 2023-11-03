@@ -1,3 +1,5 @@
+p5.disableFriendlyErrors = true;
+
 //IRL Game Items
 let items = [
   ["Laptop Charger", "Notebook", "Backpack"], 
@@ -83,7 +85,7 @@ let itemHintArray1 = [
   ["This Item is a Personal Item", "This is a Personal Item", "This Item is Related to Hygiene"],
   ["This Item is a Personal Item", "This is a Personal Item", "This Item is Related to Hygiene"], 
   ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
-  ["This Item is Related to Electronisc", "This Item is Related to Studying", "This Item is Related to Hygiene"], 
+  ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is Related to Hygiene"], 
 ];
 
 let itemHintArray2 = [
@@ -102,7 +104,7 @@ let itemHintArray2 = [
 ];
 
 let itemHintArray3 = [
-  ["If you lose this, you can't get into Canvass", "This starts off blank, but will be filled with Information", "Holds everything you need for Class"], 
+  ["If you lose this, you can't get into Canvass", "This starts off Blank, but fills with Information", "Holds everything you need for Class"], 
   ["This helps with Cuts and Scrapes", "This makes your Hands Soft", "This makes  your breath Smell Fresh"],
   ["This is used to play Music Loudly", "This holds what you need to Live", "This tells you when to Wake Up"], 
   ["This helps someone bad at Math", "This is almost always Permanent", "This helps you get into your Home"], 
@@ -192,7 +194,7 @@ let whatSetStrum = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
 //Radar Minigame Variables 
 let [dots, newLine, dotsCollected, dotsMax, speed, direction, linex] = [[], [], 0, 5, 5, 0, 1];
 //random Variable
-let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate] = [0, 0, true, 0, 0];
+let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate, frameRateVar, hint2Timer, hint3Timer,] = [0, 0, true, 0, 0, 60, 45, 90];
 
 function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
@@ -272,6 +274,7 @@ function setup() {
   miniProcTimer = 15;
   textFont(fonts[0]);
   newLine.push(new Line());
+  frameRate(frameRateVar);
 }
 
 function draw() {
@@ -279,6 +282,7 @@ function draw() {
     //main menu
     case 0:
       mainMenu();
+      if(frameRate != 60) frameRateVar = 60, frameRate(frameRateVar);
       print(batteryPasswordArray)
       break;
     //in game
@@ -385,23 +389,24 @@ function gameMenu(){
   switch (inGameState) {
     //Finding Ghost Animation
     case 0:
+      if (frameRate != 60) frameRateVar = 60, frameRate(frameRateVar);
       fill("#e7e1da");
       textSize(70);
       ghostCooldownTimer = 0;
       popupToggle = 0;
       image(images[7], width/2, height/2 );
       loadAnimTimer++
-      if(loadAnimTimer <= 2*60){
+      if(loadAnimTimer <= 2* frameRateVar){
         text("Searching for Ghost", width/2, 200);
         loadVT++;
-        if(loadVT > 0.02 * 60){
+        if(loadVT > 0.02 * frameRateVar){
           loadV++;
           if(loadV >= load.length) loadV = 0;
           loadVT = 0;
         }
         image(load[loadV], width/2, height/2);
       }
-      else if (loadAnimTimer > 2*60 && loadAnimTimer <= 3*60) {
+      else if (loadAnimTimer > 2*frameRateVar && loadAnimTimer <= 3*frameRateVar) {
         text("Ghost Found!", width/2, 200);
         image(images[0], width/2, height/2);
         if(!sounds[3].isPlaying()) sounds[3].play();
@@ -410,6 +415,7 @@ function gameMenu(){
       break;
     //Main Game
     case 1:
+      if (frameRate != 15) frameRateVar = 15, frameRate(frameRateVar);
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
         while(itemCheckBool == false){
@@ -482,7 +488,7 @@ function gameMenu(){
       break;
     //Ghost Found Loading Screen
     case 2:
-      if(frameCount % 60 == 0) ghostCooldownTimer++;
+      if(frameCount % frameRateVar == 0) ghostCooldownTimer++;
       if(ghostCooldownTimer > 1) inGameState = 0;
       break;
     //Game Over
@@ -522,15 +528,16 @@ function IGUI(){
       //Displays Hints
       textSize(25);
       fill("#694f35");
-      if(frameCount % 60 == 0) hintTimer++;
+      if(frameCount % frameRateVar == 0) hintTimer++;
       if(whatGroupState[0] != undefined) text(itemHintArray1[whatGroupState[0]][whatGroupState[1]], width/2 - 675, height/2 + 335);
-      if(hintTimer >= 30) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
+      if(hintTimer >= hint2Timer) text(itemHintArray2[whatGroupState[0]][whatGroupState[1]], width/2, height/2 + 335);
       else text("Hint 2 Locked", width/2, height/2 + 335);
-      if(hintTimer >= 60) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
+      if(hintTimer >= hint3Timer) text(itemHintArray3[whatGroupState[0]][whatGroupState[1]], width/2 + 675, height/2 + 335);
       else text("Hint 3 Locked", width/2 + 675, height/2 + 335);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
+      print(hintTimer);
       break;
     case 2:
       if(popupToggle < 70){
@@ -600,7 +607,7 @@ function minigameUI(){
         //var angle = map(x, 0, width, 0, TWO_PI);
         var angle = offset  + x * 1;
         // map x between 0 and width to 0 and Two Pi
-        var y = map(sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
+        var y = map(Math.sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
         vertex(x, y);
       }
       endShape();
@@ -610,7 +617,7 @@ function minigameUI(){
         //var angle = map(x, 0, width, 0, TWO_PI);
         var angle = offset + x * 1;
         // map x between 0 and width to 0 and Two Pi
-        var y = map(sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
+        var y = map(Math.sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
         vertex(x, y);
       }
       endShape();
@@ -643,7 +650,7 @@ function minigameUI(){
       break;
     case 10:
       if(!sounds[6].isPlaying() && finishV < 1) sounds[6].play();
-      if(frameCount % 60 == 0) finishV++;
+      if(frameCount % frameRateVar == 0) finishV++;
       if(finishV > 1) minigameState = 0, finishV = 0;
       fill(0, 0, 0, 70);
       rect(width/2, height/2, width, height);
@@ -825,7 +832,7 @@ function checkNumbers(){
 function battery(){
   fill("gray");
   rect(1850, 100, 310, 60);
-  if(frameCount % 60 == 0 && batTimer >= 0) batTimer += -1;
+  if(frameCount % frameRateVar == 0 && batTimer >= 0) batTimer += -1;
   batMap = map(batTimer, 0, batMaxTime, 0, 300);
   rectMode(CORNER);
   fill("green");
@@ -841,7 +848,7 @@ function battery(){
       textSize(50);
       text("Ghost Not Found!", width/2, height/2 + 10)
     }
-    if(frameCount % 60 == 0 && batFoundTimer < 2) batFoundTimer++;
+    if(frameCount % frameRateVar == 0 && batFoundTimer < 2) batFoundTimer++;
     if(batFoundTimer >= 2) batFoundBool = false, batFoundTimer = 0;
   }
   //buttonCreate(2, "Use Battery", 1250, 100, 225, 75, "#9e9e9e", "#636363");
@@ -850,7 +857,7 @@ function battery(){
 
 //Calculates points earned from current Ghost
 function PointCalculation(){
-  if(frameCount % 60 == 0) currentGhostTimer++;
+  if(frameCount % frameRateVar == 0) currentGhostTimer++;
   if(currentGhostTimer < ghostTimeMedium) currentGhostPoints = 1000, fill("green");
   else if(currentGhostTimer >= ghostTimeMedium && currentGhostTimer< ghostTimeMax) {
     currentGhostPoints = (1000 - map(currentGhostTimer, ghostTimeMedium, ghostTimeMax, 0, 900));
@@ -930,10 +937,10 @@ function ghostAnim(ghostXMin, ghostXMax, ghostXMid, ghostYMin, ghostYMax, ghostS
 function minigames(){
   switch(minigameState) {
     case 0:
-      if(frameCount % 60 == 0) miniVariable++;
+      if(frameCount % frameRateVar == 0) miniVariable++;
       if(miniVariable >= miniCooldown) {
-        if(miniProcChance > int(random(0, 100))){
-          minigameState = (int(random(0, minigameArray.length) + 1));
+        if(miniProcChance > Math.floor(Math.random(0, 100))){
+          minigameState = (Math.floor(Math.random(0, minigameArray.length) + 1));
           if(minigameState == 3) for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
           miniVariable = 0;
           miniProcChance = 20;
@@ -1006,15 +1013,15 @@ function checker(){
 }
 
 function buttonClick(){
-  buttons[int(random(0, buttons.length))].play();
+  buttons[Math.floor(Math.random(0, buttons.length))].play();
 }
 
 class Dots{
   constructor(){
-    this.angle = random(0, 360);
-    this.radius = random(50, 200); 
-    this.x = width / 2 + cos(this.angle) * this.radius;
-    this.y = height / 2 + sin(this.angle) * this.radius;
+    this.angle = Math.random(0, 360);
+    this.radius = Math.random(50, 200); 
+    this.x = width / 2 + Math.cos(this.angle) * this.radius;
+    this.y = height / 2 + Math.sin(this.angle) * this.radius;
 
   }
   display(){
@@ -1036,7 +1043,7 @@ class Line{
   }
   
   update(angle, lineLength){
-    this.x2 = width / 2 + cos(angle) * lineLength;
-    this.y2 = height / 2 + sin(angle) * lineLength;
+    this.x2 = width / 2 + Math.cos(angle) * lineLength;
+    this.y2 = height / 2 + Math.sin(angle) * lineLength;
   }
 }
