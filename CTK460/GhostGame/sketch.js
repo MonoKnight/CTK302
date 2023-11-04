@@ -399,7 +399,7 @@ function gameMenu(){
       if(loadAnimTimer <= 2* frameRateVar){
         text("Searching for Ghost", width/2, 200);
         loadVT++;
-        if(loadVT > 0.02 * frameRateVar){
+        if(loadVT > 0.04 * frameRateVar){
           loadV++;
           if(loadV >= load.length) loadV = 0;
           loadVT = 0;
@@ -481,7 +481,7 @@ function gameMenu(){
       keypad();
       battery();
       PointCalculation();
-      //DebugMode();
+      DebugMode();
       minigames();
       minigameUI();
       if(batTimer <= 0) gameEnd();
@@ -607,7 +607,7 @@ function minigameUI(){
         //var angle = map(x, 0, width, 0, TWO_PI);
         var angle = offset  + x * 1;
         // map x between 0 and width to 0 and Two Pi
-        var y = map(Math.sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
+        var y = map(sin(angle), -setStrum/10, setStrum/10, height/2 - 150, height/2 + 150);
         vertex(x, y);
       }
       endShape();
@@ -617,13 +617,13 @@ function minigameUI(){
         //var angle = map(x, 0, width, 0, TWO_PI);
         var angle = offset + x * 1;
         // map x between 0 and width to 0 and Two Pi
-        var y = map(Math.sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
+        var y = map(sin(angle), -strum/10, strum/10, height/2 - 150, height/2 + 150);
         vertex(x, y);
       }
       endShape();
       stroke("#292622");
       rect(width/2, height/2, 600, 300);
-      offset += offsetvar;
+      offset += offsetvar * 2;
       stroke("black");
       pop();
       break;
@@ -1018,10 +1018,10 @@ function buttonClick(){
 
 class Dots{
   constructor(){
-    this.angle = Math.random(0, 360);
-    this.radius = Math.random(50, 200); 
-    this.x = width / 2 + Math.cos(this.angle) * this.radius;
-    this.y = height / 2 + Math.sin(this.angle) * this.radius;
+    this.angle = random(0, 360);
+    this.radius = random(50, 200); 
+    this.x = width / 2 + cos(this.angle) * this.radius;
+    this.y = height / 2 + sin(this.angle) * this.radius;
 
   }
   display(){
@@ -1043,7 +1043,7 @@ class Line{
   }
   
   update(angle, lineLength){
-    this.x2 = width / 2 + Math.cos(angle) * lineLength;
-    this.y2 = height / 2 + Math.sin(angle) * lineLength;
+    this.x2 = width / 2 + cos(angle) * lineLength;
+    this.y2 = height / 2 + sin(angle) * lineLength;
   }
 }
