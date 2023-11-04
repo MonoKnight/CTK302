@@ -269,7 +269,7 @@ function setup() {
   ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 45;
+  miniCooldown = 10;
   miniProcChance = 20;
   miniProcTimer = 15;
   textFont(fonts[0]);
@@ -620,7 +620,7 @@ function minigameUI(){
       endShape();
       stroke("#292622");
       rect(width/2, height/2, 600, 300);
-      offset += offsetvar ;
+      offset += offsetvar;
       stroke("black");
       pop();
       break;
@@ -934,8 +934,8 @@ function minigames(){
     case 0:
       if(frameCount % frameRateVar == 0) miniVariable++;
       if(miniVariable >= miniCooldown) {
-        if(miniProcChance > Math.floor(Math.random(0, 100))){
-          minigameState = (Math.floor(Math.random(0, minigameArray.length) + 1));
+        if(miniProcChance > Math.floor(random(0, 100))){
+          minigameState = (Math.floor(random(0, minigameArray.length) + 1));
           if(minigameState == 3) for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
           miniVariable = 0;
           miniProcChance = 20;
@@ -948,7 +948,7 @@ function minigames(){
       break;
     case 2:
       while(setStrumBool == false){
-        setStrum = whatSetStrum[Math.floor(Math.random() * whatSetStrum.length)];
+        setStrum = whatSetStrum[Math.floor(random() * whatSetStrum.length)];
         if (setStrum != strum) setStrumBool = true;
       }
       if (strum == setStrum) setStrumBool = false, minigameState = 10;
@@ -1008,7 +1008,7 @@ function checker(){
 }
 
 function buttonClick(){
-  buttons[Math.floor(Math.random(0, buttons.length))].play();
+  buttons[Math.floor(random(0, buttons.length))].play();
 }
 
 class Dots{
