@@ -306,7 +306,7 @@ function mouseReleased() {
   if((bState[3] == true)) gameEnd(), bState[3] = false;
   if((bState[4] == true)) resetGame(), bState[4] = false, buttonClick();
   if((bState[6] == true)){
-    minigameState = 3;
+    minigameState = 2;
     bState[6] = false;
     for(let i = 0; i < dotsMax; i++) dots.push(new Dots());
   } 
@@ -538,7 +538,7 @@ function IGUI(){
       break;
     case 2:
       if(popupToggle < 70){
-        popupToggle += 20;
+        popupToggle += 10;
         fill(0, 0, 0, popupToggle);
         rect(width/2, height/2, width, height);
       }
@@ -620,7 +620,7 @@ function minigameUI(){
       endShape();
       stroke("#292622");
       rect(width/2, height/2, 600, 300);
-      offset += offsetvar * 2;
+      offset += offsetvar ;
       stroke("black");
       pop();
       break;
