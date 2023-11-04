@@ -1,4 +1,4 @@
-p5.disableFriendlyErrors = true;
+//p5.disableFriendlyErrors = true;
 
 //IRL Game Items
 let items = [
@@ -215,7 +215,7 @@ function preload() {
   inGameAsset[0] = loadImage("Assets/Images/InGameMenu/Background.png");
   inGameAsset[1] = loadImage("Assets/Images/InGameMenu/Battery.png");
   inGameAsset[2] = loadImage("Assets/Images/InGameMenu/GhostIcon.png");
-  inGameAsset[3] = loadImage("Assets/Images/InGameMenu/Frame.png");
+  inGameAsset[3] = loadImage("Assets/Images/InGameMenu/Frame2.png");
   inGameAsset[4] = loadImage("Assets/Images/InGameMenu/Corner1.png");
   inGameAsset[5] = loadImage("Assets/Images/InGameMenu/Corner2.png");
   inGameAsset[6] = loadImage("Assets/Images/InGameMenu/Basement.png");
@@ -283,7 +283,6 @@ function draw() {
     case 0:
       mainMenu();
       if(frameRate != 60) frameRateVar = 60, frameRate(frameRateVar);
-      print(batteryPasswordArray)
       break;
     //in game
     case 1:
@@ -366,7 +365,7 @@ function mainMenu(){
   //logo
   image(images[2], width/2, 250, 750, 750);
   //teehee don't delete
-  ghostAnim((width/4), ((width * 3) / 4), (width/2), ((height * 3) / 8), ((height * 5) / 8), 1000, 10);
+  //ghostAnim((width/4), ((width * 3) / 4), (width/2), ((height * 3) / 8), ((height * 5) / 8), 1000, 10);
   //buttons
   image(mainMenuAsset[1], width/2 - 200, height/2 + 250);
   image(mainMenuAsset[1], width/2 + 200, height/2 + 250);
@@ -399,7 +398,7 @@ function gameMenu(){
       if(loadAnimTimer <= 2* frameRateVar){
         text("Searching for Ghost", width/2, 200);
         loadVT++;
-        if(loadVT > 0.04 * frameRateVar){
+        if(loadVT > 0.02 * frameRateVar){
           loadV++;
           if(loadV >= load.length) loadV = 0;
           loadVT = 0;
@@ -415,7 +414,7 @@ function gameMenu(){
       break;
     //Main Game
     case 1:
-      if (frameRate != 15) frameRateVar = 15, frameRate(frameRateVar);
+      if (frameRate != 15) frameRateVar = 60, frameRate(frameRateVar);
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
         while(itemCheckBool == false){
@@ -428,7 +427,6 @@ function gameMenu(){
           }
         }
         whatGroupState = randomItem;
-        //print(whatGroupState);
       } 
       if(randBool1 == false){
         randomCheck1[whatGroupState[0]][whatGroupState[1]] = true;
@@ -506,12 +504,12 @@ function IGUI(){
       //Background
       image(inGameAsset[0], width/2, height/2, width, height);
       //Map
-      push();
-      tint(255, 75);
-      image(inGameAsset[3], width/2, height/2, inGameAsset[3].width * 0.7, inGameAsset[3].height * 0.55);
-      pop();
-      image(inGameAsset[4], width/2 - (inGameAsset[3].width * 0.235), height/2 - (inGameAsset[3].height * 0.1), inGameAsset[4].width * 0.5, inGameAsset[4].height * 0.375);
-      image(inGameAsset[5], width/2 + (inGameAsset[3].width * 0.235), height/2 + (inGameAsset[3].height * 0.1), inGameAsset[5].width * 0.5, inGameAsset[5].height * 0.375);
+      //push();
+      //tint(255, 75);
+      image(inGameAsset[3], width/2, height/2, inGameAsset[3].width * 0.7 * 1.889, inGameAsset[3].height * 0.55 * 1.889);
+      //pop();
+      image(inGameAsset[4], width/2 - (inGameAsset[3].width * 0.235* 1.889), height/2 - (inGameAsset[3].height * 0.1* 1.889), inGameAsset[4].width * 0.5, inGameAsset[4].height * 0.375);
+      image(inGameAsset[5], width/2 + (inGameAsset[3].width * 0.235* 1.889), height/2 + (inGameAsset[3].height * 0.1* 1.889), inGameAsset[5].width * 0.5, inGameAsset[5].height * 0.375);
       image(inGameAsset[6], width/2 - 450, height/2 + 20, inGameAsset[6].width * 0.2, inGameAsset[6].height * 0.2);
       image(inGameAsset[7], width/2 + 450, height/2 + 20, inGameAsset[7].width * 0.2, inGameAsset[7].height * 0.2);
       fill("#e7e1da");
@@ -537,11 +535,10 @@ function IGUI(){
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
       text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
-      print(hintTimer);
       break;
     case 2:
       if(popupToggle < 70){
-        popupToggle += 10;
+        popupToggle += 20;
         fill(0, 0, 0, popupToggle);
         rect(width/2, height/2, width, height);
       }
@@ -733,6 +730,7 @@ function resetGame(){
   batCount = 0;
   miniVariable = 0;
   miniProcChance = 20;
+  currentGhostTimer = 0;
   for(let i = 0; i < batteryCheckArray.length; i++){
     batteryCheckArray[i] = false;
   }
@@ -791,8 +789,6 @@ function deleteNumbers(numb){
 
 //Checks password
 function checkNumbers(){
-  print(batteryPasswordArray[0]);
-  print(keypadEntry);
   for(let i = 0; i < 10; i++){
     if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == false){
       batCount += 1;
@@ -803,7 +799,6 @@ function checkNumbers(){
       batNumb++;
       batCheck = true;
       pointTotal = pointTotal + 500;
-      //print("hello");
     }
     else if(keypadEntry[0] == batteryPasswordArray[i][0] && keypadEntry[1] == batteryPasswordArray[i][1] && keypadEntry[2] == batteryPasswordArray[i][2] && keypadEntry[3] == batteryPasswordArray[i][3] && batteryCheckArray[i] == true){
       batFoundBool = true;
@@ -928,7 +923,7 @@ function ghostAnim(ghostXMin, ghostXMax, ghostXMid, ghostYMin, ghostYMax, ghostS
   push();
   translate(ghostX, ghostY);
   rotate(ghostRotate);
-  tint(255, ghostTint);
+  //tint(255, ghostTint);
   image(images[1], 0, 0, ghostSize, ghostSize);
   pop();
   //circle(ghostX, ghostY, 200);
