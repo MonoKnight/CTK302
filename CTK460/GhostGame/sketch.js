@@ -194,7 +194,7 @@ let whatSetStrum = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
 //Radar Minigame Variables 
 let [dots, newLine, dotsCollected, dotsMax, speed, direction, linex] = [[], [], 0, 5, 5, 0, 1];
 //random Variable
-let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate, frameRateVar, hint2Timer, hint3Timer,] = [0, 0, true, 0, 0, 60, 45, 90];
+let [ghostX, ghostY, ghostToggle, ghostSinV, ghostRotate, frameRateVar, hint2Timer, hint3Timer,] = [0, 0, true, 0, 0, 30, 45, 90];
 
 function preload() {
   images[0] = loadImage("Assets/Images/Exclamation-Mark.png");
@@ -287,6 +287,7 @@ function draw() {
     //in game
     case 1:
       gameMenu();
+      print(currentGhostTimer);
       break;
   }
 }
@@ -414,7 +415,7 @@ function gameMenu(){
       break;
     //Main Game
     case 1:
-      if (frameRate != 15) frameRateVar = 60, frameRate(frameRateVar);
+      if (frameRate != 40) frameRateVar = 40, frameRate(frameRateVar);
       //Selects a random item and checks if its been selected before
       if(itemBool == false){
         while(itemCheckBool == false){
@@ -479,7 +480,7 @@ function gameMenu(){
       keypad();
       battery();
       PointCalculation();
-      DebugMode();
+      //DebugMode();
       minigames();
       minigameUI();
       if(batTimer <= 0) gameEnd();
