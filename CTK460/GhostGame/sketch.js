@@ -263,7 +263,7 @@ function setup() {
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
-  batTimer = 15;
+  batTimer = 300;
   batMaxTime = 300;
   ghostTimeMedium = 60;
   ghostTimeMax = 180;
