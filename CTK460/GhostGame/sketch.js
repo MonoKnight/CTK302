@@ -263,7 +263,7 @@ function setup() {
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
-  batTimer = 300;
+  batTimer = 15;
   batMaxTime = 300;
   ghostTimeMedium = 60;
   ghostTimeMax = 180;
@@ -698,6 +698,7 @@ function gameEnd(){
   if(ghostMultiplier > 1) pointTotal = pointTotal * (1 + (0.5 * (ghostMultiplier - 1)));
   sounds[7].play();
   inGameState = 3;
+  minigameState = 0;
 }
 
 function resetGame(){
