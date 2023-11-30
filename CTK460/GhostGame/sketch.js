@@ -166,7 +166,7 @@ let minigameArray = ["Spacebar", "Frequency", "Radar"];
 //"Ghost"
 
 //Assets
-let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages, sounds, buttons] = [[], [], [], [], [], [], [], [], [], []];
+let [images, fonts, mapImages, mainMenuAsset, inGameAsset, basementImages, groundImages, endImages, sounds, buttons, backgroundmusic] = [[], [], [], [], [], [], [], [], [], [], []];
 //loading gif Variables
 let [load, loadV, loadVT] = [[], 0, 0];
 //switch State Variables
@@ -237,6 +237,7 @@ function preload() {
   buttons[0] = loadSound("Assets/Sounds/Button1.mp3");
   buttons[1] = loadSound("Assets/Sounds/Button2.mp3");
   buttons[2] = loadSound("Assets/Sounds/Button3.mp3");
+  backgroundmusic[0] = loadSound("Assets/Sounds/CVA_NightmaresFinal.mp3");
 
   for(let i = 0; i < 29; i++) load[i] = loadImage("Assets/Gifs/Loading/Loading (" + (i+1) + ").gif");
   //for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
@@ -269,7 +270,7 @@ function setup() {
   ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 10;
+  miniCooldown = 90;
   miniProcChance = 20;
   miniProcTimer = 15;
   textFont(fonts[0]);
@@ -290,6 +291,7 @@ function draw() {
       print(currentGhostTimer);
       break;
   }
+  if(!backgroundmusic[0].isPlaying()) backgroundmusic[0].play(), backgroundmusic[0].setVolume(0.05);
 }
 
 function mouseReleased() {
@@ -516,6 +518,11 @@ function IGUI(){
       fill("#e7e1da");
       text("Basement", width/2 - 750, height/2 - 175);
       text("Ground Floor", width/2 + 725, height/2 - 175);
+      push();
+      textSize(20);
+      text("Available Rooms: 017, 030, 045, 048, 050, 124, 130, 132, 133, 134A, 134B, 140", width/2, height/2 - 270);
+      pop();
+      text(int((batTimer/batMaxTime) * 100) + "%", 2050, 107);
       //Buttons on Bottom
       image(inGameAsset[8], width/2 - 675, height/2 + 325, inGameAsset[8].width * 0.5, inGameAsset[8].height * 0.7);
       image(inGameAsset[9], width/2, height/2 + 325, inGameAsset[8].width * 0.5, inGameAsset[8].height * 0.7);
@@ -535,7 +542,7 @@ function IGUI(){
       else text("Hint 3 Locked", width/2 + 675, height/2 + 335);
       ghostMin = Math.floor(currentGhostTimer / 60);
       ghostSec = currentGhostTimer - (ghostMin * 60);
-      text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
+      //text("Time: " + nf(ghostMin, 2, 0) + ":" + nf(ghostSec, 2, 0), 200, 150);
       break;
     case 2:
       if(popupToggle < 70){
