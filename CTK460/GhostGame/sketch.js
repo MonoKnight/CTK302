@@ -243,18 +243,18 @@ function preload() {
   //for(let i = 0; i < 12; i++) mapImages[i] = loadImage("Assets/Images/Map/test" + (i+1) + ".png");
   //for(let i = 0; i < 4; i++) basementImages[i] = loadImage("Assets/Images/Basement/Basement" + (i+1) + ".png");
   //for(let i = 0; i < 4; i++) groundImages[i] = loadImage("Assets/Images/GroundFloor/First_Floor" + (i+1) + ".png");
-  basementImages[17] = loadImage("Assets/Images/Basement/Basement17.png");
-  basementImages[30] = loadImage("Assets/Images/Basement/Basement30.png");
-  basementImages[45] = loadImage("Assets/Images/Basement/Basement45.png");
-  basementImages[48] = loadImage("Assets/Images/Basement/Basement48.png");
-  basementImages[50] = loadImage("Assets/Images/Basement/Basement50.png");
-  groundImages[124] = loadImage("Assets/Images/GroundFloor/First_Floor124.png");
-  groundImages[130] = loadImage("Assets/Images/GroundFloor/First_Floor130.png");
-  groundImages[132] = loadImage("Assets/Images/GroundFloor/First_Floor132.png");
-  groundImages[133] = loadImage("Assets/Images/GroundFloor/First_Floor133.png");
-  groundImages[134] = loadImage("Assets/Images/GroundFloor/First_Floor134a.png");
-  groundImages[135] = loadImage("Assets/Images/GroundFloor/First_Floor134b.png");
-  groundImages[140] = loadImage("Assets/Images/GroundFloor/First_Floor140.png");
+  basementImages[17] = loadImage("Assets/Images/Basement/BasementFinal17.png");
+  basementImages[30] = loadImage("Assets/Images/Basement/BasementFinal30.png");
+  basementImages[45] = loadImage("Assets/Images/Basement/BasementFinal45.png");
+  basementImages[48] = loadImage("Assets/Images/Basement/BasementFinal48.png");
+  basementImages[50] = loadImage("Assets/Images/Basement/BasementFinal50.png");
+  groundImages[124] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal124.png");
+  groundImages[130] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal130.png");
+  groundImages[132] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal132.png");
+  groundImages[133] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal133.png");
+  groundImages[134] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134a.png");
+  groundImages[135] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134b.png");
+  groundImages[140] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal140.png");
   fonts[0] = loadFont("Assets/Fonts/Cambria.ttf");
 }
 
