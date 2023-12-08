@@ -6,7 +6,7 @@ let items = [
   ["First Aid Kit", "Lotion", "Gum"],
   ["Speaker", "Water Bottle", "Table Clock"], 
   ["Calculator", "Pen", "Keys"], 
-  ["Index Cards", "Pocket Mirror", "Deodorant"], 
+  //["Index Cards", "Pocket Mirror", "Deodorant"], 
   ["Smartphone", "Highlighter", "Snack"], 
   ["Reading Glasses", "Hairbrush", "Tissue Packet"], 
   ["Portable Charger", "Textbooks", "Planner"], 
@@ -34,7 +34,7 @@ let itemRoomNumber = [
  [30, 30, 30],
  [45, 45, 45],
  [48, 48, 48],
- [50, 50, 50],
+// [50, 50, 50],
  [124, 124, 124],
  [130, 130, 130],
  [132, 132, 132],
@@ -49,7 +49,7 @@ let whatFloor = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
-  [0, 0, 0],
+ // [0, 0, 0],
   [1, 1, 1],
   [1, 1, 1],
   [1, 1, 1],
@@ -64,7 +64,7 @@ let itemsLocation = [
   [[275, 650], [450, 825], [800, 475]],
   [[275, 825], [625, 475], [800, 650]],
   [[450, 475], [625, 650], [800, 825]],
-  [[275, 475], [450, 650], [625, 825]],
+ // [[275, 475], [450, 650], [625, 825]],
   [[275, 650], [450, 825], [800, 475]],
   [[275, 825], [625, 475], [800, 650]],
   [[450, 475], [625, 650], [800, 825]],
@@ -78,7 +78,7 @@ let itemHintArray1 = [
   ["This Item is Related to Hygiene", "This Item is Related to Hygiene", "This Item is Related to Hygiene"],
   ["This Item is Related to Electronics", "This Item is a Personal Item", "This Item is a Personal Item"], 
   ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
-  ["This Item is Related to Studying", "This Item is a Personal Item", "This Item is Related to Hygiene"], 
+ // ["This Item is Related to Studying", "This Item is a Personal Item", "This Item is Related to Hygiene"], 
   ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is a Personal Item"], 
   ["This Item is a Personal Item", "This Item is a Personal Item", "This Item is Related to Hygiene"], 
   ["This Item is Related to Electronics", "This Item is Related to Studying", "This Item is Related to Studying"], 
@@ -93,7 +93,7 @@ let itemHintArray2 = [
   ["This Item is Small", "This Item Smell Nice", "This Item Smells Nice"],
   ["This Item is Black", "This item holds Liquids", "This Item is White"], 
   ["This Item can fit in One Hand", "This Item is used to Write", "Almost every College Student has One"], 
-  ["This Item can fit in One Hand", "This Item can fit in One Hand", "This Item Smells Nice"], 
+ // ["This Item can fit in One Hand", "This Item can fit in One Hand", "This Item Smells Nice"], 
   ["This Item can fit in One Hand", "This Item typically has Bright Colors", "This Item can fit in One Hand"], 
   ["This Item can be Worn", "This Item is Gray", "This Item is Disposable"], 
   ["This Item helps Power other Technology", "This Item can Open", "Almost every College Student has One"], 
@@ -108,7 +108,7 @@ let itemHintArray3 = [
   ["This helps with Cuts and Scrapes", "This makes your Hands Soft", "This makes  your breath Smell Fresh"],
   ["This is used to play Music Loudly", "This holds what you need to Live", "This tells you when to Wake Up"], 
   ["This helps someone bad at Math", "This is almost always Permanent", "This helps you get into your Home"], 
-  ["These items are useful for Studying", "This helps you fix you appearence on the Go", "This item should be used Daily"], 
+ // ["These items are useful for Studying", "This helps you fix you appearence on the Go", "This item should be used Daily"], 
   ["Most people have this with them 24/7", "This item is used to Mark important things in Color", "This is useful when you're Hungry between Meals"], 
   ["This helps when you don't have 20/20 Vision", "This helps with Tangles and Knots", "This helps when you get a Runny Nose"], 
   ["This helps with low battery on the Go", "This is needed for most Gen-Eds for a steep Price", "This is used to keep track of Dates and Dealines"], 
@@ -123,7 +123,7 @@ let passwordArray = [
   [[4, 0, 3, 0], [8, 0, 2, 8], [6, 0, 3, 1]],
   [[5, 8, 7, 4], [2, 4, 9, 4], [6, 3, 7, 5]],
   [[9, 0, 1, 3], [1, 5, 1, 4], [2, 0, 1, 5]],
-  [[5, 0, 3, 4], [7, 0, 3, 2], [3, 0, 3, 3]],
+ // [[5, 0, 3, 4], [7, 0, 3, 2], [3, 0, 3, 3]],
   [[4, 0, 1, 1], [1, 0, 1, 2], [1, 0, 1, 0]],
   [[4, 0, 2, 5], [6, 0, 2, 7], [1, 0, 2, 6]],
   [[3, 0, 2, 1], [7, 0, 1, 9], [5, 0, 2, 0]],
@@ -137,7 +137,7 @@ let randomCheck1 = [
   [false, false, false],
   [false, false, false],
   [false, false, false],
-  [false, false, false],
+ // [false, false, false],
   [false, false, false],
   [false, false, false],
   [false, false, false],
@@ -151,7 +151,7 @@ let randomCheck2 = [
   [false, false, false],
   [false, false, false],
   [false, false, false],
-  [false, false, false],
+  //[false, false, false],
   [false, false, false],
   [false, false, false],
   [false, false, false],
@@ -270,9 +270,9 @@ function setup() {
   ghostTimeMax = 180;
   ghostX = width/4;
   ghostY = height/2;
-  miniCooldown = 90;
+  miniCooldown = 60;
   miniProcChance = 20;
-  miniProcTimer = 15;
+  miniProcTimer = 10;
   textFont(fonts[0]);
   newLine.push(new Line());
   frameRate(frameRateVar);
@@ -520,7 +520,7 @@ function IGUI(){
       text("Ground Floor", width/2 + 725, height/2 - 175);
       push();
       textSize(20);
-      text("Available Rooms: 017, 030, 045, 048, 050, 124, 130, 132, 133, 134A, 134B, 140", width/2, height/2 - 270);
+      text("Available Rooms: 017, 030, 045, 048, 124, 130, 132, 133, 134A, 134B, 140", width/2, height/2 - 270);
       pop();
       text(int((batTimer/batMaxTime) * 100) + "%", 2050, 107);
       //Buttons on Bottom
