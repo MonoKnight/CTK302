@@ -91,7 +91,7 @@ let itemHintArray1 = [
 let itemHintArray2 = [
   ["This Item helps Power other Technology", "This Item can Open", "Almost every Student has One"], 
   ["This Item is Small", "This Item Smell Nice", "This Item Smells Nice"],
-  ["This Item is Black", "This item holds Liquids", "This Item is White"], 
+  ["This Item is Black", "This item holds Liquids", "This Item is Black"], 
   ["This Item can fit in One Hand", "This Item is used to Write", "Almost every College Student has One"], 
  // ["This Item can fit in One Hand", "This Item can fit in One Hand", "This Item Smells Nice"], 
   ["This Item can fit in One Hand", "This Item typically has Bright Colors", "This Item can fit in One Hand"], 
