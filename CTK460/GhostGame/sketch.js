@@ -252,8 +252,8 @@ function preload() {
   groundImages[130] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal130.png");
   groundImages[132] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal132.png");
   groundImages[133] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal133.png");
-  groundImages[134] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134a.png");
-  groundImages[135] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134b.png");
+  groundImages[134] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134A.png");
+  groundImages[135] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal134B.png");
   groundImages[140] = loadImage("Assets/Images/GroundFloor/GroundFloorFinal140.png");
   fonts[0] = loadFont("Assets/Fonts/Cambria.ttf");
 }
